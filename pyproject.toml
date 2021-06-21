@@ -1,14 +1,16 @@
 [tool.poetry]
 name = "rubbish"
 version = "0.1.0"
-description = "Simple shell"
+description = "Yet another Rubbi shell"
 authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
 build = "build.py"
+include = ["py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 Cython = "^0.29.23"
+colorama = "^0.4.4"
 
 [tool.poetry.dev-dependencies]
 black = "^21.6b0"
