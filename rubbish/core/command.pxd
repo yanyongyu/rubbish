@@ -44,3 +44,28 @@ cdef public struct simple_cm:
     REDIRECT *redirects
 
 ctypedef public simple_cm SIMPLE_COMMAND
+
+cdef class Redirect:
+    cdef REDIRECT *_redirect
+    cdef bint ptr_set
+
+    @staticmethod
+    cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = *)
+
+
+cdef class Command:
+    cdef COMMAND *_command
+    cdef bint ptr_set
+
+    @staticmethod
+    cdef Command from_ptr(COMMAND *ptr, bint auto_dealloc = *)
+
+
+cdef class Connection(Command):
+    pass
+
+
+cdef class SimpleCommand(Command):
+
+    cdef tuple _words
+    cdef tuple _redirects

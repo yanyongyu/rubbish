@@ -157,6 +157,8 @@ struct simple_cm {
  *     REDIRECT *redirects
  * 
  * ctypedef public simple_cm SIMPLE_COMMAND             # <<<<<<<<<<<<<<
+ * 
+ * cdef class Redirect:
  */
 typedef struct simple_cm SIMPLE_COMMAND;
 

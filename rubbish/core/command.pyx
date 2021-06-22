@@ -1,12 +1,8 @@
 from libc.stdlib cimport free
 
-from rubbish.core.command cimport CommandType, WORD_LIST, REDIRECT, COMMAND, CONNECTION
-
+from rubbish.core.command cimport CommandType, WORD_LIST, REDIRECT, COMMAND
 
 cdef class Redirect:
-
-    cdef REDIRECT *_redirect
-    cdef bint ptr_set
 
     def __cinit__(self):
         self.ptr_set = False
@@ -40,9 +36,6 @@ cdef class Redirect:
 
 
 cdef class Command:
-
-    cdef COMMAND *_command
-    cdef bint ptr_set
 
     def __cinit__(self):
         self.ptr_set = False
@@ -95,12 +88,11 @@ cdef class Connection(Command):
 
 cdef class SimpleCommand(Command):
 
-    cdef tuple _words
-    cdef tuple _redirects
-
     def __dealloc__(self):
-        cdef WORD_LIST *word, *temp1
-        cdef REDIRECT *redirect, *temp2
+        cdef WORD_LIST *word
+        cdef WORD_LIST *temp1
+        cdef REDIRECT *redirect
+        cdef REDIRECT *temp2
         if self._command is not NULL and self.ptr_set is True:
             word = self._command.info.Simple.words
             while word:
