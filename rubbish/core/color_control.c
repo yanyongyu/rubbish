@@ -835,6 +835,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_7rubbish_4core_6config_Config;
 struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap;
+struct __pyx_obj_7rubbish_4core_13color_control_BackWrap;
 
 /* "rubbish/core/config.pxd":3
  * cdef Config global_config
@@ -852,9 +853,21 @@ struct __pyx_obj_7rubbish_4core_6config_Config {
 /* "rubbish/core/color_control.pxd":1
  * cdef class ForeWrap:             # <<<<<<<<<<<<<<
  *     pass
- * 
+ * cdef class BackWrap:
  */
 struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap {
+  PyObject_HEAD
+};
+
+
+/* "rubbish/core/color_control.pxd":3
+ * cdef class ForeWrap:
+ *     pass
+ * cdef class BackWrap:             # <<<<<<<<<<<<<<
+ *     pass
+ * 
+ */
+struct __pyx_obj_7rubbish_4core_13color_control_BackWrap {
   PyObject_HEAD
 };
 
@@ -1244,8 +1257,11 @@ static struct __pyx_obj_7rubbish_4core_6config_Config **__pyx_vp_7rubbish_4core_
 
 /* Module declarations from 'rubbish.core.color_control' */
 static PyTypeObject *__pyx_ptype_7rubbish_4core_13color_control_ForeWrap = 0;
+static PyTypeObject *__pyx_ptype_7rubbish_4core_13color_control_BackWrap = 0;
 static struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *__pyx_v_7rubbish_4core_13color_control_Fore = 0;
+static struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_7rubbish_4core_13color_control_Back = 0;
 static PyObject *__pyx_f_7rubbish_4core_13color_control___pyx_unpickle_ForeWrap__set_state(struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *, PyObject *); /*proto*/
+static PyObject *__pyx_f_7rubbish_4core_13color_control___pyx_unpickle_BackWrap__set_state(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *, PyObject *); /*proto*/
 #define __Pyx_MODULE_NAME "rubbish.core.color_control"
 extern int __pyx_module_is_main_rubbish__core__color_control;
 int __pyx_module_is_main_rubbish__core__color_control = 0;
@@ -1255,7 +1271,7 @@ static const char __pyx_k_[] = "";
 static const char __pyx_k_RED[] = "RED";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_BLUE[] = "BLUE";
-static const char __pyx_k_Back[] = "Back";
+static const char __pyx_k_Back[] = "_Back";
 static const char __pyx_k_CYAN[] = "CYAN";
 static const char __pyx_k_Fore[] = "_Fore";
 static const char __pyx_k_dict[] = "__dict__";
@@ -1266,7 +1282,7 @@ static const char __pyx_k_BLACK[] = "BLACK";
 static const char __pyx_k_GREEN[] = "GREEN";
 static const char __pyx_k_RESET[] = "RESET";
 static const char __pyx_k_WHITE[] = "WHITE";
-static const char __pyx_k_Back_2[] = "_Back";
+static const char __pyx_k_Back_2[] = "Back";
 static const char __pyx_k_Fore_2[] = "Fore";
 static const char __pyx_k_YELLOW[] = "YELLOW";
 static const char __pyx_k_import[] = "__import__";
@@ -1274,6 +1290,7 @@ static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_update[] = "update";
 static const char __pyx_k_MAGENTA[] = "MAGENTA";
+static const char __pyx_k_BackWrap[] = "BackWrap";
 static const char __pyx_k_ForeWrap[] = "ForeWrap";
 static const char __pyx_k_colorama[] = "colorama";
 static const char __pyx_k_getstate[] = "__getstate__";
@@ -1299,6 +1316,7 @@ static const char __pyx_k_LIGHTMAGENTA_EX[] = "LIGHTMAGENTA_EX";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_pyx_unpickle_BackWrap[] = "__pyx_unpickle_BackWrap";
 static const char __pyx_k_pyx_unpickle_ForeWrap[] = "__pyx_unpickle_ForeWrap";
 static const char __pyx_k_rubbish_core_color_control[] = "rubbish.core.color_control";
 static const char __pyx_k_Incompatible_checksums_s_vs_0xd4[] = "Incompatible checksums (%s vs 0xd41d8cd = ())";
@@ -1306,6 +1324,7 @@ static PyObject *__pyx_kp_u_;
 static PyObject *__pyx_n_s_BLACK;
 static PyObject *__pyx_n_s_BLUE;
 static PyObject *__pyx_n_s_Back;
+static PyObject *__pyx_n_s_BackWrap;
 static PyObject *__pyx_n_s_Back_2;
 static PyObject *__pyx_n_s_CYAN;
 static PyObject *__pyx_n_s_Fore;
@@ -1342,6 +1361,7 @@ static PyObject *__pyx_n_s_pyx_checksum;
 static PyObject *__pyx_n_s_pyx_result;
 static PyObject *__pyx_n_s_pyx_state;
 static PyObject *__pyx_n_s_pyx_type;
+static PyObject *__pyx_n_s_pyx_unpickle_BackWrap;
 static PyObject *__pyx_n_s_pyx_unpickle_ForeWrap;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
@@ -1372,11 +1392,34 @@ static PyObject *__pyx_pf_7rubbish_4core_13color_control_8ForeWrap_12LIGHTCYAN_E
 static PyObject *__pyx_pf_7rubbish_4core_13color_control_8ForeWrap_13LIGHTWHITE_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_13color_control_8ForeWrap___reduce_cython__(struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_13color_control_8ForeWrap_2__setstate_cython__(struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5BLACK___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_3RED___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5GREEN___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_6YELLOW___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_4BLUE___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_7MAGENTA___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_4CYAN___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5WHITE___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5RESET___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTBLACK_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_11LIGHTRED_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTGREEN_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_14LIGHTYELLOW_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_12LIGHTBLUE_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_15LIGHTMAGENTA_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_12LIGHTCYAN_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTWHITE_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap___reduce_cython__(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_2__setstate_cython__(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_13color_control___pyx_unpickle_ForeWrap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_2__pyx_unpickle_BackWrap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_7rubbish_4core_13color_control_ForeWrap(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7rubbish_4core_13color_control_BackWrap(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_222419149;
 static PyObject *__pyx_tuple__2;
+static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_codeobj__3;
+static PyObject *__pyx_codeobj__5;
 /* Late includes */
 
 /* "rubbish/core/color_control.pyx":8
@@ -3451,6 +3494,2078 @@ static PyObject *__pyx_pf_7rubbish_4core_13color_control_8ForeWrap_2__setstate_c
   return __pyx_r;
 }
 
+/* "rubbish/core/color_control.pyx":116
+ * cdef class BackWrap:
+ *     @property
+ *     def BLACK(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5BLACK_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5BLACK_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_5BLACK___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5BLACK___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":117
+ *     @property
+ *     def BLACK(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.BLACK
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":118
+ *     def BLACK(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.BLACK
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":117
+ *     @property
+ *     def BLACK(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.BLACK
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":119
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.BLACK             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_BLACK); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":116
+ * cdef class BackWrap:
+ *     @property
+ *     def BLACK(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.BLACK.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":122
+ * 
+ *     @property
+ *     def RED(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_3RED_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_3RED_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_3RED___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_3RED___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":123
+ *     @property
+ *     def RED(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.RED
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":124
+ *     def RED(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.RED
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":123
+ *     @property
+ *     def RED(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.RED
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":125
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.RED             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_RED); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":122
+ * 
+ *     @property
+ *     def RED(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.RED.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":128
+ * 
+ *     @property
+ *     def GREEN(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5GREEN_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5GREEN_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_5GREEN___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5GREEN___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":129
+ *     @property
+ *     def GREEN(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.GREEN
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":130
+ *     def GREEN(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.GREEN
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":129
+ *     @property
+ *     def GREEN(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.GREEN
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":131
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.GREEN             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_GREEN); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":128
+ * 
+ *     @property
+ *     def GREEN(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.GREEN.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":134
+ * 
+ *     @property
+ *     def YELLOW(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_6YELLOW_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_6YELLOW_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_6YELLOW___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_6YELLOW___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":135
+ *     @property
+ *     def YELLOW(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.YELLOW
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":136
+ *     def YELLOW(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.YELLOW
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":135
+ *     @property
+ *     def YELLOW(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.YELLOW
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":137
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.YELLOW             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_YELLOW); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":134
+ * 
+ *     @property
+ *     def YELLOW(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.YELLOW.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":140
+ * 
+ *     @property
+ *     def BLUE(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_4BLUE_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_4BLUE_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_4BLUE___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_4BLUE___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":141
+ *     @property
+ *     def BLUE(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.BLUE
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 141, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":142
+ *     def BLUE(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.BLUE
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":141
+ *     @property
+ *     def BLUE(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.BLUE
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":143
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.BLUE             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_BLUE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":140
+ * 
+ *     @property
+ *     def BLUE(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.BLUE.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":146
+ * 
+ *     @property
+ *     def MAGENTA(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_7MAGENTA_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_7MAGENTA_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_7MAGENTA___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_7MAGENTA___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":147
+ *     @property
+ *     def MAGENTA(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.MAGENTA
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":148
+ *     def MAGENTA(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.MAGENTA
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":147
+ *     @property
+ *     def MAGENTA(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.MAGENTA
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":149
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.MAGENTA             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_MAGENTA); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":146
+ * 
+ *     @property
+ *     def MAGENTA(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.MAGENTA.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":152
+ * 
+ *     @property
+ *     def CYAN(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_4CYAN_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_4CYAN_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_4CYAN___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_4CYAN___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":153
+ *     @property
+ *     def CYAN(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.CYAN
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":154
+ *     def CYAN(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.CYAN
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":153
+ *     @property
+ *     def CYAN(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.CYAN
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":155
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.CYAN             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CYAN); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":152
+ * 
+ *     @property
+ *     def CYAN(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.CYAN.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":158
+ * 
+ *     @property
+ *     def WHITE(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5WHITE_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5WHITE_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_5WHITE___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5WHITE___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":159
+ *     @property
+ *     def WHITE(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.WHITE
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":160
+ *     def WHITE(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.WHITE
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":159
+ *     @property
+ *     def WHITE(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.WHITE
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":161
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.WHITE             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_WHITE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":158
+ * 
+ *     @property
+ *     def WHITE(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.WHITE.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":164
+ * 
+ *     @property
+ *     def RESET(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5RESET_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_5RESET_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_5RESET___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_5RESET___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":165
+ *     @property
+ *     def RESET(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.RESET
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":166
+ *     def RESET(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.RESET
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":165
+ *     @property
+ *     def RESET(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.RESET
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":167
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.RESET             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_RESET); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 167, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":164
+ * 
+ *     @property
+ *     def RESET(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.RESET.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":170
+ * 
+ *     @property
+ *     def LIGHTBLACK_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTBLACK_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTBLACK_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTBLACK_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTBLACK_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":171
+ *     @property
+ *     def LIGHTBLACK_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTBLACK_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 171, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":172
+ *     def LIGHTBLACK_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTBLACK_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":171
+ *     @property
+ *     def LIGHTBLACK_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTBLACK_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":173
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTBLACK_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTBLACK_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":170
+ * 
+ *     @property
+ *     def LIGHTBLACK_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTBLACK_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":176
+ * 
+ *     @property
+ *     def LIGHTRED_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_11LIGHTRED_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_11LIGHTRED_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_11LIGHTRED_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_11LIGHTRED_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":177
+ *     @property
+ *     def LIGHTRED_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTRED_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":178
+ *     def LIGHTRED_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTRED_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":177
+ *     @property
+ *     def LIGHTRED_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTRED_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":179
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTRED_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTRED_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":176
+ * 
+ *     @property
+ *     def LIGHTRED_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTRED_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":182
+ * 
+ *     @property
+ *     def LIGHTGREEN_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTGREEN_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTGREEN_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTGREEN_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTGREEN_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":183
+ *     @property
+ *     def LIGHTGREEN_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTGREEN_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":184
+ *     def LIGHTGREEN_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTGREEN_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":183
+ *     @property
+ *     def LIGHTGREEN_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTGREEN_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":185
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTGREEN_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTGREEN_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":182
+ * 
+ *     @property
+ *     def LIGHTGREEN_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTGREEN_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":188
+ * 
+ *     @property
+ *     def LIGHTYELLOW_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_14LIGHTYELLOW_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_14LIGHTYELLOW_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_14LIGHTYELLOW_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_14LIGHTYELLOW_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":189
+ *     @property
+ *     def LIGHTYELLOW_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTYELLOW_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":190
+ *     def LIGHTYELLOW_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTYELLOW_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":189
+ *     @property
+ *     def LIGHTYELLOW_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTYELLOW_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":191
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTYELLOW_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTYELLOW_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":188
+ * 
+ *     @property
+ *     def LIGHTYELLOW_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTYELLOW_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":194
+ * 
+ *     @property
+ *     def LIGHTBLUE_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_12LIGHTBLUE_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_12LIGHTBLUE_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_12LIGHTBLUE_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_12LIGHTBLUE_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":195
+ *     @property
+ *     def LIGHTBLUE_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTBLUE_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 195, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":196
+ *     def LIGHTBLUE_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTBLUE_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":195
+ *     @property
+ *     def LIGHTBLUE_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTBLUE_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":197
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTBLUE_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTBLUE_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":194
+ * 
+ *     @property
+ *     def LIGHTBLUE_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTBLUE_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":200
+ * 
+ *     @property
+ *     def LIGHTMAGENTA_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_15LIGHTMAGENTA_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_15LIGHTMAGENTA_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_15LIGHTMAGENTA_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_15LIGHTMAGENTA_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":201
+ *     @property
+ *     def LIGHTMAGENTA_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTMAGENTA_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":202
+ *     def LIGHTMAGENTA_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTMAGENTA_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":201
+ *     @property
+ *     def LIGHTMAGENTA_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTMAGENTA_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":203
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTMAGENTA_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTMAGENTA_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":200
+ * 
+ *     @property
+ *     def LIGHTMAGENTA_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTMAGENTA_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":206
+ * 
+ *     @property
+ *     def LIGHTCYAN_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_12LIGHTCYAN_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_12LIGHTCYAN_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_12LIGHTCYAN_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_12LIGHTCYAN_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":207
+ *     @property
+ *     def LIGHTCYAN_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTCYAN_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":208
+ *     def LIGHTCYAN_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTCYAN_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":207
+ *     @property
+ *     def LIGHTCYAN_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTCYAN_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":209
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTCYAN_EX             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTCYAN_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":206
+ * 
+ *     @property
+ *     def LIGHTCYAN_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTCYAN_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/color_control.pyx":212
+ * 
+ *     @property
+ *     def LIGHTWHITE_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTWHITE_EX_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTWHITE_EX_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTWHITE_EX___get__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_13LIGHTWHITE_EX___get__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/color_control.pyx":213
+ *     @property
+ *     def LIGHTWHITE_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTWHITE_EX
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 213, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 213, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_3) {
+
+    /* "rubbish/core/color_control.pyx":214
+ *     def LIGHTWHITE_EX(self):
+ *         if not global_config.use_ansi:
+ *             return ""             # <<<<<<<<<<<<<<
+ *         return _Back.LIGHTWHITE_EX
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_);
+    __pyx_r = __pyx_kp_u_;
+    goto __pyx_L0;
+
+    /* "rubbish/core/color_control.pyx":213
+ *     @property
+ *     def LIGHTWHITE_EX(self):
+ *         if not global_config.use_ansi:             # <<<<<<<<<<<<<<
+ *             return ""
+ *         return _Back.LIGHTWHITE_EX
+ */
+  }
+
+  /* "rubbish/core/color_control.pyx":215
+ *         if not global_config.use_ansi:
+ *             return ""
+ *         return _Back.LIGHTWHITE_EX             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_LIGHTWHITE_EX); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/color_control.pyx":212
+ * 
+ *     @property
+ *     def LIGHTWHITE_EX(self):             # <<<<<<<<<<<<<<
+ *         if not global_config.use_ansi:
+ *             return ""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.LIGHTWHITE_EX.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     cdef tuple state
+ *     cdef object _dict
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_1__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_1__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap___reduce_cython__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap___reduce_cython__(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self) {
+  PyObject *__pyx_v_state = 0;
+  PyObject *__pyx_v__dict = 0;
+  int __pyx_v_use_setstate;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__reduce_cython__", 0);
+
+  /* "(tree fragment)":5
+ *     cdef object _dict
+ *     cdef bint use_setstate
+ *     state = ()             # <<<<<<<<<<<<<<
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:
+ */
+  __Pyx_INCREF(__pyx_empty_tuple);
+  __pyx_v_state = __pyx_empty_tuple;
+
+  /* "(tree fragment)":6
+ *     cdef bint use_setstate
+ *     state = ()
+ *     _dict = getattr(self, '__dict__', None)             # <<<<<<<<<<<<<<
+ *     if _dict is not None:
+ *         state += (_dict,)
+ */
+  __pyx_t_1 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v__dict = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "(tree fragment)":7
+ *     state = ()
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:             # <<<<<<<<<<<<<<
+ *         state += (_dict,)
+ *         use_setstate = True
+ */
+  __pyx_t_2 = (__pyx_v__dict != Py_None);
+  __pyx_t_3 = (__pyx_t_2 != 0);
+  if (__pyx_t_3) {
+
+    /* "(tree fragment)":8
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:
+ *         state += (_dict,)             # <<<<<<<<<<<<<<
+ *         use_setstate = True
+ *     else:
+ */
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 8, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_INCREF(__pyx_v__dict);
+    __Pyx_GIVEREF(__pyx_v__dict);
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v__dict);
+    __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 8, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF_SET(__pyx_v_state, ((PyObject*)__pyx_t_4));
+    __pyx_t_4 = 0;
+
+    /* "(tree fragment)":9
+ *     if _dict is not None:
+ *         state += (_dict,)
+ *         use_setstate = True             # <<<<<<<<<<<<<<
+ *     else:
+ *         use_setstate = False
+ */
+    __pyx_v_use_setstate = 1;
+
+    /* "(tree fragment)":7
+ *     state = ()
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:             # <<<<<<<<<<<<<<
+ *         state += (_dict,)
+ *         use_setstate = True
+ */
+    goto __pyx_L3;
+  }
+
+  /* "(tree fragment)":11
+ *         use_setstate = True
+ *     else:
+ *         use_setstate = False             # <<<<<<<<<<<<<<
+ *     if use_setstate:
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, None), state
+ */
+  /*else*/ {
+    __pyx_v_use_setstate = 0;
+  }
+  __pyx_L3:;
+
+  /* "(tree fragment)":12
+ *     else:
+ *         use_setstate = False
+ *     if use_setstate:             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, None), state
+ *     else:
+ */
+  __pyx_t_3 = (__pyx_v_use_setstate != 0);
+  if (__pyx_t_3) {
+
+    /* "(tree fragment)":13
+ *         use_setstate = False
+ *     if use_setstate:
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, None), state             # <<<<<<<<<<<<<<
+ *     else:
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, state)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_pyx_unpickle_BackWrap); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_222419149);
+    __Pyx_GIVEREF(__pyx_int_222419149);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_int_222419149);
+    __Pyx_INCREF(Py_None);
+    __Pyx_GIVEREF(Py_None);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, Py_None);
+    __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
+    __Pyx_INCREF(__pyx_v_state);
+    __Pyx_GIVEREF(__pyx_v_state);
+    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_v_state);
+    __pyx_t_4 = 0;
+    __pyx_t_1 = 0;
+    __pyx_r = __pyx_t_5;
+    __pyx_t_5 = 0;
+    goto __pyx_L0;
+
+    /* "(tree fragment)":12
+ *     else:
+ *         use_setstate = False
+ *     if use_setstate:             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, None), state
+ *     else:
+ */
+  }
+
+  /* "(tree fragment)":15
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, None), state
+ *     else:
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, state)             # <<<<<<<<<<<<<<
+ * def __setstate_cython__(self, __pyx_state):
+ *     __pyx_unpickle_BackWrap__set_state(self, __pyx_state)
+ */
+  /*else*/ {
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_pyx_unpickle_BackWrap); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 15, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 15, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_222419149);
+    __Pyx_GIVEREF(__pyx_int_222419149);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_int_222419149);
+    __Pyx_INCREF(__pyx_v_state);
+    __Pyx_GIVEREF(__pyx_v_state);
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_v_state);
+    __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 15, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
+    __pyx_t_5 = 0;
+    __pyx_t_1 = 0;
+    __pyx_r = __pyx_t_4;
+    __pyx_t_4 = 0;
+    goto __pyx_L0;
+  }
+
+  /* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     cdef tuple state
+ *     cdef object _dict
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_state);
+  __Pyx_XDECREF(__pyx_v__dict);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":16
+ *     else:
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, state)
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_unpickle_BackWrap__set_state(self, __pyx_state)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_3__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_8BackWrap_3__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_8BackWrap_2__setstate_cython__(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_8BackWrap_2__setstate_cython__(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__setstate_cython__", 0);
+
+  /* "(tree fragment)":17
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, state)
+ * def __setstate_cython__(self, __pyx_state):
+ *     __pyx_unpickle_BackWrap__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
+ */
+  if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7rubbish_4core_13color_control___pyx_unpickle_BackWrap__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "(tree fragment)":16
+ *     else:
+ *         return __pyx_unpickle_BackWrap, (type(self), 0xd41d8cd, state)
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_unpickle_BackWrap__set_state(self, __pyx_state)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rubbish.core.color_control.BackWrap.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __pyx_unpickle_ForeWrap(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
@@ -3829,6 +5944,384 @@ static PyObject *__pyx_f_7rubbish_4core_13color_control___pyx_unpickle_ForeWrap_
   return __pyx_r;
 }
 
+/* "(tree fragment)":1
+ * def __pyx_unpickle_BackWrap(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
+ *     cdef object __pyx_PickleError
+ *     cdef object __pyx_result
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_3__pyx_unpickle_BackWrap(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_7rubbish_4core_13color_control_3__pyx_unpickle_BackWrap = {"__pyx_unpickle_BackWrap", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7rubbish_4core_13color_control_3__pyx_unpickle_BackWrap, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_7rubbish_4core_13color_control_3__pyx_unpickle_BackWrap(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v___pyx_type = 0;
+  long __pyx_v___pyx_checksum;
+  PyObject *__pyx_v___pyx_state = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__pyx_unpickle_BackWrap (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_pyx_type,&__pyx_n_s_pyx_checksum,&__pyx_n_s_pyx_state,0};
+    PyObject* values[3] = {0,0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pyx_type)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pyx_checksum)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_BackWrap", 1, 3, 3, 1); __PYX_ERR(1, 1, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pyx_state)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_BackWrap", 1, 3, 3, 2); __PYX_ERR(1, 1, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__pyx_unpickle_BackWrap") < 0)) __PYX_ERR(1, 1, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+    }
+    __pyx_v___pyx_type = values[0];
+    __pyx_v___pyx_checksum = __Pyx_PyInt_As_long(values[1]); if (unlikely((__pyx_v___pyx_checksum == (long)-1) && PyErr_Occurred())) __PYX_ERR(1, 1, __pyx_L3_error)
+    __pyx_v___pyx_state = values[2];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_BackWrap", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 1, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("rubbish.core.color_control.__pyx_unpickle_BackWrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_7rubbish_4core_13color_control_2__pyx_unpickle_BackWrap(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_13color_control_2__pyx_unpickle_BackWrap(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_v___pyx_PickleError = 0;
+  PyObject *__pyx_v___pyx_result = 0;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__pyx_unpickle_BackWrap", 0);
+
+  /* "(tree fragment)":4
+ *     cdef object __pyx_PickleError
+ *     cdef object __pyx_result
+ *     if __pyx_checksum != 0xd41d8cd:             # <<<<<<<<<<<<<<
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)
+ */
+  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0xd41d8cd) != 0);
+  if (__pyx_t_1) {
+
+    /* "(tree fragment)":5
+ *     cdef object __pyx_result
+ *     if __pyx_checksum != 0xd41d8cd:
+ *         from pickle import PickleError as __pyx_PickleError             # <<<<<<<<<<<<<<
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)
+ *     __pyx_result = BackWrap.__new__(__pyx_type)
+ */
+    __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 5, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_n_s_PickleError);
+    __Pyx_GIVEREF(__pyx_n_s_PickleError);
+    PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_PickleError);
+    __pyx_t_3 = __Pyx_Import(__pyx_n_s_pickle, __pyx_t_2, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_3, __pyx_n_s_PickleError); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 5, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_t_2);
+    __pyx_v___pyx_PickleError = __pyx_t_2;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "(tree fragment)":6
+ *     if __pyx_checksum != 0xd41d8cd:
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)             # <<<<<<<<<<<<<<
+ *     __pyx_result = BackWrap.__new__(__pyx_type)
+ *     if __pyx_state is not None:
+ */
+    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0xd4, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_INCREF(__pyx_v___pyx_PickleError);
+    __pyx_t_2 = __pyx_v___pyx_PickleError; __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_2, function);
+      }
+    }
+    __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_Raise(__pyx_t_3, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __PYX_ERR(1, 6, __pyx_L1_error)
+
+    /* "(tree fragment)":4
+ *     cdef object __pyx_PickleError
+ *     cdef object __pyx_result
+ *     if __pyx_checksum != 0xd41d8cd:             # <<<<<<<<<<<<<<
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)
+ */
+  }
+
+  /* "(tree fragment)":7
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)
+ *     __pyx_result = BackWrap.__new__(__pyx_type)             # <<<<<<<<<<<<<<
+ *     if __pyx_state is not None:
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_7rubbish_4core_13color_control_BackWrap), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  __pyx_t_3 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_v___pyx_type) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v___pyx_type);
+  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v___pyx_result = __pyx_t_3;
+  __pyx_t_3 = 0;
+
+  /* "(tree fragment)":8
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)
+ *     __pyx_result = BackWrap.__new__(__pyx_type)
+ *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ */
+  __pyx_t_1 = (__pyx_v___pyx_state != Py_None);
+  __pyx_t_6 = (__pyx_t_1 != 0);
+  if (__pyx_t_6) {
+
+    /* "(tree fragment)":9
+ *     __pyx_result = BackWrap.__new__(__pyx_type)
+ *     if __pyx_state is not None:
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)             # <<<<<<<<<<<<<<
+ *     return __pyx_result
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):
+ */
+    if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_7rubbish_4core_13color_control___pyx_unpickle_BackWrap__set_state(((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "(tree fragment)":8
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xd41d8cd = ())" % __pyx_checksum)
+ *     __pyx_result = BackWrap.__new__(__pyx_type)
+ *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ */
+  }
+
+  /* "(tree fragment)":10
+ *     if __pyx_state is not None:
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)
+ *     return __pyx_result             # <<<<<<<<<<<<<<
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v___pyx_result);
+  __pyx_r = __pyx_v___pyx_result;
+  goto __pyx_L0;
+
+  /* "(tree fragment)":1
+ * def __pyx_unpickle_BackWrap(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
+ *     cdef object __pyx_PickleError
+ *     cdef object __pyx_result
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("rubbish.core.color_control.__pyx_unpickle_BackWrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v___pyx_PickleError);
+  __Pyx_XDECREF(__pyx_v___pyx_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":11
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[0])
+ */
+
+static PyObject *__pyx_f_7rubbish_4core_13color_control___pyx_unpickle_BackWrap__set_state(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__pyx_unpickle_BackWrap__set_state", 0);
+
+  /* "(tree fragment)":12
+ *     return __pyx_result
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[0])
+ */
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
+    __PYX_ERR(1, 12, __pyx_L1_error)
+  }
+  __pyx_t_2 = PyTuple_GET_SIZE(__pyx_v___pyx_state); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_3 = ((__pyx_t_2 > 0) != 0);
+  if (__pyx_t_3) {
+  } else {
+    __pyx_t_1 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_3 = __Pyx_HasAttr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_4 = (__pyx_t_3 != 0);
+  __pyx_t_1 = __pyx_t_4;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_1) {
+
+    /* "(tree fragment)":13
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[0])             # <<<<<<<<<<<<<<
+ */
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_update); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(__pyx_v___pyx_state == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(1, 13, __pyx_L1_error)
+    }
+    __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_8 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_7))) {
+      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_7);
+      if (likely(__pyx_t_8)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
+        __Pyx_INCREF(__pyx_t_8);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_7, function);
+      }
+    }
+    __pyx_t_5 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_8, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6);
+    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+    /* "(tree fragment)":12
+ *     return __pyx_result
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[0])
+ */
+  }
+
+  /* "(tree fragment)":11
+ *         __pyx_unpickle_BackWrap__set_state(<BackWrap> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_BackWrap__set_state(BackWrap __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[0])
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("rubbish.core.color_control.__pyx_unpickle_BackWrap__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 static PyObject *__pyx_tp_new_7rubbish_4core_13color_control_ForeWrap(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
@@ -4013,6 +6506,190 @@ static PyTypeObject __pyx_type_7rubbish_4core_13color_control_ForeWrap = {
   #endif
 };
 
+static PyObject *__pyx_tp_new_7rubbish_4core_13color_control_BackWrap(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
+    o = (*t->tp_alloc)(t, 0);
+  } else {
+    o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
+  }
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static void __pyx_tp_dealloc_7rubbish_4core_13color_control_BackWrap(PyObject *o) {
+  #if CYTHON_USE_TP_FINALIZE
+  if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
+    if (PyObject_CallFinalizerFromDealloc(o)) return;
+  }
+  #endif
+  (*Py_TYPE(o)->tp_free)(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_BLACK(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_5BLACK_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_RED(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_3RED_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_GREEN(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_5GREEN_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_YELLOW(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_6YELLOW_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_BLUE(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_4BLUE_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_MAGENTA(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_7MAGENTA_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_CYAN(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_4CYAN_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_WHITE(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_5WHITE_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_RESET(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_5RESET_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTBLACK_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTBLACK_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTRED_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_11LIGHTRED_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTGREEN_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTGREEN_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTYELLOW_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_14LIGHTYELLOW_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTBLUE_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_12LIGHTBLUE_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTMAGENTA_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_15LIGHTMAGENTA_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTCYAN_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_12LIGHTCYAN_EX_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTWHITE_EX(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_13color_control_8BackWrap_13LIGHTWHITE_EX_1__get__(o);
+}
+
+static PyMethodDef __pyx_methods_7rubbish_4core_13color_control_BackWrap[] = {
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_7rubbish_4core_13color_control_8BackWrap_1__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_7rubbish_4core_13color_control_8BackWrap_3__setstate_cython__, METH_O, 0},
+  {0, 0, 0, 0}
+};
+
+static struct PyGetSetDef __pyx_getsets_7rubbish_4core_13color_control_BackWrap[] = {
+  {(char *)"BLACK", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_BLACK, 0, (char *)0, 0},
+  {(char *)"RED", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_RED, 0, (char *)0, 0},
+  {(char *)"GREEN", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_GREEN, 0, (char *)0, 0},
+  {(char *)"YELLOW", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_YELLOW, 0, (char *)0, 0},
+  {(char *)"BLUE", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_BLUE, 0, (char *)0, 0},
+  {(char *)"MAGENTA", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_MAGENTA, 0, (char *)0, 0},
+  {(char *)"CYAN", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_CYAN, 0, (char *)0, 0},
+  {(char *)"WHITE", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_WHITE, 0, (char *)0, 0},
+  {(char *)"RESET", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_RESET, 0, (char *)0, 0},
+  {(char *)"LIGHTBLACK_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTBLACK_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTRED_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTRED_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTGREEN_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTGREEN_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTYELLOW_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTYELLOW_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTBLUE_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTBLUE_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTMAGENTA_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTMAGENTA_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTCYAN_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTCYAN_EX, 0, (char *)0, 0},
+  {(char *)"LIGHTWHITE_EX", __pyx_getprop_7rubbish_4core_13color_control_8BackWrap_LIGHTWHITE_EX, 0, (char *)0, 0},
+  {0, 0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_7rubbish_4core_13color_control_BackWrap = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "rubbish.core.color_control.BackWrap", /*tp_name*/
+  sizeof(struct __pyx_obj_7rubbish_4core_13color_control_BackWrap), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7rubbish_4core_13color_control_BackWrap, /*tp_dealloc*/
+  #if PY_VERSION_HEX < 0x030800b4
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4
+  0, /*tp_vectorcall_offset*/
+  #endif
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #endif
+  #if PY_MAJOR_VERSION >= 3
+  0, /*tp_as_async*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_7rubbish_4core_13color_control_BackWrap, /*tp_methods*/
+  0, /*tp_members*/
+  __pyx_getsets_7rubbish_4core_13color_control_BackWrap, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7rubbish_4core_13color_control_BackWrap, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b1
+  0, /*tp_vectorcall*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4 && PY_VERSION_HEX < 0x03090000
+  0, /*tp_print*/
+  #endif
+};
+
 static PyMethodDef __pyx_methods[] = {
   {0, 0, 0, 0}
 };
@@ -4063,6 +6740,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_BLACK, __pyx_k_BLACK, sizeof(__pyx_k_BLACK), 0, 0, 1, 1},
   {&__pyx_n_s_BLUE, __pyx_k_BLUE, sizeof(__pyx_k_BLUE), 0, 0, 1, 1},
   {&__pyx_n_s_Back, __pyx_k_Back, sizeof(__pyx_k_Back), 0, 0, 1, 1},
+  {&__pyx_n_s_BackWrap, __pyx_k_BackWrap, sizeof(__pyx_k_BackWrap), 0, 0, 1, 1},
   {&__pyx_n_s_Back_2, __pyx_k_Back_2, sizeof(__pyx_k_Back_2), 0, 0, 1, 1},
   {&__pyx_n_s_CYAN, __pyx_k_CYAN, sizeof(__pyx_k_CYAN), 0, 0, 1, 1},
   {&__pyx_n_s_Fore, __pyx_k_Fore, sizeof(__pyx_k_Fore), 0, 0, 1, 1},
@@ -4099,6 +6777,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pyx_result, __pyx_k_pyx_result, sizeof(__pyx_k_pyx_result), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_state, __pyx_k_pyx_state, sizeof(__pyx_k_pyx_state), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_type, __pyx_k_pyx_type, sizeof(__pyx_k_pyx_type), 0, 0, 1, 1},
+  {&__pyx_n_s_pyx_unpickle_BackWrap, __pyx_k_pyx_unpickle_BackWrap, sizeof(__pyx_k_pyx_unpickle_BackWrap), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_unpickle_ForeWrap, __pyx_k_pyx_unpickle_ForeWrap, sizeof(__pyx_k_pyx_unpickle_ForeWrap), 0, 0, 1, 1},
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
@@ -4129,6 +6808,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
   __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__2, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_ForeWrap, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_BackWrap, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4157,6 +6840,7 @@ static int __Pyx_modinit_global_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_global_init_code", 0);
   /*--- Global init code ---*/
   __pyx_v_7rubbish_4core_13color_control_Fore = ((struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *)Py_None); Py_INCREF(Py_None);
+  __pyx_v_7rubbish_4core_13color_control_Back = ((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)Py_None); Py_INCREF(Py_None);
   __Pyx_RefNannyFinishContext();
   return 0;
 }
@@ -4169,6 +6853,7 @@ static int __Pyx_modinit_variable_export_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_variable_export_code", 0);
   /*--- Variable export code ---*/
   if (__Pyx_ExportVoidPtr(__pyx_n_s_Fore_2, (void *)&__pyx_v_7rubbish_4core_13color_control_Fore, "struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportVoidPtr(__pyx_n_s_Back_2, (void *)&__pyx_v_7rubbish_4core_13color_control_Back, "struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4201,6 +6886,16 @@ static int __Pyx_modinit_type_init_code(void) {
   if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ForeWrap, (PyObject *)&__pyx_type_7rubbish_4core_13color_control_ForeWrap) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7rubbish_4core_13color_control_ForeWrap) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __pyx_ptype_7rubbish_4core_13color_control_ForeWrap = &__pyx_type_7rubbish_4core_13color_control_ForeWrap;
+  if (PyType_Ready(&__pyx_type_7rubbish_4core_13color_control_BackWrap) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+  #if PY_VERSION_HEX < 0x030800B1
+  __pyx_type_7rubbish_4core_13color_control_BackWrap.tp_print = 0;
+  #endif
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7rubbish_4core_13color_control_BackWrap.tp_dictoffset && __pyx_type_7rubbish_4core_13color_control_BackWrap.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_7rubbish_4core_13color_control_BackWrap.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  }
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BackWrap, (PyObject *)&__pyx_type_7rubbish_4core_13color_control_BackWrap) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7rubbish_4core_13color_control_BackWrap) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_ptype_7rubbish_4core_13color_control_BackWrap = &__pyx_type_7rubbish_4core_13color_control_BackWrap;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4470,9 +7165,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_s_Fore_2);
   __Pyx_GIVEREF(__pyx_n_s_Fore_2);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Fore_2);
-  __Pyx_INCREF(__pyx_n_s_Back);
-  __Pyx_GIVEREF(__pyx_n_s_Back);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_Back);
+  __Pyx_INCREF(__pyx_n_s_Back_2);
+  __Pyx_GIVEREF(__pyx_n_s_Back_2);
+  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_Back_2);
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_colorama, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4480,9 +7175,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_Fore, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Back); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Back_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Back_2, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Back, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
@@ -4490,11 +7185,25 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  * cdef ForeWrap Fore = ForeWrap()             # <<<<<<<<<<<<<<
+ * 
+ * 
  */
   __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_7rubbish_4core_13color_control_ForeWrap)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_7rubbish_4core_13color_control_Fore));
   __Pyx_DECREF_SET(__pyx_v_7rubbish_4core_13color_control_Fore, ((struct __pyx_obj_7rubbish_4core_13color_control_ForeWrap *)__pyx_t_2));
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "rubbish/core/color_control.pyx":218
+ * 
+ * 
+ * cdef BackWrap Back = BackWrap()             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_2 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_7rubbish_4core_13color_control_BackWrap)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_7rubbish_4core_13color_control_Back));
+  __Pyx_DECREF_SET(__pyx_v_7rubbish_4core_13color_control_Back, ((struct __pyx_obj_7rubbish_4core_13color_control_BackWrap *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
@@ -4506,6 +7215,18 @@ if (!__Pyx_RefNanny) {
   __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7rubbish_4core_13color_control_1__pyx_unpickle_ForeWrap, NULL, __pyx_n_s_rubbish_core_color_control); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_ForeWrap, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "(tree fragment)":11
+ *         __pyx_unpickle_ForeWrap__set_state(<ForeWrap> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_ForeWrap__set_state(ForeWrap __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 0 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[0])
+ */
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7rubbish_4core_13color_control_3__pyx_unpickle_BackWrap, NULL, __pyx_n_s_rubbish_core_color_control); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_BackWrap, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "rubbish/core/color_control.pyx":1
