@@ -7,11 +7,27 @@ cdef extern from "_prompt.h":
     const char* _get_promptchar "get_promptchar" ()
 
 
+cpdef unicode get_username():
+    return _get_username().decode("utf-8")
+
+
+cpdef unicode get_hostname():
+    return _get_hostname().decode("utf-8")
+
+
+cpdef unicode get_cwd():
+    return _get_cwd().decode("utf-8")
+
+
+cpdef unicode get_promptchar():
+    return _get_promptchar().decode("utf-8")
+
+
 cpdef unicode get_prompt():
-    cdef unicode username = _get_username().decode("utf-8")
-    cdef unicode hostname = _get_hostname().decode("utf-8")
-    cdef unicode cwd = _get_cwd().decode("utf-8")
-    cdef unicode promptchar = _get_promptchar().decode("utf-8")
+    cdef unicode username = get_username()
+    cdef unicode hostname = get_hostname()
+    cdef unicode cwd = get_cwd()
+    cdef unicode promptchar = get_promptchar()
     cdef unicode prompt = "["
     prompt += Fore.RED + username + Fore.RESET
     prompt += "@"

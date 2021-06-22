@@ -1,0 +1,3 @@
+from .command import Command
+
+def parse(input: str) -> Command: ...
