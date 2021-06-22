@@ -1,7 +1,9 @@
-from rubbish.core import Config, get_prompt
+from rubbish.core import Config, set_config, get_prompt
 
 
-def main(config: Config):
+def main(config: Config = None):
+    if config:
+        set_config(config)
     while True:
         try:
             input(get_prompt())

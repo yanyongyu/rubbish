@@ -1,4 +1,4 @@
-from colorama import Fore, Back
+from rubbish.core.color_control cimport Fore
 
 cdef extern from "_prompt.h":
     const char* _get_username "get_username" ()

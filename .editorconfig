@@ -33,5 +33,5 @@ trim_trailing_whitespace = false
 [{package.json,.travis.yml}]
 indent_size = 2
 
-[{*.py,*.pyi,*.pyx}]
+[{*.py,*.pyi,*.pyx,*.pxd}]
 indent_size = 4
