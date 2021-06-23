@@ -1,6 +1,6 @@
 from rubbish.core.color_control cimport Fore
 
-cdef extern from "_prompt.h":
+cdef extern from "_prompt.c":
     const char* _get_username "get_username" ()
     const char* _get_hostname "get_hostname" ()
     const char* _get_cwd "get_cwd" ()

@@ -4,7 +4,7 @@
 {
     "distutils": {
         "depends": [
-            "rubbish/core/_prompt.h"
+            "rubbish/core/_prompt.c"
         ],
         "include_dirs": [
             "rubbish/core"
@@ -625,7 +625,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #define __PYX_HAVE__rubbish__core__prompt
 #define __PYX_HAVE_API__rubbish__core__prompt
 /* Early includes */
-#include "_prompt.h"
+#include "_prompt.c"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -2165,7 +2165,7 @@ if (!__Pyx_RefNanny) {
   /* "rubbish/core/prompt.pyx":1
  * from rubbish.core.color_control cimport Fore             # <<<<<<<<<<<<<<
  * 
- * cdef extern from "_prompt.h":
+ * cdef extern from "_prompt.c":
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
