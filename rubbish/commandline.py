@@ -1,7 +1,9 @@
+from typing import Optional
+
 from rubbish.core import Config, set_config, get_prompt
 
 
-def main(config: Config = None):
+def main(config: Optional[Config] = None):
     if config:
         set_config(config)
     while True:
