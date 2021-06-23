@@ -5,7 +5,7 @@
     "distutils": {
         "name": "rubbish.core.color_control",
         "sources": [
-            "rubbish/core/color_control.pyx"
+            "/mnt/e/desktop/\u5927\u4e09\u4e0b/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/color_control.pyx"
         ]
     },
     "module_name": "rubbish.core.color_control"

@@ -11,7 +11,7 @@
         ],
         "name": "rubbish.core.prompt",
         "sources": [
-            "/media/yan/\u6570\u636e/\u5171\u4eab\u6587\u4ef6/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/prompt.pyx"
+            "/mnt/e/desktop/\u5927\u4e09\u4e0b/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/prompt.pyx"
         ]
     },
     "module_name": "rubbish.core.prompt"
