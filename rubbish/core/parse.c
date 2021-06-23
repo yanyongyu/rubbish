@@ -4,11 +4,13 @@
 {
     "distutils": {
         "depends": [
+            "rubbish/core/_command.h",
             "rubbish/core/grammar.tab.c",
             "rubbish/core/lexial.yy.c"
         ],
         "include_dirs": [
-            "rubbish/core"
+            "rubbish/core",
+            "./rubbish/core"
         ],
         "name": "rubbish.core.parse",
         "sources": [
@@ -629,6 +631,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "_command.h"
 #include "lexial.yy.c"
 #include "grammar.tab.c"
 #ifdef _OPENMP
@@ -848,212 +851,10 @@ struct __pyx_obj_7rubbish_4core_7command_Redirect;
 struct __pyx_obj_7rubbish_4core_7command_Command;
 struct __pyx_obj_7rubbish_4core_7command_Connection;
 struct __pyx_obj_7rubbish_4core_7command_SimpleCommand;
-struct word_list;
-union redirector;
-struct redirect;
-struct element;
-union command_info;
-struct command;
-struct connection;
-struct simple_cm;
 struct __pyx_opt_args_7rubbish_4core_7command_8Redirect_from_ptr;
 struct __pyx_opt_args_7rubbish_4core_7command_7Command_from_ptr;
 
-/* "rubbish/core/command.pxd":1
- * cpdef public enum CommandType "command_type":             # <<<<<<<<<<<<<<
- *     cm_simple
- *     cm_connection
- */
-enum command_type {
-  cm_simple,
-  cm_connection
-};
-
-/* "rubbish/core/command.pxd":5
- *     cm_connection
- * 
- * cpdef public enum RedirectInstruction "redirect_instruction":             # <<<<<<<<<<<<<<
- *     r_output_direction
- *     r_input_direction
- */
-enum redirect_instruction {
-  r_output_direction,
-  r_input_direction,
-  r_appending_to
-};
-
-/* "rubbish/core/command.pxd":10
- *     r_appending_to
- * 
- * cdef public struct word_list:             # <<<<<<<<<<<<<<
- *     word_list *next
- *     char *word
- */
-struct word_list {
-  struct word_list *next;
-  char *word;
-};
-
-/* "rubbish/core/command.pxd":14
- *     char *word
- * 
- * ctypedef public word_list WORD_LIST             # <<<<<<<<<<<<<<
- * 
- * cdef public union redirector:
- */
-typedef struct word_list WORD_LIST;
-
-/* "rubbish/core/command.pxd":16
- * ctypedef public word_list WORD_LIST
- * 
- * cdef public union redirector:             # <<<<<<<<<<<<<<
- *     int dest
- *     char *filename
- */
-union redirector {
-  int dest;
-  char *filename;
-};
-
-/* "rubbish/core/command.pxd":20
- *     char *filename
- * 
- * ctypedef public redirector REDIRECTOR             # <<<<<<<<<<<<<<
- * 
- * cdef public struct redirect:
- */
-typedef union redirector REDIRECTOR;
-
-/* "rubbish/core/command.pxd":22
- * ctypedef public redirector REDIRECTOR
- * 
- * cdef public struct redirect:             # <<<<<<<<<<<<<<
- *     redirect *next
- *     REDIRECTOR redirector
- */
-struct redirect {
-  struct redirect *next;
-  REDIRECTOR redirector;
-  enum redirect_instruction instruction;
-  REDIRECTOR redirectee;
-};
-
-/* "rubbish/core/command.pxd":28
- *     REDIRECTOR redirectee
- * 
- * ctypedef public redirect REDIRECT             # <<<<<<<<<<<<<<
- * 
- * cdef public struct element:
- */
-typedef struct redirect REDIRECT;
-
-/* "rubbish/core/command.pxd":30
- * ctypedef public redirect REDIRECT
- * 
- * cdef public struct element:             # <<<<<<<<<<<<<<
- *   char *word
- *   REDIRECT *redirect
- */
-struct element {
-  char *word;
-  REDIRECT *redirect;
-};
-
-/* "rubbish/core/command.pxd":33
- *   char *word
- *   REDIRECT *redirect
- * ctypedef public element ELEMENT             # <<<<<<<<<<<<<<
- * 
- * cdef public union command_info:
- */
-typedef struct element ELEMENT;
-
-/* "rubbish/core/command.pxd":35
- * ctypedef public element ELEMENT
- * 
- * cdef public union command_info:             # <<<<<<<<<<<<<<
- *     connection *Connection
- *     simple_cm *Simple
- */
-union command_info {
-  struct connection *Connection;
-  struct simple_cm *Simple;
-};
-
-/* "rubbish/core/command.pxd":39
- *     simple_cm *Simple
- * 
- * ctypedef public command_info COMMAND_INFO             # <<<<<<<<<<<<<<
- * 
- * cdef public struct command:
- */
-typedef union command_info COMMAND_INFO;
-
-/* "rubbish/core/command.pxd":41
- * ctypedef public command_info COMMAND_INFO
- * 
- * cdef public struct command:             # <<<<<<<<<<<<<<
- *     CommandType type
- *     command_info info
- */
-struct command {
-  enum command_type type;
-  union command_info info;
-};
-
-/* "rubbish/core/command.pxd":45
- *     command_info info
- * 
- * ctypedef public command COMMAND             # <<<<<<<<<<<<<<
- * 
- * cdef public struct connection:
- */
-typedef struct command COMMAND;
-
 /* "rubbish/core/command.pxd":47
- * ctypedef public command COMMAND
- * 
- * cdef public struct connection:             # <<<<<<<<<<<<<<
- *     COMMAND *first
- *     COMMAND *second
- */
-struct connection {
-  COMMAND *first;
-  COMMAND *second;
-  int connector;
-};
-
-/* "rubbish/core/command.pxd":52
- *     int connector
- * 
- * ctypedef public connection CONNECTION             # <<<<<<<<<<<<<<
- * 
- * cdef public struct simple_cm:
- */
-typedef struct connection CONNECTION;
-
-/* "rubbish/core/command.pxd":54
- * ctypedef public connection CONNECTION
- * 
- * cdef public struct simple_cm:             # <<<<<<<<<<<<<<
- *     WORD_LIST *words
- *     REDIRECT *redirects
- */
-struct simple_cm {
-  WORD_LIST *words;
-  REDIRECT *redirects;
-};
-
-/* "rubbish/core/command.pxd":58
- *     REDIRECT *redirects
- * 
- * ctypedef public simple_cm SIMPLE_COMMAND             # <<<<<<<<<<<<<<
- * 
- * cdef class Redirect:
- */
-typedef struct simple_cm SIMPLE_COMMAND;
-
-/* "rubbish/core/command.pxd":65
  * 
  *     @staticmethod
  *     cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = *)             # <<<<<<<<<<<<<<
@@ -1065,7 +866,7 @@ struct __pyx_opt_args_7rubbish_4core_7command_8Redirect_from_ptr {
   int auto_dealloc;
 };
 
-/* "rubbish/core/command.pxd":73
+/* "rubbish/core/command.pxd":55
  * 
  *     @staticmethod
  *     cdef Command from_ptr(COMMAND *ptr, bint auto_dealloc = *)             # <<<<<<<<<<<<<<
@@ -1077,8 +878,8 @@ struct __pyx_opt_args_7rubbish_4core_7command_7Command_from_ptr {
   int auto_dealloc;
 };
 
-/* "rubbish/core/command.pxd":60
- * ctypedef public simple_cm SIMPLE_COMMAND
+/* "rubbish/core/command.pxd":42
+ *         REDIRECT *redirects
  * 
  * cdef class Redirect:             # <<<<<<<<<<<<<<
  *     cdef REDIRECT *_redirect
@@ -1092,7 +893,7 @@ struct __pyx_obj_7rubbish_4core_7command_Redirect {
 };
 
 
-/* "rubbish/core/command.pxd":68
+/* "rubbish/core/command.pxd":50
  * 
  * 
  * cdef class Command:             # <<<<<<<<<<<<<<
@@ -1107,7 +908,7 @@ struct __pyx_obj_7rubbish_4core_7command_Command {
 };
 
 
-/* "rubbish/core/command.pxd":76
+/* "rubbish/core/command.pxd":58
  * 
  * 
  * cdef class Connection(Command):             # <<<<<<<<<<<<<<
@@ -1119,7 +920,7 @@ struct __pyx_obj_7rubbish_4core_7command_Connection {
 };
 
 
-/* "rubbish/core/command.pxd":80
+/* "rubbish/core/command.pxd":62
  * 
  * 
  * cdef class SimpleCommand(Command):             # <<<<<<<<<<<<<<
@@ -1134,8 +935,8 @@ struct __pyx_obj_7rubbish_4core_7command_SimpleCommand {
 
 
 
-/* "rubbish/core/command.pxd":60
- * ctypedef public simple_cm SIMPLE_COMMAND
+/* "rubbish/core/command.pxd":42
+ *         REDIRECT *redirects
  * 
  * cdef class Redirect:             # <<<<<<<<<<<<<<
  *     cdef REDIRECT *_redirect
@@ -1148,7 +949,7 @@ struct __pyx_vtabstruct_7rubbish_4core_7command_Redirect {
 static struct __pyx_vtabstruct_7rubbish_4core_7command_Redirect *__pyx_vtabptr_7rubbish_4core_7command_Redirect;
 
 
-/* "rubbish/core/command.pxd":68
+/* "rubbish/core/command.pxd":50
  * 
  * 
  * cdef class Command:             # <<<<<<<<<<<<<<
@@ -1162,7 +963,7 @@ struct __pyx_vtabstruct_7rubbish_4core_7command_Command {
 static struct __pyx_vtabstruct_7rubbish_4core_7command_Command *__pyx_vtabptr_7rubbish_4core_7command_Command;
 
 
-/* "rubbish/core/command.pxd":76
+/* "rubbish/core/command.pxd":58
  * 
  * 
  * cdef class Connection(Command):             # <<<<<<<<<<<<<<
@@ -1176,7 +977,7 @@ struct __pyx_vtabstruct_7rubbish_4core_7command_Connection {
 static struct __pyx_vtabstruct_7rubbish_4core_7command_Connection *__pyx_vtabptr_7rubbish_4core_7command_Connection;
 
 
-/* "rubbish/core/command.pxd":80
+/* "rubbish/core/command.pxd":62
  * 
  * 
  * cdef class SimpleCommand(Command):             # <<<<<<<<<<<<<<
@@ -1659,20 +1460,20 @@ static int __Pyx_modinit_type_import_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_import_code", 0);
   /*--- Type import code ---*/
-  __pyx_t_1 = PyImport_ImportModule("rubbish.core.command"); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("rubbish.core.command"); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_ptype_7rubbish_4core_7command_Redirect = __Pyx_ImportType(__pyx_t_1, "rubbish.core.command", "Redirect", sizeof(struct __pyx_obj_7rubbish_4core_7command_Redirect), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_7rubbish_4core_7command_Redirect) __PYX_ERR(1, 60, __pyx_L1_error)
-  __pyx_vtabptr_7rubbish_4core_7command_Redirect = (struct __pyx_vtabstruct_7rubbish_4core_7command_Redirect*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_Redirect->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_Redirect)) __PYX_ERR(1, 60, __pyx_L1_error)
+   if (!__pyx_ptype_7rubbish_4core_7command_Redirect) __PYX_ERR(1, 42, __pyx_L1_error)
+  __pyx_vtabptr_7rubbish_4core_7command_Redirect = (struct __pyx_vtabstruct_7rubbish_4core_7command_Redirect*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_Redirect->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_Redirect)) __PYX_ERR(1, 42, __pyx_L1_error)
   __pyx_ptype_7rubbish_4core_7command_Command = __Pyx_ImportType(__pyx_t_1, "rubbish.core.command", "Command", sizeof(struct __pyx_obj_7rubbish_4core_7command_Command), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_7rubbish_4core_7command_Command) __PYX_ERR(1, 68, __pyx_L1_error)
-  __pyx_vtabptr_7rubbish_4core_7command_Command = (struct __pyx_vtabstruct_7rubbish_4core_7command_Command*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_Command->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_Command)) __PYX_ERR(1, 68, __pyx_L1_error)
+   if (!__pyx_ptype_7rubbish_4core_7command_Command) __PYX_ERR(1, 50, __pyx_L1_error)
+  __pyx_vtabptr_7rubbish_4core_7command_Command = (struct __pyx_vtabstruct_7rubbish_4core_7command_Command*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_Command->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_Command)) __PYX_ERR(1, 50, __pyx_L1_error)
   __pyx_ptype_7rubbish_4core_7command_Connection = __Pyx_ImportType(__pyx_t_1, "rubbish.core.command", "Connection", sizeof(struct __pyx_obj_7rubbish_4core_7command_Connection), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_7rubbish_4core_7command_Connection) __PYX_ERR(1, 76, __pyx_L1_error)
-  __pyx_vtabptr_7rubbish_4core_7command_Connection = (struct __pyx_vtabstruct_7rubbish_4core_7command_Connection*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_Connection->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_Connection)) __PYX_ERR(1, 76, __pyx_L1_error)
+   if (!__pyx_ptype_7rubbish_4core_7command_Connection) __PYX_ERR(1, 58, __pyx_L1_error)
+  __pyx_vtabptr_7rubbish_4core_7command_Connection = (struct __pyx_vtabstruct_7rubbish_4core_7command_Connection*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_Connection->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_Connection)) __PYX_ERR(1, 58, __pyx_L1_error)
   __pyx_ptype_7rubbish_4core_7command_SimpleCommand = __Pyx_ImportType(__pyx_t_1, "rubbish.core.command", "SimpleCommand", sizeof(struct __pyx_obj_7rubbish_4core_7command_SimpleCommand), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_7rubbish_4core_7command_SimpleCommand) __PYX_ERR(1, 80, __pyx_L1_error)
-  __pyx_vtabptr_7rubbish_4core_7command_SimpleCommand = (struct __pyx_vtabstruct_7rubbish_4core_7command_SimpleCommand*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_SimpleCommand->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_SimpleCommand)) __PYX_ERR(1, 80, __pyx_L1_error)
+   if (!__pyx_ptype_7rubbish_4core_7command_SimpleCommand) __PYX_ERR(1, 62, __pyx_L1_error)
+  __pyx_vtabptr_7rubbish_4core_7command_SimpleCommand = (struct __pyx_vtabstruct_7rubbish_4core_7command_SimpleCommand*)__Pyx_GetVtable(__pyx_ptype_7rubbish_4core_7command_SimpleCommand->tp_dict); if (unlikely(!__pyx_vtabptr_7rubbish_4core_7command_SimpleCommand)) __PYX_ERR(1, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

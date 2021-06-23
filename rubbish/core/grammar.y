@@ -1,12 +1,18 @@
 %{
-#include "command.h"
+#include "_command.h"
 
 static REDIRECTOR source;
 static REDIRECTOR destination;
 extern COMMAND *global_command;
 
-int yylex();
+int yylex(void);
 void yyerror(const char *s);
+
+COMMAND * create_connection(COMMAND *first, COMMAND *second, int connector);
+COMMAND * create_simple_command(void);
+COMMAND * merge_simple_command(ELEMENT element, COMMAND *command);
+REDIRECT * create_redirection(REDIRECTOR source, enum RedirectInstruction instruction, REDIRECTOR destination);
+WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 %}
 
 %union {
@@ -145,7 +151,7 @@ COMMAND * create_connection(COMMAND *first, COMMAND *second, int connector) {
   return command;
 }
 
-COMMAND * create_simple_command() {
+COMMAND * create_simple_command(void) {
   COMMAND *command;
   SIMPLE_COMMAND *temp;
   command = (COMMAND *)malloc(sizeof(COMMAND));
@@ -175,16 +181,15 @@ COMMAND * merge_simple_command(ELEMENT element, COMMAND *command) {
   return command;
 }
 
-REDIRECT * create_redirection(REDIRECTOR source, redirect_instruction instruction, REDIRECTOR destination) {
+REDIRECT * create_redirection(REDIRECTOR source, enum RedirectInstruction instruction, REDIRECTOR destination) {
   REDIRECT *temp;
-  temp = (REDIRECT *)malloc(sizeof(REDIRECT))
+  temp = (REDIRECT *)malloc(sizeof(REDIRECT));
   temp->redirector = source;
   temp->redirectee = destination;
   temp->instruction = instruction;
   temp->next = (REDIRECT *)NULL;
-  return redirect;
+  return temp;
 }
-
 
 WORD_LIST * merge_word_list(char *word, WORD_LIST *list) {
   WORD_LIST *temp;

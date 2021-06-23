@@ -1,6 +1,45 @@
 from libc.stdlib cimport free
 
-from rubbish.core.command cimport CommandType, WORD_LIST, REDIRECT, COMMAND
+cdef extern from "_command.h":
+    cpdef enum CommandType:
+        cm_simple
+        cm_connection
+
+    cpdef enum RedirectInstruction:
+        r_output_direction
+        r_input_direction
+        r_appending_to
+
+    ctypedef struct WORD_LIST:
+        WORD_LIST *next
+        char *word
+
+    ctypedef union REDIRECTOR:
+        int dest
+        char *filename
+
+    ctypedef struct REDIRECT:
+        REDIRECT *next
+        REDIRECTOR redirector
+        RedirectInstruction instruction
+        REDIRECTOR redirectee
+
+    ctypedef union COMMAND_INFO:
+        CONNECTION *Connection
+        SIMPLE_COMMAND *Simple
+
+    ctypedef struct COMMAND:
+        CommandType type
+        COMMAND_INFO info
+
+    ctypedef struct CONNECTION:
+        COMMAND *first
+        COMMAND *second
+        int connector
+
+    ctypedef struct SIMPLE_COMMAND:
+        WORD_LIST *words
+        REDIRECT *redirects
 
 cdef class Redirect:
 

@@ -1,61 +1,43 @@
-cpdef public enum CommandType "command_type":
-    cm_simple
-    cm_connection
+cdef extern from "_command.h":
+    cpdef enum CommandType:
+        cm_simple
+        cm_connection
 
-cpdef public enum RedirectInstruction "redirect_instruction":
-    r_output_direction
-    r_input_direction
-    r_appending_to
+    cpdef enum RedirectInstruction:
+        r_output_direction
+        r_input_direction
+        r_appending_to
 
-cdef public struct word_list:
-    word_list *next
-    char *word
+    ctypedef struct WORD_LIST:
+        WORD_LIST *next
+        char *word
 
-ctypedef public word_list WORD_LIST
+    ctypedef union REDIRECTOR:
+        int dest
+        char *filename
 
-cdef public union redirector:
-    int dest
-    char *filename
+    ctypedef struct REDIRECT:
+        REDIRECT *next
+        REDIRECTOR redirector
+        RedirectInstruction instruction
+        REDIRECTOR redirectee
 
-ctypedef public redirector REDIRECTOR
+    ctypedef union COMMAND_INFO:
+        CONNECTION *Connection
+        SIMPLE_COMMAND *Simple
 
-cdef struct redirect:
-    redirect *next
-    REDIRECTOR redirector
-    RedirectInstruction instruction
-    REDIRECTOR redirectee
+    ctypedef struct COMMAND:
+        CommandType type
+        COMMAND_INFO info
 
-ctypedef public redirect REDIRECT
+    ctypedef struct CONNECTION:
+        COMMAND *first
+        COMMAND *second
+        int connector
 
-cdef struct element:
-  char *word
-  REDIRECT *redirect
-ctypedef public element ELEMENT
-
-cdef union command_info:
-    connection *Connection
-    simple_cm *Simple
-
-ctypedef public command_info COMMAND_INFO
-
-cdef struct command:
-    CommandType type
-    command_info info
-
-ctypedef public command COMMAND
-
-cdef struct connection:
-    COMMAND *first
-    COMMAND *second
-    int connector
-
-ctypedef public connection CONNECTION
-
-cdef struct simple_cm:
-    WORD_LIST *words
-    REDIRECT *redirects
-
-ctypedef public simple_cm SIMPLE_COMMAND
+    ctypedef struct SIMPLE_COMMAND:
+        WORD_LIST *words
+        REDIRECT *redirects
 
 cdef class Redirect:
     cdef REDIRECT *_redirect

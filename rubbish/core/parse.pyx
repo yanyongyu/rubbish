@@ -5,11 +5,11 @@ from rubbish.core.command cimport COMMAND, Command
 
 
 cdef extern from "lexial.yy.c":
-    void yyset_in (FILE * input)
-    int yylex ()
+    cdef void yyset_in (FILE * input)
+    cdef int yylex ()
 
 cdef extern from "grammar.tab.c":
-    int yyparse ()
+    cdef int yyparse ()
 
 
 cpdef Command parse(unicode input):

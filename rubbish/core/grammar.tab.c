@@ -68,13 +68,22 @@
 /* First part of user prologue.  */
 #line 1 "rubbish/core/grammar.y"
 
-#include "command.h"
+#include "_command.h"
 
 static REDIRECTOR source;
 static REDIRECTOR destination;
 extern COMMAND *global_command;
 
-#line 78 "rubbish/core/grammar.tab.c"
+int yylex(void);
+void yyerror(const char *s);
+
+COMMAND * create_connection(COMMAND *first, COMMAND *second, int connector);
+COMMAND * create_simple_command(void);
+COMMAND * merge_simple_command(ELEMENT element, COMMAND *command);
+REDIRECT * create_redirection(REDIRECTOR source, enum RedirectInstruction instruction, REDIRECTOR destination);
+WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
+
+#line 87 "rubbish/core/grammar.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -134,7 +143,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 9 "rubbish/core/grammar.y"
+#line 18 "rubbish/core/grammar.y"
 
   char *word;
   WORD_LIST *word_list;
@@ -142,7 +151,7 @@ union YYSTYPE
   ELEMENT element;
   REDIRECT *redirect;
 
-#line 146 "rubbish/core/grammar.tab.c"
+#line 155 "rubbish/core/grammar.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -516,11 +525,11 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    36,    37,    41,    44,    47,    53,    56,
-      59,    62,    65,    69,    70,    73,    74,    78,    81,    87,
-      93,    96,   102,   106,   113,   118,   123
+       0,    41,    41,    45,    46,    50,    53,    56,    62,    65,
+      68,    71,    74,    78,    79,    82,    83,    87,    90,    96,
+     102,   105,   111,   115,   122,   127,   132
 };
 #endif
 
@@ -1330,160 +1339,160 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 32 "rubbish/core/grammar.y"
+#line 41 "rubbish/core/grammar.y"
                                        {
       global_command = (yyvsp[-1].command);
       YYACCEPT;
     }
-#line 1339 "rubbish/core/grammar.tab.c"
+#line 1348 "rubbish/core/grammar.tab.c"
     break;
 
   case 5:
-#line 41 "rubbish/core/grammar.y"
+#line 50 "rubbish/core/grammar.y"
                       {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1347 "rubbish/core/grammar.tab.c"
+#line 1356 "rubbish/core/grammar.tab.c"
     break;
 
   case 6:
-#line 44 "rubbish/core/grammar.y"
+#line 53 "rubbish/core/grammar.y"
                           {
       (yyval.command) = (yyvsp[-1].command);
     }
-#line 1355 "rubbish/core/grammar.tab.c"
+#line 1364 "rubbish/core/grammar.tab.c"
     break;
 
   case 7:
-#line 47 "rubbish/core/grammar.y"
+#line 56 "rubbish/core/grammar.y"
                           {
       (yyval.command) = (yyvsp[-1].command);
     }
-#line 1363 "rubbish/core/grammar.tab.c"
+#line 1372 "rubbish/core/grammar.tab.c"
     break;
 
   case 8:
-#line 53 "rubbish/core/grammar.y"
+#line 62 "rubbish/core/grammar.y"
                                                              {
       (yyval.command) = create_connection((yyvsp[-3].command), (yyvsp[0].command), AND_AND);
     }
-#line 1371 "rubbish/core/grammar.tab.c"
+#line 1380 "rubbish/core/grammar.tab.c"
     break;
 
   case 9:
-#line 56 "rubbish/core/grammar.y"
+#line 65 "rubbish/core/grammar.y"
                                                            {
       (yyval.command) = create_connection((yyvsp[-3].command), (yyvsp[0].command), OR_OR);
     }
-#line 1379 "rubbish/core/grammar.tab.c"
+#line 1388 "rubbish/core/grammar.tab.c"
     break;
 
   case 10:
-#line 59 "rubbish/core/grammar.y"
+#line 68 "rubbish/core/grammar.y"
                                             {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), '&');
     }
-#line 1387 "rubbish/core/grammar.tab.c"
+#line 1396 "rubbish/core/grammar.tab.c"
     break;
 
   case 11:
-#line 62 "rubbish/core/grammar.y"
+#line 71 "rubbish/core/grammar.y"
                                             {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), ';');
     }
-#line 1395 "rubbish/core/grammar.tab.c"
+#line 1404 "rubbish/core/grammar.tab.c"
     break;
 
   case 17:
-#line 78 "rubbish/core/grammar.y"
+#line 87 "rubbish/core/grammar.y"
                                               {
       (yyval.command) = create_connection((yyvsp[-3].command), (yyvsp[0].command), '|');
     }
-#line 1403 "rubbish/core/grammar.tab.c"
+#line 1412 "rubbish/core/grammar.tab.c"
     break;
 
   case 18:
-#line 81 "rubbish/core/grammar.y"
+#line 90 "rubbish/core/grammar.y"
             {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1411 "rubbish/core/grammar.tab.c"
+#line 1420 "rubbish/core/grammar.tab.c"
     break;
 
   case 19:
-#line 87 "rubbish/core/grammar.y"
+#line 96 "rubbish/core/grammar.y"
                    {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1419 "rubbish/core/grammar.tab.c"
+#line 1428 "rubbish/core/grammar.tab.c"
     break;
 
   case 20:
-#line 93 "rubbish/core/grammar.y"
+#line 102 "rubbish/core/grammar.y"
                            {
       (yyval.command) = merge_simple_command((yyvsp[0].element), (COMMAND *)NULL);
     }
-#line 1427 "rubbish/core/grammar.tab.c"
+#line 1436 "rubbish/core/grammar.tab.c"
     break;
 
   case 21:
-#line 96 "rubbish/core/grammar.y"
+#line 105 "rubbish/core/grammar.y"
                                           {
       (yyval.command) = merge_simple_command((yyvsp[0].element), (yyvsp[-1].command));
-    }
-#line 1435 "rubbish/core/grammar.tab.c"
-    break;
-
-  case 22:
-#line 102 "rubbish/core/grammar.y"
-         {
-      (yyval.element).word = (yyvsp[0].word);
-      (yyval.element).redirect = 0;
     }
 #line 1444 "rubbish/core/grammar.tab.c"
     break;
 
-  case 23:
-#line 106 "rubbish/core/grammar.y"
-                {
-      (yyval.element).redirect = (yyvsp[0].redirect);
-      (yyval.element).word = 0;
+  case 22:
+#line 111 "rubbish/core/grammar.y"
+         {
+      (yyval.element).word = (yyvsp[0].word);
+      (yyval.element).redirect = 0;
     }
 #line 1453 "rubbish/core/grammar.tab.c"
     break;
 
+  case 23:
+#line 115 "rubbish/core/grammar.y"
+                {
+      (yyval.element).redirect = (yyvsp[0].redirect);
+      (yyval.element).word = 0;
+    }
+#line 1462 "rubbish/core/grammar.tab.c"
+    break;
+
   case 24:
-#line 113 "rubbish/core/grammar.y"
+#line 122 "rubbish/core/grammar.y"
              {
       source.dest = 1;
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_output_direction, destination);
     }
-#line 1463 "rubbish/core/grammar.tab.c"
+#line 1472 "rubbish/core/grammar.tab.c"
     break;
 
   case 25:
-#line 118 "rubbish/core/grammar.y"
+#line 127 "rubbish/core/grammar.y"
              {
       source.dest = 0;
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_input_direction, destination);
     }
-#line 1473 "rubbish/core/grammar.tab.c"
+#line 1482 "rubbish/core/grammar.tab.c"
     break;
 
   case 26:
-#line 123 "rubbish/core/grammar.y"
+#line 132 "rubbish/core/grammar.y"
                          {
       source.dest = 1;
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_appending_to, destination);
     }
-#line 1483 "rubbish/core/grammar.tab.c"
+#line 1492 "rubbish/core/grammar.tab.c"
     break;
 
 
-#line 1487 "rubbish/core/grammar.tab.c"
+#line 1496 "rubbish/core/grammar.tab.c"
 
       default: break;
     }
@@ -1715,7 +1724,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 130 "rubbish/core/grammar.y"
+#line 139 "rubbish/core/grammar.y"
 
 
 COMMAND * create_connection(COMMAND *first, COMMAND *second, int connector) {
@@ -1731,7 +1740,7 @@ COMMAND * create_connection(COMMAND *first, COMMAND *second, int connector) {
   return command;
 }
 
-COMMAND * create_simple_command() {
+COMMAND * create_simple_command(void) {
   COMMAND *command;
   SIMPLE_COMMAND *temp;
   command = (COMMAND *)malloc(sizeof(COMMAND));
@@ -1761,16 +1770,15 @@ COMMAND * merge_simple_command(ELEMENT element, COMMAND *command) {
   return command;
 }
 
-REDIRECT * create_redirection(REDIRECTOR source, redirect_instruction instruction, REDIRECTOR destination) {
+REDIRECT * create_redirection(REDIRECTOR source, enum RedirectInstruction instruction, REDIRECTOR destination) {
   REDIRECT *temp;
-  temp = (REDIRECT *)malloc(sizeof(REDIRECT))
+  temp = (REDIRECT *)malloc(sizeof(REDIRECT));
   temp->redirector = source;
   temp->redirectee = destination;
   temp->instruction = instruction;
   temp->next = (REDIRECT *)NULL;
-  return redirect;
+  return temp;
 }
-
 
 WORD_LIST * merge_word_list(char *word, WORD_LIST *list) {
   WORD_LIST *temp;

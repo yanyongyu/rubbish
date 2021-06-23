@@ -449,7 +449,8 @@ char *yytext;
 #define YYSTYPE char*
 #include "grammar.tab.h"
 #line 452 "rubbish/core/lexial.yy.c"
-#line 453 "rubbish/core/lexial.yy.c"
+#define YY_NO_INPUT 1
+#line 454 "rubbish/core/lexial.yy.c"
 
 #define INITIAL 0
 
@@ -509,8 +510,6 @@ extern int yywrap ( void );
 #endif
 
 #ifndef YY_NO_UNPUT
-    
-    static void yyunput ( int c, char *buf_ptr  );
     
 #endif
 
@@ -666,10 +665,10 @@ YY_DECL
 		}
 
 	{
-#line 6 "rubbish/core/lexial.l"
+#line 9 "rubbish/core/lexial.l"
 
 
-#line 673 "rubbish/core/lexial.yy.c"
+#line 672 "rubbish/core/lexial.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -728,62 +727,62 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "rubbish/core/lexial.l"
+#line 11 "rubbish/core/lexial.l"
 { return '\\'; }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 9 "rubbish/core/lexial.l"
+#line 12 "rubbish/core/lexial.l"
 { return '\n'; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "rubbish/core/lexial.l"
+#line 13 "rubbish/core/lexial.l"
 { return AND_AND; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "rubbish/core/lexial.l"
+#line 14 "rubbish/core/lexial.l"
 { return '&'; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "rubbish/core/lexial.l"
+#line 15 "rubbish/core/lexial.l"
 { return ';'; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 13 "rubbish/core/lexial.l"
+#line 16 "rubbish/core/lexial.l"
 { return OR_OR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 14 "rubbish/core/lexial.l"
+#line 17 "rubbish/core/lexial.l"
 { return '|'; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 15 "rubbish/core/lexial.l"
+#line 18 "rubbish/core/lexial.l"
 { return GREATER_GREATER; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 16 "rubbish/core/lexial.l"
+#line 19 "rubbish/core/lexial.l"
 { return '>'; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 17 "rubbish/core/lexial.l"
+#line 20 "rubbish/core/lexial.l"
 { return '<'; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 18 "rubbish/core/lexial.l"
+#line 21 "rubbish/core/lexial.l"
 { return YACCEOF; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "rubbish/core/lexial.l"
+#line 23 "rubbish/core/lexial.l"
 {
   yylval = strdup(yytext);
   return WORD;
@@ -791,15 +790,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "rubbish/core/lexial.l"
+#line 28 "rubbish/core/lexial.l"
 /* ignore whitespace */ ;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 27 "rubbish/core/lexial.l"
+#line 30 "rubbish/core/lexial.l"
 ECHO;
 	YY_BREAK
-#line 803 "rubbish/core/lexial.yy.c"
+#line 802 "rubbish/core/lexial.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1132,43 +1131,6 @@ static int yy_get_next_buffer (void)
 }
 
 #ifndef YY_NO_UNPUT
-
-    static void yyunput (int c, char * yy_bp )
-{
-	char *yy_cp;
-    
-    yy_cp = (yy_c_buf_p);
-
-	/* undo effects of setting up yytext */
-	*yy_cp = (yy_hold_char);
-
-	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-		{ /* need to shift things up to make room */
-		/* +2 for EOB chars. */
-		int number_to_move = (yy_n_chars) + 2;
-		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
-					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		char *source =
-				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
-
-		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
-			*--dest = *--source;
-
-		yy_cp += (int) (dest - source);
-		yy_bp += (int) (dest - source);
-		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
-
-		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-			YY_FATAL_ERROR( "flex scanner push-back overflow" );
-		}
-
-	*--yy_cp = (char) c;
-
-	(yytext_ptr) = yy_bp;
-	(yy_hold_char) = *yy_cp;
-	(yy_c_buf_p) = yy_cp;
-}
 
 #endif
 
@@ -1802,6 +1764,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 27 "rubbish/core/lexial.l"
+#line 30 "rubbish/core/lexial.l"
 
 

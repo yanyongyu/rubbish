@@ -3,6 +3,9 @@
 #include "grammar.tab.h"
 %}
 
+%option noinput
+%option nounput
+
 %%
 
 "\\" { return '\\'; }
