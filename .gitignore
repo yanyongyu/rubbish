@@ -9,7 +9,7 @@ __pycache__/
 
 # C extensions
 *.so
-*.html
+rubbish/core/*.html
 
 # Distribution / packaging
 .Python

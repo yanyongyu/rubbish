@@ -11,9 +11,17 @@ include = ["py.typed"]
 python = "^3.7"
 Cython = "^0.29.23"
 colorama = "^0.4.4"
+PyQt5 = { version = "^5.15.4", optional = true }
+PyQtWebEngine = "^5.15.4"
 
 [tool.poetry.dev-dependencies]
 black = "^21.6b0"
+
+[tool.poetry.extras]
+ui = ["PyQt5"]
+
+[tool.poetry.scripts]
+rubbish = "rubbish.__main__:start"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "cython"]

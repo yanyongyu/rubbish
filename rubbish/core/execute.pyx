@@ -1,5 +1,3 @@
-from io import StringIO
-
 from rubbish.core.command cimport Command
 
 

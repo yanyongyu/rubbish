@@ -17,6 +17,10 @@ parser.add_argument(
 )
 
 
-if __name__ == "__main__":
+def start():
     result = parser.parse_args(namespace=Config())
     main(result)
+
+
+if __name__ == "__main__":
+    start()
