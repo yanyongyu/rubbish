@@ -10,14 +10,12 @@ cdef class Redirect:
     def __dealloc__(self):
         # De-allocate if not null and flag is set
         if self._redirect is not NULL and self.ptr_set is True:
-            free(self._redirect.redirector)
-            free(self._redirect.redirectee)
             free(self._redirect)
             self._redirect = NULL
 
     @property
     def redirector(self):
-        return self._redirect.redirector.decode("utf-8")
+        return self._redirect.redirector.dest or self._redirect.redirector.filename.decode("utf-8")
 
     @property
     def instruction(self):
@@ -25,7 +23,7 @@ cdef class Redirect:
 
     @property
     def redirectee(self):
-        return self._redirect.redirectee.decode("utf-8")
+        return self._redirect.redirectee.dest or self._redirect.redirectee.filename.decode("utf-8")
 
     @staticmethod
     cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = False):
@@ -83,7 +81,7 @@ cdef class Connection(Command):
 
     @property
     def connector(self):
-        return self._command.info.Connection.connector.decode("utf-8")
+        return self._command.info.Connection.connector
 
 
 cdef class SimpleCommand(Command):

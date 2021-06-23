@@ -5,7 +5,9 @@
 
 #include "Python.h"
 struct word_list;
+union redirector;
 struct redirect;
+struct element;
 union command_info;
 struct command;
 struct connection;
@@ -30,11 +32,12 @@ enum command_type {
  */
 enum redirect_instruction {
   r_output_direction,
-  r_input_direction
+  r_input_direction,
+  r_appending_to
 };
 
-/* "rubbish/core/command.pxd":9
- *     r_input_direction
+/* "rubbish/core/command.pxd":10
+ *     r_appending_to
  * 
  * cdef public struct word_list:             # <<<<<<<<<<<<<<
  *     word_list *next
@@ -45,40 +48,82 @@ struct word_list {
   char *word;
 };
 
-/* "rubbish/core/command.pxd":13
+/* "rubbish/core/command.pxd":14
  *     char *word
  * 
  * ctypedef public word_list WORD_LIST             # <<<<<<<<<<<<<<
  * 
- * cdef public struct redirect:
+ * cdef public union redirector:
  */
 typedef struct word_list WORD_LIST;
 
-/* "rubbish/core/command.pxd":15
+/* "rubbish/core/command.pxd":16
  * ctypedef public word_list WORD_LIST
+ * 
+ * cdef public union redirector:             # <<<<<<<<<<<<<<
+ *     int dest
+ *     char *filename
+ */
+union redirector {
+  int dest;
+  char *filename;
+};
+
+/* "rubbish/core/command.pxd":20
+ *     char *filename
+ * 
+ * ctypedef public redirector REDIRECTOR             # <<<<<<<<<<<<<<
+ * 
+ * cdef public struct redirect:
+ */
+typedef union redirector REDIRECTOR;
+
+/* "rubbish/core/command.pxd":22
+ * ctypedef public redirector REDIRECTOR
  * 
  * cdef public struct redirect:             # <<<<<<<<<<<<<<
  *     redirect *next
- *     char *redirector
+ *     REDIRECTOR redirector
  */
 struct redirect {
   struct redirect *next;
-  char *redirector;
+  REDIRECTOR redirector;
   enum redirect_instruction instruction;
-  char *redirectee;
+  REDIRECTOR redirectee;
 };
 
-/* "rubbish/core/command.pxd":21
- *     char *redirectee
+/* "rubbish/core/command.pxd":28
+ *     REDIRECTOR redirectee
  * 
  * ctypedef public redirect REDIRECT             # <<<<<<<<<<<<<<
  * 
- * cdef public union command_info:
+ * cdef public struct element:
  */
 typedef struct redirect REDIRECT;
 
-/* "rubbish/core/command.pxd":23
+/* "rubbish/core/command.pxd":30
  * ctypedef public redirect REDIRECT
+ * 
+ * cdef public struct element:             # <<<<<<<<<<<<<<
+ *   char *word
+ *   REDIRECT *redirect
+ */
+struct element {
+  char *word;
+  REDIRECT *redirect;
+};
+
+/* "rubbish/core/command.pxd":33
+ *   char *word
+ *   REDIRECT *redirect
+ * ctypedef public element ELEMENT             # <<<<<<<<<<<<<<
+ * 
+ * cdef public union command_info:
+ */
+typedef struct element ELEMENT;
+
+/* "rubbish/core/command.pxd":35
+ * ctypedef public element ELEMENT
  * 
  * cdef public union command_info:             # <<<<<<<<<<<<<<
  *     connection *Connection
@@ -89,7 +134,7 @@ union command_info {
   struct simple_cm *Simple;
 };
 
-/* "rubbish/core/command.pxd":27
+/* "rubbish/core/command.pxd":39
  *     simple_cm *Simple
  * 
  * ctypedef public command_info COMMAND_INFO             # <<<<<<<<<<<<<<
@@ -98,7 +143,7 @@ union command_info {
  */
 typedef union command_info COMMAND_INFO;
 
-/* "rubbish/core/command.pxd":29
+/* "rubbish/core/command.pxd":41
  * ctypedef public command_info COMMAND_INFO
  * 
  * cdef public struct command:             # <<<<<<<<<<<<<<
@@ -110,7 +155,7 @@ struct command {
   union command_info info;
 };
 
-/* "rubbish/core/command.pxd":33
+/* "rubbish/core/command.pxd":45
  *     command_info info
  * 
  * ctypedef public command COMMAND             # <<<<<<<<<<<<<<
@@ -119,7 +164,7 @@ struct command {
  */
 typedef struct command COMMAND;
 
-/* "rubbish/core/command.pxd":35
+/* "rubbish/core/command.pxd":47
  * ctypedef public command COMMAND
  * 
  * cdef public struct connection:             # <<<<<<<<<<<<<<
@@ -129,11 +174,11 @@ typedef struct command COMMAND;
 struct connection {
   COMMAND *first;
   COMMAND *second;
-  char connector;
+  int connector;
 };
 
-/* "rubbish/core/command.pxd":40
- *     char connector
+/* "rubbish/core/command.pxd":52
+ *     int connector
  * 
  * ctypedef public connection CONNECTION             # <<<<<<<<<<<<<<
  * 
@@ -141,7 +186,7 @@ struct connection {
  */
 typedef struct connection CONNECTION;
 
-/* "rubbish/core/command.pxd":42
+/* "rubbish/core/command.pxd":54
  * ctypedef public connection CONNECTION
  * 
  * cdef public struct simple_cm:             # <<<<<<<<<<<<<<
@@ -153,7 +198,7 @@ struct simple_cm {
   REDIRECT *redirects;
 };
 
-/* "rubbish/core/command.pxd":46
+/* "rubbish/core/command.pxd":58
  *     REDIRECT *redirects
  * 
  * ctypedef public simple_cm SIMPLE_COMMAND             # <<<<<<<<<<<<<<

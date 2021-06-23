@@ -8,6 +8,7 @@ class CommandType(IntEnum):
 class RedirectInstruction(IntEnum):
     r_output_direction = 0
     r_input_direction = 1
+    r_appending_to = 2
 
 class Redirect:
     @property
@@ -27,7 +28,7 @@ class Connection(Command):
     @property
     def second(self) -> Command: ...
     @property
-    def connector(self) -> str: ...
+    def connector(self) -> int: ...
 
 class SimpleCommand(Command):
     @property

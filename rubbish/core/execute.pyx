@@ -10,13 +10,12 @@ cpdef void execute_command(Command command, input, output):
 
 
 cpdef int execute_simplecommand(SimpleCommand command, input, output):
-    cdef char ** parameters=<char **>malloc(100*sizeof(char *))
-    cdef int i=0,result
+    cdef char ** parameters = <char **>malloc(100 * sizeof(char *))
+    cdef int i = 0, result
     for word in command.words:
         word_bytes = word.decode("utf-8")
-        parameters[i] = <char *>malloc(sizeof(char) * 100);
+        parameters[i] = <char *>malloc(sizeof(char) * 100)
         parameters[i] = word_bytes
         i += 1
     result = _execute(parameters)
     return result
-

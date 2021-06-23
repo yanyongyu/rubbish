@@ -5,6 +5,7 @@ cpdef public enum CommandType "command_type":
 cpdef public enum RedirectInstruction "redirect_instruction":
     r_output_direction
     r_input_direction
+    r_appending_to
 
 cdef public struct word_list:
     word_list *next
@@ -12,34 +13,45 @@ cdef public struct word_list:
 
 ctypedef public word_list WORD_LIST
 
-cdef public struct redirect:
+cdef public union redirector:
+    int dest
+    char *filename
+
+ctypedef public redirector REDIRECTOR
+
+cdef struct redirect:
     redirect *next
-    char *redirector
+    REDIRECTOR redirector
     RedirectInstruction instruction
-    char *redirectee
+    REDIRECTOR redirectee
 
 ctypedef public redirect REDIRECT
 
-cdef public union command_info:
+cdef struct element:
+  char *word
+  REDIRECT *redirect
+ctypedef public element ELEMENT
+
+cdef union command_info:
     connection *Connection
     simple_cm *Simple
 
 ctypedef public command_info COMMAND_INFO
 
-cdef public struct command:
+cdef struct command:
     CommandType type
     command_info info
 
 ctypedef public command COMMAND
 
-cdef public struct connection:
+cdef struct connection:
     COMMAND *first
     COMMAND *second
-    char connector
+    int connector
 
 ctypedef public connection CONNECTION
 
-cdef public struct simple_cm:
+cdef struct simple_cm:
     WORD_LIST *words
     REDIRECT *redirects
 
