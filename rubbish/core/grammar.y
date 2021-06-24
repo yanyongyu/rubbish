@@ -25,7 +25,7 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 }
 
 %token <word> WORD
-%token BACKSLASH NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER LESS YACCEOF
+%token NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER LESS YACCEOF
 
 %type <redirect> redirection
 %type <element> simple_command_element
@@ -33,7 +33,7 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 
 %start input
 
-%left AND SEMI BACKSLASH NEWLINE YACCEOF
+%left AND SEMI NEWLINE YACCEOF
 %left AND_AND OR_OR
 
 %%

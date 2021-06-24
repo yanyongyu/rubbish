@@ -44,7 +44,6 @@ cdef extern from "_command.h":
 cdef extern from "grammar.tab.h":
     cpdef enum TokenType "yytokentype":
         WORD
-        BACKSLASH
         NEWLINE
         AND
         AND_AND

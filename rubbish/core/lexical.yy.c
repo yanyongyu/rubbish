@@ -355,8 +355,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 15
-#define YY_END_OF_BUFFER 16
+#define YY_NUM_RULES 14
+#define YY_END_OF_BUFFER 15
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -364,11 +364,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[25] =
+static const flex_int16_t yy_accept[27] =
     {   0,
-        0,    0,   16,   12,   14,    2,   12,    3,    5,   10,
-        8,    1,    6,   12,   12,    0,    4,    9,   11,    0,
-        7,   12,   13,    0
+        0,    0,   15,   11,   13,    1,   11,    2,    4,    9,
+        7,   14,    5,   11,    0,   11,    0,    0,    3,    8,
+       10,    0,    6,   11,   12,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -406,39 +406,41 @@ static const YY_CHAR yy_ec[256] =
 static const YY_CHAR yy_meta[13] =
     {   0,
         1,    2,    3,    3,    1,    3,    1,    3,    3,    3,
-        3,    3
+        1,    3
     } ;
 
-static const flex_int16_t yy_base[27] =
+static const flex_int16_t yy_base[29] =
     {   0,
-        0,    0,   23,    0,   35,   35,   12,   16,   35,   35,
-       11,   17,    6,    0,   24,   11,   35,   35,   35,    0,
-       35,    0,   10,   35,   13,   31
+        0,    0,   31,   19,   45,   45,   12,   21,   45,   45,
+       16,   21,   10,   10,   16,   28,   13,   36,   45,   45,
+       45,   12,   45,    0,   10,   45,   13,   41
     } ;
 
-static const flex_int16_t yy_def[27] =
+static const flex_int16_t yy_def[29] =
     {   0,
-       24,    1,   24,   25,   24,   24,   26,   24,   24,   24,
-       24,   24,   24,   25,   26,   26,   24,   24,   24,   12,
-       24,   15,   26,    0,   24,   24
+       26,    1,   26,   27,   26,   26,   28,   26,   26,   26,
+       26,   26,   26,   27,   26,   28,   28,   28,   26,   26,
+       26,   12,   26,   16,   28,    0,   26,   26
     } ;
 
-static const flex_int16_t yy_nxt[48] =
+static const flex_int16_t yy_nxt[58] =
     {   0,
         4,    5,    6,    5,    7,    8,    4,    9,   10,   11,
-       12,   13,   15,   14,   23,   23,   15,   21,   15,   19,
-       18,   17,   24,   20,   15,   24,   24,   24,   22,   24,
-       15,   16,   24,   16,    3,   24,   24,   24,   24,   24,
-       24,   24,   24,   24,   24,   24,   24
+       12,   13,   16,   14,   25,   26,   16,   25,   16,   14,
+       15,   23,   18,   21,   14,   20,   19,   22,   16,   15,
+       26,   26,   24,   26,   16,   26,   26,   26,   18,   16,
+       25,   17,   26,   17,    3,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   26,   26,   26
     } ;
 
-static const flex_int16_t yy_chk[48] =
+static const flex_int16_t yy_chk[58] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    7,   25,   23,   16,    7,   13,    7,   12,
-       11,    8,    3,   12,   15,    0,    0,    0,   15,    0,
-       15,   26,    0,   26,   24,   24,   24,   24,   24,   24,
-       24,   24,   24,   24,   24,   24,   24
+        1,    1,    7,   27,   25,   22,    7,   17,    7,   15,
+       14,   13,    7,   12,   12,   11,    8,   12,   16,    4,
+        3,    0,   16,    0,   16,    0,    0,    0,   16,   18,
+       18,   28,    0,   28,   26,   26,   26,   26,   26,   26,
+       26,   26,   26,   26,   26,   26,   26
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -462,9 +464,9 @@ char *yytext;
 
 #include "_global.h"
 #include "grammar.tab.h"
-#line 466 "rubbish/core/lexical.yy.c"
-#define YY_NO_INPUT 1
 #line 468 "rubbish/core/lexical.yy.c"
+#define YY_NO_INPUT 1
+#line 470 "rubbish/core/lexical.yy.c"
 
 #define INITIAL 0
 
@@ -682,7 +684,7 @@ YY_DECL
 #line 13 "rubbish/core/lexical.l"
 
 
-#line 686 "rubbish/core/lexical.yy.c"
+#line 688 "rubbish/core/lexical.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -709,13 +711,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 25 )
+				if ( yy_current_state >= 27 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 35 );
+		while ( yy_base[yy_current_state] != 45 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -740,98 +742,93 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
 #line 15 "rubbish/core/lexical.l"
-{ return BACKSLASH; }
+{ return NEWLINE; }
 	YY_BREAK
 case 2:
-/* rule 2 can match eol */
 YY_RULE_SETUP
 #line 16 "rubbish/core/lexical.l"
-{ return NEWLINE; }
+{ return AND; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 17 "rubbish/core/lexical.l"
-{ return AND; }
+{ return AND_AND; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 18 "rubbish/core/lexical.l"
-{ return AND_AND; }
+{ return SEMI; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 19 "rubbish/core/lexical.l"
-{ return SEMI; }
+{ return OR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 20 "rubbish/core/lexical.l"
-{ return OR; }
+{ return OR_OR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 21 "rubbish/core/lexical.l"
-{ return OR_OR; }
+{ return GREATER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 22 "rubbish/core/lexical.l"
-{ return GREATER; }
+{ return GREATER_GREATER; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 23 "rubbish/core/lexical.l"
-{ return GREATER_GREATER; }
-	YY_BREAK
-case 10:
-YY_RULE_SETUP
-#line 24 "rubbish/core/lexical.l"
 { return LESS; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 25 "rubbish/core/lexical.l"
+#line 24 "rubbish/core/lexical.l"
 { return YACCEOF; }
 	YY_BREAK
-case 11:
-/* rule 11 can match eol */
+case 10:
+/* rule 10 can match eol */
 *yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
 YY_LINENO_REWIND_TO(yy_bp + 1);
 (yy_c_buf_p) = yy_cp = yy_bp + 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 27 "rubbish/core/lexical.l"
+#line 26 "rubbish/core/lexical.l"
 { return NEWLINE; }
 	YY_BREAK
-case 12:
+case 11:
 YY_RULE_SETUP
-#line 28 "rubbish/core/lexical.l"
+#line 27 "rubbish/core/lexical.l"
+{
+  yylval.word = strdup(yytext);
+  return WORD;
+}
+	YY_BREAK
+case 12:
+/* rule 12 can match eol */
+YY_RULE_SETUP
+#line 31 "rubbish/core/lexical.l"
 {
   yylval.word = strdup(yytext);
   return WORD;
 }
 	YY_BREAK
 case 13:
-/* rule 13 can match eol */
 YY_RULE_SETUP
-#line 32 "rubbish/core/lexical.l"
-{
-  yylval.word = strdup(yytext);
-  return WORD;
-}
+#line 36 "rubbish/core/lexical.l"
+/* ignore whitespace */ ;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 37 "rubbish/core/lexical.l"
-/* ignore whitespace */ ;
-	YY_BREAK
-case 15:
-YY_RULE_SETUP
-#line 39 "rubbish/core/lexical.l"
+#line 38 "rubbish/core/lexical.l"
 ECHO;
 	YY_BREAK
-#line 835 "rubbish/core/lexical.yy.c"
+#line 832 "rubbish/core/lexical.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1126,7 +1123,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 25 )
+			if ( yy_current_state >= 27 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1154,11 +1151,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 25 )
+		if ( yy_current_state >= 27 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 24);
+	yy_is_jam = (yy_current_state == 26);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1797,6 +1794,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 39 "rubbish/core/lexical.l"
+#line 38 "rubbish/core/lexical.l"
 
 

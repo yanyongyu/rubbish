@@ -134,17 +134,16 @@ extern int yydebug;
   enum yytokentype
   {
     WORD = 258,
-    BACKSLASH = 259,
-    NEWLINE = 260,
-    AND = 261,
-    AND_AND = 262,
-    SEMI = 263,
-    OR = 264,
-    OR_OR = 265,
-    GREATER = 266,
-    GREATER_GREATER = 267,
-    LESS = 268,
-    YACCEOF = 269
+    NEWLINE = 259,
+    AND = 260,
+    AND_AND = 261,
+    SEMI = 262,
+    OR = 263,
+    OR_OR = 264,
+    GREATER = 265,
+    GREATER_GREATER = 266,
+    LESS = 267,
+    YACCEOF = 268
   };
 #endif
 
@@ -159,7 +158,7 @@ union YYSTYPE
   ELEMENT element;
   REDIRECT *redirect;
 
-#line 163 "rubbish/core/grammar.tab.c"
+#line 162 "rubbish/core/grammar.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -478,10 +477,10 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  21
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   38
+#define YYLAST   40
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  15
+#define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  11
 /* YYNRULES -- Number of rules.  */
@@ -490,7 +489,7 @@ union yyalloc
 #define YYNSTATES  40
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   269
+#define YYMAXUTOK   268
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -528,7 +527,7 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14
+       5,     6,     7,     8,     9,    10,    11,    12,    13
 };
 
 #if YYDEBUG
@@ -546,9 +545,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "WORD", "BACKSLASH", "NEWLINE", "AND",
-  "AND_AND", "SEMI", "OR", "OR_OR", "GREATER", "GREATER_GREATER", "LESS",
-  "YACCEOF", "$accept", "input", "simple_list", "simple_list_inner",
+  "$end", "error", "$undefined", "WORD", "NEWLINE", "AND", "AND_AND",
+  "SEMI", "OR", "OR_OR", "GREATER", "GREATER_GREATER", "LESS", "YACCEOF",
+  "$accept", "input", "simple_list", "simple_list_inner",
   "simple_list_terminator", "newline_list", "pipeline_command", "command",
   "simple_command", "simple_command_element", "redirection", YY_NULLPTR
 };
@@ -560,11 +559,11 @@ static const char *const yytname[] =
 static const yytype_int16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269
+     265,   266,   267,   268
 };
 # endif
 
-#define YYPACT_NINF (-6)
+#define YYPACT_NINF (-7)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -578,10 +577,10 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,    16,    -6,    -6,    -2,     0,     2,    -6,     7,    18,
-      27,    17,    -6,     6,    -6,    -6,    -6,    -6,    -6,    -6,
-      -6,    -6,    -6,    -6,    -6,     6,    -6,     6,    -6,    -6,
-      -6,    21,     3,    21,     3,     3,    -6,    -6,    -6,    -6
+      -1,     4,    -7,    -7,     2,    17,    19,    -7,    32,    14,
+      24,    28,    -7,    13,    -7,    -7,    -7,    -7,    -7,    -7,
+      -7,    -7,    -7,    -7,    -7,    13,    -7,    13,    -7,    -7,
+      -7,    -5,     3,    -5,     3,     3,    -7,    -7,    -7,    -7
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -598,8 +597,8 @@ static const yytype_int8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -6,    -5,    -6,    -4,    -6,     1,    -6,    25,
-      -6
+      -7,    -7,    -7,    -6,    -7,     6,    -7,     5,    -7,    25,
+      -7
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -614,36 +613,38 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,    18,     2,    19,     3,    20,     2,    21,    36,     2,
-       4,     5,     6,     7,     4,     5,     6,     4,     5,     6,
-      31,    16,    33,    22,    34,    35,    29,    37,    26,    38,
-      17,    28,    23,    25,    26,    27,    39,    28,    30
+       1,    26,     2,     3,    28,    18,     2,    36,    16,     4,
+       5,     6,     7,     4,     5,     6,     2,    17,    22,    31,
+      19,    33,    20,     4,     5,     6,    37,    23,    38,    25,
+      26,    27,    21,    28,    34,    35,    29,     0,    30,     0,
+      39
 };
 
 static const yytype_int8 yycheck[] =
 {
-       1,     3,     3,     3,     5,     3,     3,     0,     5,     3,
-      11,    12,    13,    14,    11,    12,    13,    11,    12,    13,
-      25,     5,    27,     5,    28,    29,     9,    32,     7,    34,
-      14,    10,    14,     6,     7,     8,    35,    10,    13
+       1,     6,     3,     4,     9,     3,     3,     4,     4,    10,
+      11,    12,    13,    10,    11,    12,     3,    13,     4,    25,
+       3,    27,     3,    10,    11,    12,    32,    13,    34,     5,
+       6,     7,     0,     9,    28,    29,     8,    -1,    13,    -1,
+      35
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     1,     3,     5,    11,    12,    13,    14,    16,    17,
-      18,    21,    22,    23,    24,    25,     5,    14,     3,     3,
-       3,     0,     5,    14,    19,     6,     7,     8,    10,     9,
-      24,    18,    20,    18,    20,    20,     5,    18,    18,    22
+       0,     1,     3,     4,    10,    11,    12,    13,    15,    16,
+      17,    20,    21,    22,    23,    24,     4,    13,     3,     3,
+       3,     0,     4,    13,    18,     5,     6,     7,     9,     8,
+      23,    17,    19,    17,    19,    19,     4,    17,    17,    21
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    15,    16,    16,    16,    16,    16,    17,    17,    17,
-      18,    18,    18,    18,    18,    19,    19,    20,    20,    21,
-      21,    22,    23,    23,    24,    24,    25,    25,    25
+       0,    14,    15,    15,    15,    15,    15,    16,    16,    16,
+      17,    17,    17,    17,    17,    18,    18,    19,    19,    20,
+      20,    21,    22,    22,    23,    23,    24,    24,    24
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1352,7 +1353,7 @@ yyreduce:
       global_command = (yyvsp[-1].command);
       YYACCEPT;
     }
-#line 1356 "rubbish/core/grammar.tab.c"
+#line 1357 "rubbish/core/grammar.tab.c"
     break;
 
   case 3:
@@ -1360,7 +1361,7 @@ yyreduce:
             {
       YYACCEPT;
     }
-#line 1364 "rubbish/core/grammar.tab.c"
+#line 1365 "rubbish/core/grammar.tab.c"
     break;
 
   case 4:
@@ -1373,7 +1374,7 @@ yyreduce:
         YYABORT;
       }
     }
-#line 1377 "rubbish/core/grammar.tab.c"
+#line 1378 "rubbish/core/grammar.tab.c"
     break;
 
   case 5:
@@ -1381,7 +1382,7 @@ yyreduce:
             {
       YYACCEPT;
     }
-#line 1385 "rubbish/core/grammar.tab.c"
+#line 1386 "rubbish/core/grammar.tab.c"
     break;
 
   case 6:
@@ -1394,7 +1395,7 @@ yyreduce:
         YYABORT;
       }
     }
-#line 1398 "rubbish/core/grammar.tab.c"
+#line 1399 "rubbish/core/grammar.tab.c"
     break;
 
   case 7:
@@ -1402,7 +1403,7 @@ yyreduce:
                       {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1406 "rubbish/core/grammar.tab.c"
+#line 1407 "rubbish/core/grammar.tab.c"
     break;
 
   case 8:
@@ -1410,7 +1411,7 @@ yyreduce:
                           {
       (yyval.command) = (yyvsp[-1].command);
     }
-#line 1414 "rubbish/core/grammar.tab.c"
+#line 1415 "rubbish/core/grammar.tab.c"
     break;
 
   case 9:
@@ -1418,7 +1419,7 @@ yyreduce:
                            {
       (yyval.command) = (yyvsp[-1].command);
     }
-#line 1422 "rubbish/core/grammar.tab.c"
+#line 1423 "rubbish/core/grammar.tab.c"
     break;
 
   case 10:
@@ -1426,7 +1427,7 @@ yyreduce:
                                                              {
       (yyval.command) = create_connection((yyvsp[-3].command), (yyvsp[0].command), AND_AND);
     }
-#line 1430 "rubbish/core/grammar.tab.c"
+#line 1431 "rubbish/core/grammar.tab.c"
     break;
 
   case 11:
@@ -1434,7 +1435,7 @@ yyreduce:
                                                            {
       (yyval.command) = create_connection((yyvsp[-3].command), (yyvsp[0].command), OR_OR);
     }
-#line 1438 "rubbish/core/grammar.tab.c"
+#line 1439 "rubbish/core/grammar.tab.c"
     break;
 
   case 12:
@@ -1442,7 +1443,7 @@ yyreduce:
                                             {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), AND);
     }
-#line 1446 "rubbish/core/grammar.tab.c"
+#line 1447 "rubbish/core/grammar.tab.c"
     break;
 
   case 13:
@@ -1450,7 +1451,7 @@ yyreduce:
                                              {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), SEMI);
     }
-#line 1454 "rubbish/core/grammar.tab.c"
+#line 1455 "rubbish/core/grammar.tab.c"
     break;
 
   case 19:
@@ -1458,7 +1459,7 @@ yyreduce:
                                              {
       (yyval.command) = create_connection((yyvsp[-3].command), (yyvsp[0].command), OR);
     }
-#line 1462 "rubbish/core/grammar.tab.c"
+#line 1463 "rubbish/core/grammar.tab.c"
     break;
 
   case 20:
@@ -1466,7 +1467,7 @@ yyreduce:
             {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1470 "rubbish/core/grammar.tab.c"
+#line 1471 "rubbish/core/grammar.tab.c"
     break;
 
   case 21:
@@ -1474,7 +1475,7 @@ yyreduce:
                    {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1478 "rubbish/core/grammar.tab.c"
+#line 1479 "rubbish/core/grammar.tab.c"
     break;
 
   case 22:
@@ -1482,7 +1483,7 @@ yyreduce:
                            {
       (yyval.command) = merge_simple_command((yyvsp[0].element), (COMMAND *)NULL);
     }
-#line 1486 "rubbish/core/grammar.tab.c"
+#line 1487 "rubbish/core/grammar.tab.c"
     break;
 
   case 23:
@@ -1490,7 +1491,7 @@ yyreduce:
                                           {
       (yyval.command) = merge_simple_command((yyvsp[0].element), (yyvsp[-1].command));
     }
-#line 1494 "rubbish/core/grammar.tab.c"
+#line 1495 "rubbish/core/grammar.tab.c"
     break;
 
   case 24:
@@ -1499,7 +1500,7 @@ yyreduce:
       (yyval.element).word = (yyvsp[0].word);
       (yyval.element).redirect = 0;
     }
-#line 1503 "rubbish/core/grammar.tab.c"
+#line 1504 "rubbish/core/grammar.tab.c"
     break;
 
   case 25:
@@ -1508,7 +1509,7 @@ yyreduce:
       (yyval.element).redirect = (yyvsp[0].redirect);
       (yyval.element).word = 0;
     }
-#line 1512 "rubbish/core/grammar.tab.c"
+#line 1513 "rubbish/core/grammar.tab.c"
     break;
 
   case 26:
@@ -1518,7 +1519,7 @@ yyreduce:
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_output_direction, destination);
     }
-#line 1522 "rubbish/core/grammar.tab.c"
+#line 1523 "rubbish/core/grammar.tab.c"
     break;
 
   case 27:
@@ -1528,7 +1529,7 @@ yyreduce:
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_input_direction, destination);
     }
-#line 1532 "rubbish/core/grammar.tab.c"
+#line 1533 "rubbish/core/grammar.tab.c"
     break;
 
   case 28:
@@ -1538,11 +1539,11 @@ yyreduce:
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_appending_to, destination);
     }
-#line 1542 "rubbish/core/grammar.tab.c"
+#line 1543 "rubbish/core/grammar.tab.c"
     break;
 
 
-#line 1546 "rubbish/core/grammar.tab.c"
+#line 1547 "rubbish/core/grammar.tab.c"
 
       default: break;
     }

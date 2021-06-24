@@ -12,7 +12,6 @@
 
 %%
 
-"\\" { return BACKSLASH; }
 "\n" { return NEWLINE; }
 "&" { return AND; }
 "&&" { return AND_AND; }
@@ -25,7 +24,7 @@
 <<EOF>> { return YACCEOF; }
 
 \\/[:blank:]*\n { return NEWLINE; }
-[^ \n\r\t\\&|<>;]+ {
+([^ \n\r\t\\&|<>;]|"\\ ")+ {
   yylval.word = strdup(yytext);
   return WORD;
 }
