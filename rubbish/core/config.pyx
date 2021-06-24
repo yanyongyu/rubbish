@@ -1,7 +1,21 @@
+cdef extern from "_global.h":
+    cdef int interactive
+
 cdef class Config:
 
-    def __cinit__(self, bint use_ansi = True):
+    def __cinit__(self, bint interactive = False, bint use_ansi = True):
+        self._interactive = interactive
         self._use_ansi = use_ansi
+        interactive = interactive
+
+    @property
+    def interactive(self):
+        return self._interactive
+
+    @interactive.setter
+    def interactive(self, value):
+        self._interactive = value
+        interactive = value
 
     @property
     def use_ansi(self):

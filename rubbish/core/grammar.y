@@ -1,9 +1,11 @@
 %{
+#include "_global.h"
 #include "_command.h"
+// #include <stdio.h>
 
 static REDIRECTOR source;
 static REDIRECTOR destination;
-extern COMMAND *global_command;
+COMMAND *global_command = (COMMAND *)NULL;
 
 int yylex(void);
 void yyerror(const char *s);
@@ -17,14 +19,13 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 
 %union {
   char *word;
-  WORD_LIST *word_list;
   COMMAND *command;
   ELEMENT element;
   REDIRECT *redirect;
 }
 
 %token <word> WORD
-%token AND_AND OR_OR GREATER_GREATER YACCEOF
+%token BACKSLASH NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER LESS YACCEOF
 
 %type <redirect> redirection
 %type <element> simple_command_element
@@ -32,7 +33,7 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 
 %start input
 
-%left '&' ';' '\n' YACCEOF
+%left AND SEMI BACKSLASH NEWLINE YACCEOF
 %left AND_AND OR_OR
 
 %%
@@ -42,18 +43,38 @@ input:
       global_command = $1;
       YYACCEPT;
     }
-  | '\n'
-  | YACCEOF
+  | NEWLINE {
+      YYACCEPT;
+    }
+  | error NEWLINE {
+      global_command = (COMMAND *)NULL;
+      if (interactive) {
+        YYACCEPT;
+      } else {
+        YYABORT;
+      }
+    }
+  | YACCEOF {
+      YYACCEPT;
+    }
+  | error YACCEOF {
+      global_command = (COMMAND *)NULL;
+      if (interactive) {
+        YYACCEPT;
+      } else {
+        YYABORT;
+      }
+    }
   ;
 
 simple_list:
     simple_list_inner {
       $$ = $1;
     }
-  | simple_list_inner '&' {
+  | simple_list_inner AND {
       $$ = $1;
     }
-  | simple_list_inner ';' {
+  | simple_list_inner SEMI {
       $$ = $1;
     }
   ;
@@ -65,27 +86,27 @@ simple_list_inner:
   | simple_list_inner OR_OR newline_list simple_list_inner {
       $$ = create_connection($1, $4, OR_OR);
     }
-  | simple_list_inner '&' simple_list_inner {
-      $$ = create_connection($1, $3, '&');
+  | simple_list_inner AND simple_list_inner {
+      $$ = create_connection($1, $3, AND);
     }
-  | simple_list_inner ';' simple_list_inner {
-      $$ = create_connection($1, $3, ';');
+  | simple_list_inner SEMI simple_list_inner {
+      $$ = create_connection($1, $3, SEMI);
     }
   | pipeline_command
   ;
 
 simple_list_terminator:
-    '\n'
+    NEWLINE
   | YACCEOF
   ;
 
 newline_list:
-  | newline_list '\n'
+  | newline_list NEWLINE
   ;
 
 pipeline_command:
-    pipeline_command '|' newline_list command {
-      $$ = create_connection($1, $4, '|');
+    pipeline_command OR newline_list command {
+      $$ = create_connection($1, $4, OR);
     }
   | command {
       $$ = $1;
@@ -119,12 +140,12 @@ simple_command_element:
   ;
 
 redirection:
-    '>' WORD {
+    GREATER WORD {
       source.dest = 1;
       destination.filename = $2;
       $$ = create_redirection(source, r_output_direction, destination);
     }
-  | '<' WORD {
+  | LESS WORD {
       source.dest = 0;
       destination.filename = $2;
       $$ = create_redirection(source, r_input_direction, destination);
@@ -138,10 +159,15 @@ redirection:
 
 %%
 
+void yyerror(const char *s) {
+  /* fprintf(yyout, "%s\n", s); */
+}
+
 COMMAND * create_connection(COMMAND *first, COMMAND *second, int connector) {
   COMMAND *command;
   CONNECTION *connect;
   command = (COMMAND *)malloc(sizeof(COMMAND));
+  command->type = cm_connection;
   command->info.Connection = connect = (CONNECTION *)malloc(sizeof(CONNECTION));
 
   connect->first = first;

@@ -1,12 +1,13 @@
-from rubbish.core import Config, set_config, get_prompt
+from rubbish.core import Config, set_config, get_config, get_prompt, parse
 
 
 def main(config: Config = None):
-    if config:
-        set_config(config)
+    config = config or get_config()
+    config.interactive = True
+    set_config(config)
     while True:
         try:
-            input(get_prompt())
+            print(parse(input(get_prompt())))
         except KeyboardInterrupt:
             break
         except EOFError:

@@ -41,6 +41,21 @@ cdef extern from "_command.h":
         WORD_LIST *words
         REDIRECT *redirects
 
+cdef extern from "grammar.tab.h":
+    cpdef enum TokenType "yytokentype":
+        WORD
+        BACKSLASH
+        NEWLINE
+        AND
+        AND_AND
+        SEMI
+        OR
+        OR_OR
+        GREATER
+        GREATER_GREATER
+        LESS
+        YACCEOF
+
 cdef class Redirect:
 
     def __cinit__(self):
@@ -85,7 +100,7 @@ cdef class Command:
 
     @property
     def type(self):
-        return self._command.type
+        return CommandType(self._command.type)
 
     @staticmethod
     cdef Command from_ptr(COMMAND *ptr, bint auto_dealloc = False):
@@ -95,6 +110,8 @@ cdef class Command:
             wrapper = SimpleCommand.__new__(SimpleCommand)
         elif type == CommandType.cm_connection:
             wrapper = Connection.__new__(Connection)
+        else:
+            raise ValueError("Unknown command type")
         wrapper._command = ptr
         wrapper.ptr_set = auto_dealloc
         return wrapper
@@ -120,7 +137,10 @@ cdef class Connection(Command):
 
     @property
     def connector(self):
-        return self._command.info.Connection.connector
+        return TokenType(self._command.info.Connection.connector)
+
+    def __str__(self):
+        return f"Connection({self.first} {self.connector!s} {self.second})"
 
 
 cdef class SimpleCommand(Command):
@@ -153,7 +173,7 @@ cdef class SimpleCommand(Command):
             words = []
             word = self._command.info.Simple.words
             while word:
-                words.append(word.word.decode("utf-8"))
+                words.insert(0, word.word.decode("utf-8"))
                 word = word.next
             self._words = tuple(words)
         return self._words
@@ -170,3 +190,6 @@ cdef class SimpleCommand(Command):
                 redirect = redirect.next
             self._redirects = tuple(redirects)
         return self._redirects
+
+    def __str__(self):
+        return f"SimpleCommand({self.words}, {self.redirects})"
