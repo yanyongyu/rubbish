@@ -48,6 +48,7 @@ input:
     }
   | error NEWLINE {
       global_command = (COMMAND *)NULL;
+      command_end = 0;
       if (interactive) {
         YYACCEPT;
       } else {
@@ -59,6 +60,7 @@ input:
     }
   | error YACCEOF {
       global_command = (COMMAND *)NULL;
+      command_end = 0;
       if (interactive) {
         YYACCEPT;
       } else {
@@ -93,6 +95,14 @@ simple_list_inner:
       $$ = create_connection($1, $3, SEMI);
     }
   | pipeline_command
+  | error YACCEOF {
+      if (interactive) {
+        command_end = 0;
+        YYACCEPT;
+      } else {
+        YYABORT;
+      }
+    }
   ;
 
 simple_list_terminator:
@@ -110,6 +120,14 @@ pipeline_command:
     }
   | command {
       $$ = $1;
+    }
+  | error YACCEOF {
+      if (interactive) {
+        command_end = 0;
+        YYACCEPT;
+      } else {
+        YYABORT;
+      }
     }
   ;
 

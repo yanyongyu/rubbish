@@ -8,6 +8,9 @@ from rubbish.core.command cimport COMMAND, Command
 cdef extern from "<stdio.h>":
     cdef FILE * open_memstream(char **, size_t *)
 
+cdef extern from "_global.h":
+    cdef int command_end
+    cdef int interactive
 
 cdef extern from "lexical.yy.c":
     cdef void yyset_in (FILE * input)
@@ -39,10 +42,14 @@ cpdef Command parse(unicode input):
     temp = input_bytes
     fwrite(temp, sizeof(char), strlen(temp), fake_input)
 
+    # reset state
+    command_end = 1
+
     result = yyparse()
 
     c_command = global_command
 
+    # print(result, c_command is NULL, command_end, interactive)
     if result == 0:
         command = Command.from_ptr(c_command)
         return command

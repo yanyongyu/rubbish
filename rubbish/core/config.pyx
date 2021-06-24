@@ -1,12 +1,12 @@
 cdef extern from "_global.h":
-    cdef int interactive
+    cdef void set_interactive(int)
 
 cdef class Config:
 
     def __cinit__(self, bint interactive = False, bint use_ansi = True):
         self._interactive = interactive
         self._use_ansi = use_ansi
-        interactive = interactive
+        set_interactive(interactive)
 
     @property
     def interactive(self):
@@ -15,7 +15,7 @@ cdef class Config:
     @interactive.setter
     def interactive(self, value):
         self._interactive = value
-        interactive = value
+        set_interactive(value)
 
     @property
     def use_ansi(self):
