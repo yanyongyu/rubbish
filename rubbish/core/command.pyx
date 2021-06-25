@@ -1,6 +1,59 @@
 from libc.stdlib cimport free
 
-from rubbish.core.command cimport CommandType, WORD_LIST, REDIRECT, COMMAND
+cdef extern from "_command.h":
+    cpdef enum CommandType:
+        cm_simple
+        cm_connection
+
+    cpdef enum RedirectInstruction:
+        r_output_direction
+        r_input_direction
+        r_appending_to
+
+    ctypedef struct WORD_LIST:
+        WORD_LIST *next
+        char *word
+
+    ctypedef union REDIRECTOR:
+        int dest
+        char *filename
+
+    ctypedef struct REDIRECT:
+        REDIRECT *next
+        REDIRECTOR redirector
+        RedirectInstruction instruction
+        REDIRECTOR redirectee
+
+    ctypedef union COMMAND_INFO:
+        CONNECTION *Connection
+        SIMPLE_COMMAND *Simple
+
+    ctypedef struct COMMAND:
+        CommandType type
+        COMMAND_INFO info
+
+    ctypedef struct CONNECTION:
+        COMMAND *first
+        COMMAND *second
+        int connector
+
+    ctypedef struct SIMPLE_COMMAND:
+        WORD_LIST *words
+        REDIRECT *redirects
+
+cdef extern from "grammar.tab.h":
+    cpdef enum TokenType "yytokentype":
+        WORD
+        NEWLINE
+        AND
+        AND_AND
+        SEMI
+        OR
+        OR_OR
+        GREATER
+        GREATER_GREATER
+        LESS
+        YACCEOF
 
 cdef class Redirect:
 
@@ -10,14 +63,12 @@ cdef class Redirect:
     def __dealloc__(self):
         # De-allocate if not null and flag is set
         if self._redirect is not NULL and self.ptr_set is True:
-            free(self._redirect.redirector)
-            free(self._redirect.redirectee)
             free(self._redirect)
             self._redirect = NULL
 
     @property
     def redirector(self):
-        return self._redirect.redirector.decode("utf-8")
+        return self._redirect.redirector.dest or self._redirect.redirector.filename.decode("utf-8")
 
     @property
     def instruction(self):
@@ -25,7 +76,7 @@ cdef class Redirect:
 
     @property
     def redirectee(self):
-        return self._redirect.redirectee.decode("utf-8")
+        return self._redirect.redirectee.dest or self._redirect.redirectee.filename.decode("utf-8")
 
     @staticmethod
     cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = False):
@@ -48,7 +99,7 @@ cdef class Command:
 
     @property
     def type(self):
-        return self._command.type
+        return CommandType(self._command.type)
 
     @staticmethod
     cdef Command from_ptr(COMMAND *ptr, bint auto_dealloc = False):
@@ -58,6 +109,8 @@ cdef class Command:
             wrapper = SimpleCommand.__new__(SimpleCommand)
         elif type == CommandType.cm_connection:
             wrapper = Connection.__new__(Connection)
+        else:
+            raise ValueError("Unknown command type")
         wrapper._command = ptr
         wrapper.ptr_set = auto_dealloc
         return wrapper
@@ -83,7 +136,10 @@ cdef class Connection(Command):
 
     @property
     def connector(self):
-        return self._command.info.Connection.connector.decode("utf-8")
+        return TokenType(self._command.info.Connection.connector)
+
+    def __str__(self):
+        return f"Connection({self.first} {self.connector!s} {self.second})"
 
 
 cdef class SimpleCommand(Command):
@@ -116,7 +172,7 @@ cdef class SimpleCommand(Command):
             words = []
             word = self._command.info.Simple.words
             while word:
-                words.append(word.word.decode("utf-8"))
+                words.insert(0, word.word.decode("utf-8"))
                 word = word.next
             self._words = tuple(words)
         return self._words
@@ -133,3 +189,6 @@ cdef class SimpleCommand(Command):
                 redirect = redirect.next
             self._redirects = tuple(redirects)
         return self._redirects
+
+    def __str__(self):
+        return f"SimpleCommand({self.words}, {self.redirects})"

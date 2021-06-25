@@ -839,11 +839,12 @@ struct __pyx_obj_7rubbish_4core_6config_Config;
  * 
  * cdef class Config:             # <<<<<<<<<<<<<<
  *     cdef bint _use_ansi
- * 
+ *     cdef bint _interactive
  */
 struct __pyx_obj_7rubbish_4core_6config_Config {
   PyObject_HEAD
   int _use_ansi;
+  int _interactive;
 };
 
 
@@ -1171,6 +1172,7 @@ static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_use_ansi[] = "use_ansi";
 static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
+static const char __pyx_k_interactive[] = "interactive";
 static const char __pyx_k_global_config[] = "global_config";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
@@ -1181,6 +1183,7 @@ static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_global_config;
+static PyObject *__pyx_n_s_interactive;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
@@ -1192,7 +1195,9 @@ static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_use_ansi;
-static int __pyx_pf_7rubbish_4core_6config_6Config___cinit__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, int __pyx_v_use_ansi); /* proto */
+static int __pyx_pf_7rubbish_4core_6config_6Config___cinit__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, int __pyx_v_interactive, int __pyx_v_use_ansi); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_11interactive___get__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self); /* proto */
+static int __pyx_pf_7rubbish_4core_6config_6Config_11interactive_2__set__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_8use_ansi___get__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self); /* proto */
 static int __pyx_pf_7rubbish_4core_6config_6Config_8use_ansi_2__set__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_2__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self); /* proto */
@@ -1207,14 +1212,15 @@ static PyObject *__pyx_tuple__2;
 /* "rubbish/core/config.pyx":3
  * cdef class Config:
  * 
- *     def __cinit__(self, bint use_ansi = True):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self, bint interactive = False, bint use_ansi = True):             # <<<<<<<<<<<<<<
+ *         self._interactive = interactive
  *         self._use_ansi = use_ansi
- * 
  */
 
 /* Python wrapper */
 static int __pyx_pw_7rubbish_4core_6config_6Config_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_7rubbish_4core_6config_6Config_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  int __pyx_v_interactive;
   int __pyx_v_use_ansi;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -1223,12 +1229,14 @@ static int __pyx_pw_7rubbish_4core_6config_6Config_1__cinit__(PyObject *__pyx_v_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_use_ansi,0};
-    PyObject* values[1] = {0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_interactive,&__pyx_n_s_use_ansi,0};
+    PyObject* values[2] = {0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         CYTHON_FALLTHROUGH;
         case  0: break;
@@ -1238,8 +1246,14 @@ static int __pyx_pw_7rubbish_4core_6config_6Config_1__cinit__(PyObject *__pyx_v_
       switch (pos_args) {
         case  0:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_ansi);
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_interactive);
           if (value) { values[0] = value; kw_args--; }
+        }
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_use_ansi);
+          if (value) { values[1] = value; kw_args--; }
         }
       }
       if (unlikely(kw_args > 0)) {
@@ -1247,6 +1261,8 @@ static int __pyx_pw_7rubbish_4core_6config_6Config_1__cinit__(PyObject *__pyx_v_
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         CYTHON_FALLTHROUGH;
         case  0: break;
@@ -1254,34 +1270,48 @@ static int __pyx_pw_7rubbish_4core_6config_6Config_1__cinit__(PyObject *__pyx_v_
       }
     }
     if (values[0]) {
-      __pyx_v_use_ansi = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_use_ansi == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 3, __pyx_L3_error)
+      __pyx_v_interactive = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_interactive == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 3, __pyx_L3_error)
+    } else {
+      __pyx_v_interactive = ((int)0);
+    }
+    if (values[1]) {
+      __pyx_v_use_ansi = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_use_ansi == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 3, __pyx_L3_error)
     } else {
       __pyx_v_use_ansi = ((int)1);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 3, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 3, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rubbish.core.config.Config.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_7rubbish_4core_6config_6Config___cinit__(((struct __pyx_obj_7rubbish_4core_6config_Config *)__pyx_v_self), __pyx_v_use_ansi);
+  __pyx_r = __pyx_pf_7rubbish_4core_6config_6Config___cinit__(((struct __pyx_obj_7rubbish_4core_6config_Config *)__pyx_v_self), __pyx_v_interactive, __pyx_v_use_ansi);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_7rubbish_4core_6config_6Config___cinit__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, int __pyx_v_use_ansi) {
+static int __pyx_pf_7rubbish_4core_6config_6Config___cinit__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, int __pyx_v_interactive, int __pyx_v_use_ansi) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
   /* "rubbish/core/config.pyx":4
  * 
- *     def __cinit__(self, bint use_ansi = True):
+ *     def __cinit__(self, bint interactive = False, bint use_ansi = True):
+ *         self._interactive = interactive             # <<<<<<<<<<<<<<
+ *         self._use_ansi = use_ansi
+ * 
+ */
+  __pyx_v_self->_interactive = __pyx_v_interactive;
+
+  /* "rubbish/core/config.pyx":5
+ *     def __cinit__(self, bint interactive = False, bint use_ansi = True):
+ *         self._interactive = interactive
  *         self._use_ansi = use_ansi             # <<<<<<<<<<<<<<
  * 
  *     @property
@@ -1291,9 +1321,9 @@ static int __pyx_pf_7rubbish_4core_6config_6Config___cinit__(struct __pyx_obj_7r
   /* "rubbish/core/config.pyx":3
  * cdef class Config:
  * 
- *     def __cinit__(self, bint use_ansi = True):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self, bint interactive = False, bint use_ansi = True):             # <<<<<<<<<<<<<<
+ *         self._interactive = interactive
  *         self._use_ansi = use_ansi
- * 
  */
 
   /* function exit code */
@@ -1302,7 +1332,129 @@ static int __pyx_pf_7rubbish_4core_6config_6Config___cinit__(struct __pyx_obj_7r
   return __pyx_r;
 }
 
-/* "rubbish/core/config.pyx":7
+/* "rubbish/core/config.pyx":8
+ * 
+ *     @property
+ *     def interactive(self):             # <<<<<<<<<<<<<<
+ *         return self._interactive
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7rubbish_4core_6config_6Config_11interactive_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_6config_6Config_11interactive_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_6config_6Config_11interactive___get__(((struct __pyx_obj_7rubbish_4core_6config_Config *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_11interactive___get__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+
+  /* "rubbish/core/config.pyx":9
+ *     @property
+ *     def interactive(self):
+ *         return self._interactive             # <<<<<<<<<<<<<<
+ * 
+ *     @interactive.setter
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_interactive); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "rubbish/core/config.pyx":8
+ * 
+ *     @property
+ *     def interactive(self):             # <<<<<<<<<<<<<<
+ *         return self._interactive
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rubbish.core.config.Config.interactive.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/config.pyx":12
+ * 
+ *     @interactive.setter
+ *     def interactive(self, value):             # <<<<<<<<<<<<<<
+ *         self._interactive = value
+ * 
+ */
+
+/* Python wrapper */
+static int __pyx_pw_7rubbish_4core_6config_6Config_11interactive_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_7rubbish_4core_6config_6Config_11interactive_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_7rubbish_4core_6config_6Config_11interactive_2__set__(((struct __pyx_obj_7rubbish_4core_6config_Config *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_7rubbish_4core_6config_6Config_11interactive_2__set__(struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__set__", 0);
+
+  /* "rubbish/core/config.pyx":13
+ *     @interactive.setter
+ *     def interactive(self, value):
+ *         self._interactive = value             # <<<<<<<<<<<<<<
+ * 
+ *     @property
+ */
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 13, __pyx_L1_error)
+  __pyx_v_self->_interactive = __pyx_t_1;
+
+  /* "rubbish/core/config.pyx":12
+ * 
+ *     @interactive.setter
+ *     def interactive(self, value):             # <<<<<<<<<<<<<<
+ *         self._interactive = value
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("rubbish.core.config.Config.interactive.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rubbish/core/config.pyx":16
  * 
  *     @property
  *     def use_ansi(self):             # <<<<<<<<<<<<<<
@@ -1332,7 +1484,7 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_8use_ansi___get__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "rubbish/core/config.pyx":8
+  /* "rubbish/core/config.pyx":17
  *     @property
  *     def use_ansi(self):
  *         return self._use_ansi             # <<<<<<<<<<<<<<
@@ -1340,13 +1492,13 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_8use_ansi___get__(struc
  *     @use_ansi.setter
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 8, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_use_ansi); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rubbish/core/config.pyx":7
+  /* "rubbish/core/config.pyx":16
  * 
  *     @property
  *     def use_ansi(self):             # <<<<<<<<<<<<<<
@@ -1365,7 +1517,7 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_8use_ansi___get__(struc
   return __pyx_r;
 }
 
-/* "rubbish/core/config.pyx":11
+/* "rubbish/core/config.pyx":20
  * 
  *     @use_ansi.setter
  *     def use_ansi(self, value):             # <<<<<<<<<<<<<<
@@ -1395,17 +1547,17 @@ static int __pyx_pf_7rubbish_4core_6config_6Config_8use_ansi_2__set__(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "rubbish/core/config.pyx":12
+  /* "rubbish/core/config.pyx":21
  *     @use_ansi.setter
  *     def use_ansi(self, value):
  *         self._use_ansi = value             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L1_error)
   __pyx_v_self->_use_ansi = __pyx_t_1;
 
-  /* "rubbish/core/config.pyx":11
+  /* "rubbish/core/config.pyx":20
  * 
  *     @use_ansi.setter
  *     def use_ansi(self, value):             # <<<<<<<<<<<<<<
@@ -1537,7 +1689,7 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_6Config_4__setstate_cython__(CY
   return __pyx_r;
 }
 
-/* "rubbish/core/config.pyx":15
+/* "rubbish/core/config.pyx":24
  * 
  * 
  * cpdef void set_config(Config config):             # <<<<<<<<<<<<<<
@@ -1550,7 +1702,7 @@ static void __pyx_f_7rubbish_4core_6config_set_config(struct __pyx_obj_7rubbish_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_config", 0);
 
-  /* "rubbish/core/config.pyx":17
+  /* "rubbish/core/config.pyx":26
  * cpdef void set_config(Config config):
  *     global global_config
  *     global_config = config             # <<<<<<<<<<<<<<
@@ -1562,7 +1714,7 @@ static void __pyx_f_7rubbish_4core_6config_set_config(struct __pyx_obj_7rubbish_
   __Pyx_DECREF_SET(__pyx_v_7rubbish_4core_6config_global_config, __pyx_v_config);
   __Pyx_GIVEREF(((PyObject *)__pyx_v_config));
 
-  /* "rubbish/core/config.pyx":15
+  /* "rubbish/core/config.pyx":24
  * 
  * 
  * cpdef void set_config(Config config):             # <<<<<<<<<<<<<<
@@ -1583,7 +1735,7 @@ static PyObject *__pyx_pw_7rubbish_4core_6config_1set_config(PyObject *__pyx_sel
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_config (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_config), __pyx_ptype_7rubbish_4core_6config_Config, 1, "config", 0))) __PYX_ERR(1, 15, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_config), __pyx_ptype_7rubbish_4core_6config_Config, 1, "config", 0))) __PYX_ERR(1, 24, __pyx_L1_error)
   __pyx_r = __pyx_pf_7rubbish_4core_6config_set_config(__pyx_self, ((struct __pyx_obj_7rubbish_4core_6config_Config *)__pyx_v_config));
 
   /* function exit code */
@@ -1604,7 +1756,7 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_set_config(CYTHON_UNUSED PyObje
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_config", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_7rubbish_4core_6config_set_config(__pyx_v_config, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_7rubbish_4core_6config_set_config(__pyx_v_config, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1621,7 +1773,7 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_set_config(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "rubbish/core/config.pyx":20
+/* "rubbish/core/config.pyx":29
  * 
  * 
  * cpdef Config get_config():             # <<<<<<<<<<<<<<
@@ -1635,7 +1787,7 @@ static struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_f_7rubbish_4core_6c
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_config", 0);
 
-  /* "rubbish/core/config.pyx":21
+  /* "rubbish/core/config.pyx":30
  * 
  * cpdef Config get_config():
  *     return global_config             # <<<<<<<<<<<<<<
@@ -1647,7 +1799,7 @@ static struct __pyx_obj_7rubbish_4core_6config_Config *__pyx_f_7rubbish_4core_6c
   __pyx_r = __pyx_v_7rubbish_4core_6config_global_config;
   goto __pyx_L0;
 
-  /* "rubbish/core/config.pyx":20
+  /* "rubbish/core/config.pyx":29
  * 
  * 
  * cpdef Config get_config():             # <<<<<<<<<<<<<<
@@ -1684,7 +1836,7 @@ static PyObject *__pyx_pf_7rubbish_4core_6config_2get_config(CYTHON_UNUSED PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_config", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_7rubbish_4core_6config_get_config(0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 20, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_7rubbish_4core_6config_get_config(0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1725,6 +1877,20 @@ static void __pyx_tp_dealloc_7rubbish_4core_6config_Config(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
+static PyObject *__pyx_getprop_7rubbish_4core_6config_6Config_interactive(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_7rubbish_4core_6config_6Config_11interactive_1__get__(o);
+}
+
+static int __pyx_setprop_7rubbish_4core_6config_6Config_interactive(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_7rubbish_4core_6config_6Config_11interactive_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
 static PyObject *__pyx_getprop_7rubbish_4core_6config_6Config_use_ansi(PyObject *o, CYTHON_UNUSED void *x) {
   return __pyx_pw_7rubbish_4core_6config_6Config_8use_ansi_1__get__(o);
 }
@@ -1746,6 +1912,7 @@ static PyMethodDef __pyx_methods_7rubbish_4core_6config_Config[] = {
 };
 
 static struct PyGetSetDef __pyx_getsets_7rubbish_4core_6config_Config[] = {
+  {(char *)"interactive", __pyx_getprop_7rubbish_4core_6config_6Config_interactive, __pyx_setprop_7rubbish_4core_6config_6Config_interactive, (char *)0, 0},
   {(char *)"use_ansi", __pyx_getprop_7rubbish_4core_6config_6Config_use_ansi, __pyx_setprop_7rubbish_4core_6config_6Config_use_ansi, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
@@ -1872,6 +2039,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_s_global_config, __pyx_k_global_config, sizeof(__pyx_k_global_config), 0, 0, 1, 1},
+  {&__pyx_n_s_interactive, __pyx_k_interactive, sizeof(__pyx_k_interactive), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
@@ -2226,12 +2394,12 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
 
-  /* "rubbish/core/config.pyx":23
+  /* "rubbish/core/config.pyx":32
  *     return global_config
  * 
  * cdef Config global_config = Config()             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_7rubbish_4core_6config_Config)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_7rubbish_4core_6config_Config)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config));
   __Pyx_DECREF_SET(__pyx_v_7rubbish_4core_6config_global_config, ((struct __pyx_obj_7rubbish_4core_6config_Config *)__pyx_t_1));
@@ -2241,7 +2409,7 @@ if (!__Pyx_RefNanny) {
   /* "rubbish/core/config.pyx":1
  * cdef class Config:             # <<<<<<<<<<<<<<
  * 
- *     def __cinit__(self, bint use_ansi = True):
+ *     def __cinit__(self, bint interactive = False, bint use_ansi = True):
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

@@ -5,7 +5,7 @@
     "distutils": {
         "name": "rubbish.core.color_control",
         "sources": [
-            "rubbish/core/color_control.pyx"
+            "/media/yan/\u6570\u636e/\u5171\u4eab\u6587\u4ef6/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/color_control.pyx"
         ]
     },
     "module_name": "rubbish.core.color_control"
@@ -842,11 +842,12 @@ struct __pyx_obj_7rubbish_4core_13color_control_BackWrap;
  * 
  * cdef class Config:             # <<<<<<<<<<<<<<
  *     cdef bint _use_ansi
- * 
+ *     cdef bint _interactive
  */
 struct __pyx_obj_7rubbish_4core_6config_Config {
   PyObject_HEAD
   int _use_ansi;
+  int _interactive;
 };
 
 
