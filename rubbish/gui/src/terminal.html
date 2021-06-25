@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>RubbiSh</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <style type="text/css">
+      body {
+        background-color: #333333;
+      }
+      .bg {
+        background: url(logo.png) no-repeat center 70px;
+        height: 100vh;
+        overflow: auto;
+      }
+      .textdiv {
+        width: 100%;
+        overflow: auto;
+      }
+      .content {
+        width: 99%;
+        position: relative;
+        bottom: -18px;
+        left: 2px;
+      }
+      .break {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        font-size: 20px;
+        color: #f8f9fa;
+      }
+      .area {
+        width: 99%; /*自动适应父布局宽度*/
+        overflow: auto;
+        resize: none;
+        height: 100vh;
+        border: 0;
+        outline: none;
+        font-size: 20px;
+        color: #f8f9fa;
+        font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+        background: transparent;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <div class="bg">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-expanded="false"
+            >
+              编辑
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#" onclick="clear()">清除</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">复制</a>
+              <a class="dropdown-item" href="#" onclick="addContent()">粘贴</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-expanded="false"
+            >
+              查看
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a
+                class="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#colorModal"
+                >背景色</a
+              >
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">复制</a>
+              <a class="dropdown-item" href="#">粘贴</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="colorModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">更改背景色</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg"
+                style="background-color: #333333"
+                onclick="changeBgColor2Black()"
+              >
+                <p></p>
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg"
+                style="background-color: #f8f9fa"
+                onclick="changeBgColor2White()"
+              >
+                <p></p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="textdiv" class="textdiv">
+        <div class="content"><pre id="content" class="break"></pre></div>
+        <div>
+          <textarea class="area" id="textarea" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <script src="bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function clear() {
+        var obj = document.getElementById("content");
+        obj.innerHTML = "";
+      }
+      function addContent() {
+        var obj = document.getElementById("content");
+        var txt = document.createTextNode(
+          "13212 312312312312312312312121625123123123123123123123123123123123123123123123123123123123123123123123123123123123123123\n123"
+        );
+        obj.appendChild(txt);
+      }
+      function makeExpandingArea(el) {
+        var timer = null;
+        //由于ie8有溢出堆栈问题，故调整了这里
+        var setStyle = function (el, auto) {
+          if (auto) el.style.height = "auto";
+          el.style.height = el.scrollHeight + "px";
+        };
+        var delayedResize = function (el) {
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+          timer = setTimeout(function () {
+            setStyle(el);
+          }, 200);
+        };
+        if (el.addEventListener) {
+          el.addEventListener(
+            "input",
+            function () {
+              setStyle(el, 1);
+            },
+            false
+          );
+          setStyle(el);
+        } else if (el.attachEvent) {
+          el.attachEvent("onpropertychange", function () {
+            setStyle(el);
+          });
+          setStyle(el);
+        }
+        if (window.VBArray && window.addEventListener) {
+          //IE9
+          el.attachEvent("onkeydown", function () {
+            var key = window.event.keyCode;
+            if (key == 8 || key == 46) delayedResize(el);
+          });
+          el.attachEvent("oncut", function () {
+            delayedResize(el);
+          }); //处理粘贴
+        }
+      }
+      function changeBgColor2White() {
+        var obj1 = document.getElementById("body");
+        var obj2 = document.getElementById("textdiv");
+        obj1.style.cssText = "background-color:#f8f9fa";
+        obj2.style.cssText = "color:#333333";
+      }
+      function changeBgColor2Black() {
+        var obj1 = document.getElementById("body");
+        var obj2 = document.getElementById("textdiv");
+        obj1.style.cssText = "background-color:#333333";
+        obj2.style.cssText = "color:#f8f9fa";
+      }
+      //调用
+      var textarea = document.getElementById("textarea");
+      makeExpandingArea(textarea);
+    </script>
+  </body>
+</html>
