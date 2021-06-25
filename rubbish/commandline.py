@@ -1,6 +1,14 @@
+import sys
 from prompt_toolkit import PromptSession, ANSI
 
-from rubbish.core import Config, set_config, get_config, get_prompt, parse
+from rubbish.core import (
+    Config,
+    set_config,
+    get_config,
+    get_prompt,
+    parse,
+    execute_command,
+)
 
 
 def main(config: Config = None):
@@ -25,7 +33,7 @@ def main(config: Config = None):
                 continue
             more = False
             input_stuck = []
-            print(result)
+            return_code = execute_command(result, sys.stdin, sys.stdout)
         except SyntaxError:
             print("Syntax error")
             more = False

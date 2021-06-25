@@ -57,4 +57,7 @@ cpdef Command parse(unicode input):
         return command
     elif command_end == 0:
         return None
+    elif result == 0:
+        # FIXME: input is empty
+        pass
     raise SyntaxError("Syntax error")

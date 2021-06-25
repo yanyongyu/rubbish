@@ -1453,7 +1453,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  *         return command
  *     elif command_end == 0:             # <<<<<<<<<<<<<<
  *         return None
- *     raise SyntaxError("Syntax error")
+ *     elif result == 0:
  */
   __pyx_t_4 = ((command_end == 0) != 0);
   if (__pyx_t_4) {
@@ -1462,7 +1462,8 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  *         return command
  *     elif command_end == 0:
  *         return None             # <<<<<<<<<<<<<<
- *     raise SyntaxError("Syntax error")
+ *     elif result == 0:
+ *         # FIXME: input is empty
  */
     __Pyx_XDECREF(((PyObject *)__pyx_r));
     __pyx_r = ((struct __pyx_obj_7rubbish_4core_7command_Command *)Py_None); __Pyx_INCREF(Py_None);
@@ -1473,20 +1474,31 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  *         return command
  *     elif command_end == 0:             # <<<<<<<<<<<<<<
  *         return None
- *     raise SyntaxError("Syntax error")
+ *     elif result == 0:
  */
   }
 
   /* "rubbish/core/parse.pyx":60
  *     elif command_end == 0:
  *         return None
+ *     elif result == 0:             # <<<<<<<<<<<<<<
+ *         # FIXME: input is empty
+ *         pass
+ */
+  __pyx_t_4 = ((__pyx_v_result == 0) != 0);
+  if (__pyx_t_4) {
+  }
+
+  /* "rubbish/core/parse.pyx":63
+ *         # FIXME: input is empty
+ *         pass
  *     raise SyntaxError("Syntax error")             # <<<<<<<<<<<<<<
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_SyntaxError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_SyntaxError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_ERR(0, 60, __pyx_L1_error)
+  __PYX_ERR(0, 63, __pyx_L1_error)
 
   /* "rubbish/core/parse.pyx":34
  * 
@@ -1617,7 +1629,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_SyntaxError = __Pyx_GetBuiltinName(__pyx_n_s_SyntaxError); if (!__pyx_builtin_SyntaxError) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_builtin_SyntaxError = __Pyx_GetBuiltinName(__pyx_n_s_SyntaxError); if (!__pyx_builtin_SyntaxError) __PYX_ERR(0, 63, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -1627,12 +1639,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "rubbish/core/parse.pyx":60
- *     elif command_end == 0:
- *         return None
+  /* "rubbish/core/parse.pyx":63
+ *         # FIXME: input is empty
+ *         pass
  *     raise SyntaxError("Syntax error")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_Syntax_error); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_Syntax_error); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
   __Pyx_RefNannyFinishContext();

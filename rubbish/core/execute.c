@@ -1051,6 +1051,54 @@ static struct __pyx_vtabstruct_7rubbish_4core_7command_SimpleCommand *__pyx_vtab
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
+/* PyObjectGetAttrStr.proto */
+#if CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name);
+#else
+#define __Pyx_PyObject_GetAttrStr(o,n) PyObject_GetAttr(o,n)
+#endif
+
+/* PyThreadStateGet.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
+#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
+#define __Pyx_PyErr_Occurred()  __pyx_tstate->curexc_type
+#else
+#define __Pyx_PyThreadState_declare
+#define __Pyx_PyThreadState_assign
+#define __Pyx_PyErr_Occurred()  PyErr_Occurred()
+#endif
+
+/* PyErrFetchRestore.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
+#if CYTHON_COMPILING_IN_CPYTHON
+#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
+#else
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#endif
+#else
+#define __Pyx_PyErr_Clear() PyErr_Clear()
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
+#endif
+
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
+
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -1068,13 +1116,6 @@ static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
     ((likely((Py_TYPE(obj) == type) | (none_allowed && (obj == Py_None)))) ? 1 :\
         __Pyx__ArgTypeTest(obj, type, name, exact))
 static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
-
-/* PyObjectGetAttrStr.proto */
-#if CYTHON_USE_TYPE_SLOTS
-static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name);
-#else
-#define __Pyx_PyObject_GetAttrStr(o,n) PyObject_GetAttr(o,n)
-#endif
 
 /* PyCFunctionFastCall.proto */
 #if CYTHON_FAST_PYCCALL
@@ -1123,47 +1164,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 
 /* PyObjectCallOneArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
-
-/* PyThreadStateGet.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
-#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
-#define __Pyx_PyErr_Occurred()  __pyx_tstate->curexc_type
-#else
-#define __Pyx_PyThreadState_declare
-#define __Pyx_PyThreadState_assign
-#define __Pyx_PyErr_Occurred()  PyErr_Occurred()
-#endif
-
-/* PyErrFetchRestore.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
-#if CYTHON_COMPILING_IN_CPYTHON
-#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
-#else
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#endif
-#else
-#define __Pyx_PyErr_Clear() PyErr_Clear()
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
-#endif
-
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
 
 /* TypeImport.proto */
 #ifndef __PYX_HAVE_RT_ImportType_proto
@@ -1237,6 +1237,9 @@ static void __Pyx_AddTraceback(const char *funcname, int c_line,
 #endif
 
 /* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__CommandType(enum CommandType value);
+
+/* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 /* CIntToPy.proto */
@@ -1282,7 +1285,7 @@ static PyTypeObject *__pyx_ptype_7rubbish_4core_7command_SimpleCommand = 0;
 /* Module declarations from 'libc.stdlib' */
 
 /* Module declarations from 'rubbish.core.execute' */
-static void __pyx_f_7rubbish_4core_7execute_execute_command(struct __pyx_obj_7rubbish_4core_7command_Command *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_7rubbish_4core_7execute_execute_command(struct __pyx_obj_7rubbish_4core_7command_Command *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
 static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_obj_7rubbish_4core_7command_SimpleCommand *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
 #define __Pyx_MODULE_NAME "rubbish.core.execute"
 extern int __pyx_module_is_main_rubbish__core__execute;
@@ -1292,44 +1295,109 @@ int __pyx_module_is_main_rubbish__core__execute = 0;
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
+static const char __pyx_k_type[] = "type";
 static const char __pyx_k_input[] = "input";
 static const char __pyx_k_utf_8[] = "utf-8";
 static const char __pyx_k_words[] = "words";
-static const char __pyx_k_decode[] = "decode";
+static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_output[] = "output";
 static const char __pyx_k_command[] = "command";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_command;
-static PyObject *__pyx_n_s_decode;
+static PyObject *__pyx_n_s_encode;
 static PyObject *__pyx_n_s_input;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_output;
 static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_n_s_type;
 static PyObject *__pyx_kp_u_utf_8;
 static PyObject *__pyx_n_s_words;
 static PyObject *__pyx_pf_7rubbish_4core_7execute_execute_command(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_v_command, PyObject *__pyx_v_input, PyObject *__pyx_v_output); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_7execute_2execute_simplecommand(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_7rubbish_4core_7command_SimpleCommand *__pyx_v_command, PyObject *__pyx_v_input, PyObject *__pyx_v_output); /* proto */
 /* Late includes */
 
-/* "rubbish/core/execute.pyx":8
+/* "rubbish/core/execute.pyx":9
  * 
  * 
- * cpdef void execute_command(Command command, input, output):             # <<<<<<<<<<<<<<
- *     pass
- * 
+ * cpdef int execute_command(Command command, input, output):             # <<<<<<<<<<<<<<
+ *     if command.type == CommandType.cm_simple:
+ *         return execute_simplecommand(<SimpleCommand>command, input, output)
  */
 
 static PyObject *__pyx_pw_7rubbish_4core_7execute_1execute_command(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static void __pyx_f_7rubbish_4core_7execute_execute_command(CYTHON_UNUSED struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_v_command, CYTHON_UNUSED PyObject *__pyx_v_input, CYTHON_UNUSED PyObject *__pyx_v_output, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static int __pyx_f_7rubbish_4core_7execute_execute_command(struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_v_command, PyObject *__pyx_v_input, PyObject *__pyx_v_output, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_r;
   __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("execute_command", 0);
 
+  /* "rubbish/core/execute.pyx":10
+ * 
+ * cpdef int execute_command(Command command, input, output):
+ *     if command.type == CommandType.cm_simple:             # <<<<<<<<<<<<<<
+ *         return execute_simplecommand(<SimpleCommand>command, input, output)
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_command), __pyx_n_s_type); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_From_enum__CommandType(cm_simple); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__pyx_t_4) {
+
+    /* "rubbish/core/execute.pyx":11
+ * cpdef int execute_command(Command command, input, output):
+ *     if command.type == CommandType.cm_simple:
+ *         return execute_simplecommand(<SimpleCommand>command, input, output)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+    __pyx_r = __pyx_f_7rubbish_4core_7execute_execute_simplecommand(((struct __pyx_obj_7rubbish_4core_7command_SimpleCommand *)__pyx_v_command), __pyx_v_input, __pyx_v_output, 0);
+    goto __pyx_L0;
+
+    /* "rubbish/core/execute.pyx":10
+ * 
+ * cpdef int execute_command(Command command, input, output):
+ *     if command.type == CommandType.cm_simple:             # <<<<<<<<<<<<<<
+ *         return execute_simplecommand(<SimpleCommand>command, input, output)
+ * 
+ */
+  }
+
+  /* "rubbish/core/execute.pyx":9
+ * 
+ * 
+ * cpdef int execute_command(Command command, input, output):             # <<<<<<<<<<<<<<
+ *     if command.type == CommandType.cm_simple:
+ *         return execute_simplecommand(<SimpleCommand>command, input, output)
+ */
+
   /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_WriteUnraisable("rubbish.core.execute.execute_command", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
+  return __pyx_r;
 }
 
 /* Python wrapper */
@@ -1369,17 +1437,17 @@ static PyObject *__pyx_pw_7rubbish_4core_7execute_1execute_command(PyObject *__p
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_input)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("execute_command", 1, 3, 3, 1); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("execute_command", 1, 3, 3, 1); __PYX_ERR(0, 9, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_output)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("execute_command", 1, 3, 3, 2); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("execute_command", 1, 3, 3, 2); __PYX_ERR(0, 9, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "execute_command") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "execute_command") < 0)) __PYX_ERR(0, 9, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -1394,13 +1462,13 @@ static PyObject *__pyx_pw_7rubbish_4core_7execute_1execute_command(PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("execute_command", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("execute_command", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 9, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rubbish.core.execute.execute_command", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_command), __pyx_ptype_7rubbish_4core_7command_Command, 1, "command", 0))) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_command), __pyx_ptype_7rubbish_4core_7command_Command, 1, "command", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
   __pyx_r = __pyx_pf_7rubbish_4core_7execute_execute_command(__pyx_self, __pyx_v_command, __pyx_v_input, __pyx_v_output);
 
   /* function exit code */
@@ -1421,7 +1489,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7execute_execute_command(CYTHON_UNUSED 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("execute_command", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_7rubbish_4core_7execute_execute_command(__pyx_v_command, __pyx_v_input, __pyx_v_output, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_7rubbish_4core_7execute_execute_command(__pyx_v_command, __pyx_v_input, __pyx_v_output, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1438,7 +1506,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7execute_execute_command(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "rubbish/core/execute.pyx":12
+/* "rubbish/core/execute.pyx":14
  * 
  * 
  * cpdef int execute_simplecommand(SimpleCommand command, input, output):             # <<<<<<<<<<<<<<
@@ -1467,7 +1535,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("execute_simplecommand", 0);
 
-  /* "rubbish/core/execute.pyx":13
+  /* "rubbish/core/execute.pyx":15
  * 
  * cpdef int execute_simplecommand(SimpleCommand command, input, output):
  *     cdef char ** parameters = <char **>malloc(100 * sizeof(char *))             # <<<<<<<<<<<<<<
@@ -1476,31 +1544,31 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
  */
   __pyx_v_parameters = ((char **)malloc((0x64 * (sizeof(char *)))));
 
-  /* "rubbish/core/execute.pyx":14
+  /* "rubbish/core/execute.pyx":16
  * cpdef int execute_simplecommand(SimpleCommand command, input, output):
  *     cdef char ** parameters = <char **>malloc(100 * sizeof(char *))
  *     cdef int i = 0, result             # <<<<<<<<<<<<<<
  *     for word in command.words:
- *         word_bytes = word.decode("utf-8")
+ *         word_bytes = word.encode("utf-8")
  */
   __pyx_v_i = 0;
 
-  /* "rubbish/core/execute.pyx":15
+  /* "rubbish/core/execute.pyx":17
  *     cdef char ** parameters = <char **>malloc(100 * sizeof(char *))
  *     cdef int i = 0, result
  *     for word in command.words:             # <<<<<<<<<<<<<<
- *         word_bytes = word.decode("utf-8")
+ *         word_bytes = word.encode("utf-8")
  *         parameters[i] = <char *>malloc(sizeof(char) * 100)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_command), __pyx_n_s_words); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_command), __pyx_n_s_words); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
     __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -1508,17 +1576,17 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 15, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 17, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 15, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 17, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -1528,7 +1596,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 15, __pyx_L1_error)
+          else __PYX_ERR(0, 17, __pyx_L1_error)
         }
         break;
       }
@@ -1537,14 +1605,14 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
     __Pyx_XDECREF_SET(__pyx_v_word, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "rubbish/core/execute.pyx":16
+    /* "rubbish/core/execute.pyx":18
  *     cdef int i = 0, result
  *     for word in command.words:
- *         word_bytes = word.decode("utf-8")             # <<<<<<<<<<<<<<
+ *         word_bytes = word.encode("utf-8")             # <<<<<<<<<<<<<<
  *         parameters[i] = <char *>malloc(sizeof(char) * 100)
  *         parameters[i] = word_bytes
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_word, __pyx_n_s_decode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_word, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -1558,32 +1626,32 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
     }
     __pyx_t_1 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_6, __pyx_kp_u_utf_8) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_kp_u_utf_8);
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_XDECREF_SET(__pyx_v_word_bytes, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "rubbish/core/execute.pyx":17
+    /* "rubbish/core/execute.pyx":19
  *     for word in command.words:
- *         word_bytes = word.decode("utf-8")
+ *         word_bytes = word.encode("utf-8")
  *         parameters[i] = <char *>malloc(sizeof(char) * 100)             # <<<<<<<<<<<<<<
  *         parameters[i] = word_bytes
  *         i += 1
  */
     (__pyx_v_parameters[__pyx_v_i]) = ((char *)malloc(((sizeof(char)) * 0x64)));
 
-    /* "rubbish/core/execute.pyx":18
- *         word_bytes = word.decode("utf-8")
+    /* "rubbish/core/execute.pyx":20
+ *         word_bytes = word.encode("utf-8")
  *         parameters[i] = <char *>malloc(sizeof(char) * 100)
  *         parameters[i] = word_bytes             # <<<<<<<<<<<<<<
  *         i += 1
  *     result = _execute(parameters)
  */
-    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_word_bytes); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_word_bytes); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L1_error)
     (__pyx_v_parameters[__pyx_v_i]) = __pyx_t_7;
 
-    /* "rubbish/core/execute.pyx":19
+    /* "rubbish/core/execute.pyx":21
  *         parameters[i] = <char *>malloc(sizeof(char) * 100)
  *         parameters[i] = word_bytes
  *         i += 1             # <<<<<<<<<<<<<<
@@ -1592,17 +1660,17 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
  */
     __pyx_v_i = (__pyx_v_i + 1);
 
-    /* "rubbish/core/execute.pyx":15
+    /* "rubbish/core/execute.pyx":17
  *     cdef char ** parameters = <char **>malloc(100 * sizeof(char *))
  *     cdef int i = 0, result
  *     for word in command.words:             # <<<<<<<<<<<<<<
- *         word_bytes = word.decode("utf-8")
+ *         word_bytes = word.encode("utf-8")
  *         parameters[i] = <char *>malloc(sizeof(char) * 100)
  */
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "rubbish/core/execute.pyx":20
+  /* "rubbish/core/execute.pyx":22
  *         parameters[i] = word_bytes
  *         i += 1
  *     result = _execute(parameters)             # <<<<<<<<<<<<<<
@@ -1610,7 +1678,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
  */
   __pyx_v_result = execute(__pyx_v_parameters);
 
-  /* "rubbish/core/execute.pyx":21
+  /* "rubbish/core/execute.pyx":23
  *         i += 1
  *     result = _execute(parameters)
  *     return result             # <<<<<<<<<<<<<<
@@ -1618,7 +1686,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "rubbish/core/execute.pyx":12
+  /* "rubbish/core/execute.pyx":14
  * 
  * 
  * cpdef int execute_simplecommand(SimpleCommand command, input, output):             # <<<<<<<<<<<<<<
@@ -1678,17 +1746,17 @@ static PyObject *__pyx_pw_7rubbish_4core_7execute_3execute_simplecommand(PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_input)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("execute_simplecommand", 1, 3, 3, 1); __PYX_ERR(0, 12, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("execute_simplecommand", 1, 3, 3, 1); __PYX_ERR(0, 14, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_output)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("execute_simplecommand", 1, 3, 3, 2); __PYX_ERR(0, 12, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("execute_simplecommand", 1, 3, 3, 2); __PYX_ERR(0, 14, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "execute_simplecommand") < 0)) __PYX_ERR(0, 12, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "execute_simplecommand") < 0)) __PYX_ERR(0, 14, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -1703,13 +1771,13 @@ static PyObject *__pyx_pw_7rubbish_4core_7execute_3execute_simplecommand(PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("execute_simplecommand", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 12, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("execute_simplecommand", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 14, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rubbish.core.execute.execute_simplecommand", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_command), __pyx_ptype_7rubbish_4core_7command_SimpleCommand, 1, "command", 0))) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_command), __pyx_ptype_7rubbish_4core_7command_SimpleCommand, 1, "command", 0))) __PYX_ERR(0, 14, __pyx_L1_error)
   __pyx_r = __pyx_pf_7rubbish_4core_7execute_2execute_simplecommand(__pyx_self, __pyx_v_command, __pyx_v_input, __pyx_v_output);
 
   /* function exit code */
@@ -1730,7 +1798,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7execute_2execute_simplecommand(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("execute_simplecommand", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_7rubbish_4core_7execute_execute_simplecommand(__pyx_v_command, __pyx_v_input, __pyx_v_output, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_7rubbish_4core_7execute_execute_simplecommand(__pyx_v_command, __pyx_v_input, __pyx_v_output, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1797,13 +1865,14 @@ static struct PyModuleDef __pyx_moduledef = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_command, __pyx_k_command, sizeof(__pyx_k_command), 0, 0, 1, 1},
-  {&__pyx_n_s_decode, __pyx_k_decode, sizeof(__pyx_k_decode), 0, 0, 1, 1},
+  {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
   {&__pyx_n_s_input, __pyx_k_input, sizeof(__pyx_k_input), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_output, __pyx_k_output, sizeof(__pyx_k_output), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_n_s_type, __pyx_k_type, sizeof(__pyx_k_type), 0, 0, 1, 1},
   {&__pyx_kp_u_utf_8, __pyx_k_utf_8, sizeof(__pyx_k_utf_8), 0, 1, 0, 0},
   {&__pyx_n_s_words, __pyx_k_words, sizeof(__pyx_k_words), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
@@ -1857,7 +1926,8 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("execute_command", (void (*)(void))__pyx_f_7rubbish_4core_7execute_execute_command, "void (struct __pyx_obj_7rubbish_4core_7command_Command *, PyObject *, PyObject *, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("execute_command", (void (*)(void))__pyx_f_7rubbish_4core_7execute_execute_command, "int (struct __pyx_obj_7rubbish_4core_7command_Command *, PyObject *, PyObject *, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("execute_simplecommand", (void (*)(void))__pyx_f_7rubbish_4core_7execute_execute_simplecommand, "int (struct __pyx_obj_7rubbish_4core_7command_SimpleCommand *, PyObject *, PyObject *, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2123,9 +2193,9 @@ if (!__Pyx_RefNanny) {
   #endif
 
   /* "rubbish/core/execute.pyx":1
- * from rubbish.core.command cimport Command, SimpleCommand             # <<<<<<<<<<<<<<
- * from libc.stdlib cimport malloc
+ * from libc.stdlib cimport malloc             # <<<<<<<<<<<<<<
  * 
+ * from rubbish.core.command cimport Command, SimpleCommand, CommandType
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -2173,6 +2243,86 @@ end:
     return (__Pyx_RefNannyAPIStruct *)r;
 }
 #endif
+
+/* PyObjectGetAttrStr */
+#if CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name) {
+    PyTypeObject* tp = Py_TYPE(obj);
+    if (likely(tp->tp_getattro))
+        return tp->tp_getattro(obj, attr_name);
+#if PY_MAJOR_VERSION < 3
+    if (likely(tp->tp_getattr))
+        return tp->tp_getattr(obj, PyString_AS_STRING(attr_name));
+#endif
+    return PyObject_GetAttr(obj, attr_name);
+}
+#endif
+
+/* PyErrFetchRestore */
+#if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+}
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+}
+#endif
+
+/* WriteUnraisableException */
+static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
+}
 
 /* RaiseArgTupleInvalid */
 static void __Pyx_RaiseArgtupleInvalid(
@@ -2336,20 +2486,6 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
         name, type->tp_name, Py_TYPE(obj)->tp_name);
     return 0;
 }
-
-/* PyObjectGetAttrStr */
-#if CYTHON_USE_TYPE_SLOTS
-static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name) {
-    PyTypeObject* tp = Py_TYPE(obj);
-    if (likely(tp->tp_getattro))
-        return tp->tp_getattro(obj, attr_name);
-#if PY_MAJOR_VERSION < 3
-    if (likely(tp->tp_getattr))
-        return tp->tp_getattr(obj, PyString_AS_STRING(attr_name));
-#endif
-    return PyObject_GetAttr(obj, attr_name);
-}
-#endif
 
 /* PyCFunctionFastCall */
 #if CYTHON_FAST_PYCCALL
@@ -2601,72 +2737,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
     return result;
 }
 #endif
-
-/* PyErrFetchRestore */
-#if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-}
-#endif
-
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
-}
 
 /* TypeImport */
 #ifndef __PYX_HAVE_RT_ImportType
@@ -2980,6 +3050,44 @@ static void __Pyx_AddTraceback(const char *funcname, int c_line,
 bad:
     Py_XDECREF(py_code);
     Py_XDECREF(py_frame);
+}
+
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__CommandType(enum CommandType value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const enum CommandType neg_one = (enum CommandType) -1, const_zero = (enum CommandType) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(enum CommandType) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(enum CommandType) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(enum CommandType) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(enum CommandType) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(enum CommandType) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(enum CommandType),
+                                     little, !is_unsigned);
+    }
 }
 
 /* CIntToPy */

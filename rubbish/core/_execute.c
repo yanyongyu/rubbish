@@ -1,19 +1,21 @@
+#include <errno.h>
 #include <unistd.h>
 #include <wait.h>
 
 int execute(char **parameters) {
-  int result = 0;
+  int status;
   pid_t pid = fork();
   if (pid == -1) {
     printf("create fork failed\n");
   } else if (pid == 0) {
-    result = execvp(parameters[0], parameters);
+    int result = execvp(parameters[0], parameters);
     if (result < 0) {
-      printf("%s :command not found!\n", parameters[0]);
+      printf("%s: command not found!\n", parameters[0]);
     }
+    exit(errno);
   } else {
-    wait(NULL);
+    wait(&status);
   }
   free(parameters);
-  return result;
+  return status;
 }

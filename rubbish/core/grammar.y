@@ -44,6 +44,7 @@ input:
       YYACCEPT;
     }
   | NEWLINE {
+      global_command = (COMMAND *)NULL;
       YYACCEPT;
     }
   | error NEWLINE {
@@ -51,6 +52,7 @@ input:
       YYABORT;
     }
   | YACCEOF {
+      global_command = (COMMAND *)NULL;
       YYACCEPT;
     }
   | error YACCEOF {
