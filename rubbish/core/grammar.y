@@ -1,8 +1,8 @@
 %{
-#include "_global.h"
 #include "_command.h"
-// #include <stdio.h>
 
+int command_end = 1;
+int is_interactive = 0;
 static REDIRECTOR source;
 static REDIRECTOR destination;
 COMMAND *global_command = (COMMAND *)NULL;
@@ -48,24 +48,14 @@ input:
     }
   | error NEWLINE {
       global_command = (COMMAND *)NULL;
-      command_end = 0;
-      if (interactive) {
-        YYACCEPT;
-      } else {
-        YYABORT;
-      }
+      YYABORT;
     }
   | YACCEOF {
       YYACCEPT;
     }
   | error YACCEOF {
       global_command = (COMMAND *)NULL;
-      command_end = 0;
-      if (interactive) {
-        YYACCEPT;
-      } else {
-        YYABORT;
-      }
+      YYABORT;
     }
   ;
 
@@ -82,11 +72,27 @@ simple_list:
   ;
 
 simple_list_inner:
-    simple_list_inner AND_AND newline_list simple_list_inner {
-      $$ = create_connection($1, $4, AND_AND);
+    simple_list_inner AND_AND simple_list_inner {
+      $$ = create_connection($1, $3, AND_AND);
     }
-  | simple_list_inner OR_OR newline_list simple_list_inner {
-      $$ = create_connection($1, $4, OR_OR);
+  | simple_list_inner AND_AND NEWLINE newline_list simple_list_inner {
+      $$ = create_connection($1, $5, AND_AND);
+    }
+  | simple_list_inner AND_AND NEWLINE YACCEOF {
+      command_end = 0;
+      global_command = (COMMAND *)NULL;
+      YYABORT;
+    }
+  | simple_list_inner OR_OR simple_list_inner {
+      $$ = create_connection($1, $3, OR_OR);
+    }
+  | simple_list_inner OR_OR NEWLINE newline_list simple_list_inner {
+      $$ = create_connection($1, $5, OR_OR);
+    }
+  | simple_list_inner OR_OR NEWLINE YACCEOF {
+      command_end = 0;
+      global_command = (COMMAND *)NULL;
+      YYABORT;
     }
   | simple_list_inner AND simple_list_inner {
       $$ = create_connection($1, $3, AND);
@@ -95,14 +101,6 @@ simple_list_inner:
       $$ = create_connection($1, $3, SEMI);
     }
   | pipeline_command
-  | error YACCEOF {
-      if (interactive) {
-        command_end = 0;
-        YYACCEPT;
-      } else {
-        YYABORT;
-      }
-    }
   ;
 
 simple_list_terminator:
@@ -115,19 +113,19 @@ newline_list:
   ;
 
 pipeline_command:
-    pipeline_command OR newline_list command {
-      $$ = create_connection($1, $4, OR);
+    pipeline_command OR command {
+      $$ = create_connection($1, $3, OR);
+    }
+  | pipeline_command OR NEWLINE newline_list command {
+      $$ = create_connection($1, $5, OR);
+    }
+  | pipeline_command OR NEWLINE YACCEOF {
+      command_end = 0;
+      global_command = (COMMAND *)NULL;
+      YYABORT;
     }
   | command {
       $$ = $1;
-    }
-  | error YACCEOF {
-      if (interactive) {
-        command_end = 0;
-        YYACCEPT;
-      } else {
-        YYABORT;
-      }
     }
   ;
 

@@ -1,3 +1,5 @@
+import os.path
+
 from rubbish.core.color_control cimport Fore
 
 cdef extern from "_prompt.h":
@@ -16,7 +18,9 @@ cpdef unicode get_hostname():
 
 
 cpdef unicode get_cwd():
-    return _get_cwd().decode("utf-8")
+    user_home = os.path.expanduser("~")
+    cwd = _get_cwd().decode("utf-8")
+    return cwd.replace(user_home, "~") if cwd.startswith(user_home) else cwd
 
 
 cpdef unicode get_promptchar():
