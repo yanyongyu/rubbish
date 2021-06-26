@@ -20,7 +20,9 @@ def main(config: Config = None):
         result = parse()
         if result:
             print(result)
-            return_code = execute_command(result, sys.stdin, sys.stdout)
+            return_code = execute_command(
+                result, sys.stdin.fileno(), sys.stdout.fileno()
+            )
         return
 
     session = PromptSession()
@@ -39,7 +41,9 @@ def main(config: Config = None):
             input_stuck = []
             if result:
                 print(result)
-                return_code = execute_command(result, sys.stdin, sys.stdout)
+                return_code = execute_command(
+                    result, sys.stdin.fileno(), sys.stdout.fileno()
+                )
         except MoreInputNeeded:
             more = True
         except SyntaxError:

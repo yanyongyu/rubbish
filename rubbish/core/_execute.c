@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <string.h>
 #include <unistd.h>
 #include <wait.h>
 
@@ -16,6 +17,5 @@ int execute(char **parameters) {
   } else {
     wait(&status);
   }
-  free(parameters);
   return status;
 }

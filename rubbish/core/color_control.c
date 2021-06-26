@@ -5,7 +5,7 @@
     "distutils": {
         "name": "rubbish.core.color_control",
         "sources": [
-            "/media/yan/\u6570\u636e/\u5171\u4eab\u6587\u4ef6/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/color_control.pyx"
+            "E:\\desktop\\\u5927\u4e09\u4e0b\\\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1\\rubbish\\rubbish\\core\\color_control.pyx"
         ]
     },
     "module_name": "rubbish.core.color_control"
@@ -827,9 +827,9 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "rubbish/core/color_control.pyx",
+  "rubbish\\core\\color_control.pyx",
   "stringsource",
-  "rubbish/core/config.pxd",
+  "rubbish\\core\\config.pxd",
 };
 
 /*--- Type declarations ---*/
