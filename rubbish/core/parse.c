@@ -15,7 +15,7 @@
         ],
         "name": "rubbish.core.parse",
         "sources": [
-            "/mnt/e/desktop/\u5927\u4e09\u4e0b/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/parse.pyx"
+            "/media/yan/\u6570\u636e/\u5171\u4eab\u6587\u4ef6/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/parse.pyx"
         ]
     },
     "module_name": "rubbish.core.parse"
@@ -883,12 +883,12 @@ struct __pyx_opt_args_7rubbish_4core_7command_7Command_from_ptr {
 };
 struct __pyx_opt_args_7rubbish_4core_5parse_parse;
 
-/* "rubbish/core/parse.pyx":34
+/* "rubbish/core/parse.pyx":36
  * 
  * 
- * cpdef Command parse(unicode input = None):             # <<<<<<<<<<<<<<
- *     cdef int result
+ * cpdef list parse(unicode input = None):             # <<<<<<<<<<<<<<
  *     cdef char *temp
+ *     cdef int result
  */
 struct __pyx_opt_args_7rubbish_4core_5parse_parse {
   int __pyx_n;
@@ -1315,6 +1315,23 @@ static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name);
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
+/* ListAppend.proto */
+#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
+static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len) & likely(len > (L->allocated >> 1))) {
+        Py_INCREF(x);
+        PyList_SET_ITEM(list, len, x);
+        __Pyx_SET_SIZE(list, len + 1);
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
+#endif
+
 /* RaiseDoubleKeywords.proto */
 static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
 
@@ -1446,7 +1463,7 @@ static PyTypeObject *__pyx_ptype_7rubbish_4core_7command_SimpleCommand = 0;
 static char *__pyx_v_7rubbish_4core_5parse_input_bp;
 static size_t __pyx_v_7rubbish_4core_5parse_input_size;
 static FILE *__pyx_v_7rubbish_4core_5parse_fake_input;
-static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_5parse_parse(int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_5parse_parse *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_7rubbish_4core_5parse_parse(int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_5parse_parse *__pyx_optional_args); /*proto*/
 #define __Pyx_MODULE_NAME "rubbish.core.parse"
 extern int __pyx_module_is_main_rubbish__core__parse;
 int __pyx_module_is_main_rubbish__core__parse = 0;
@@ -1516,24 +1533,25 @@ static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__3;
 /* Late includes */
 
-/* "rubbish/core/parse.pyx":34
+/* "rubbish/core/parse.pyx":36
  * 
  * 
- * cpdef Command parse(unicode input = None):             # <<<<<<<<<<<<<<
- *     cdef int result
+ * cpdef list parse(unicode input = None):             # <<<<<<<<<<<<<<
  *     cdef char *temp
+ *     cdef int result
  */
 
 static PyObject *__pyx_pw_7rubbish_4core_5parse_1parse(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_5parse_parse(CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_5parse_parse *__pyx_optional_args) {
+static PyObject *__pyx_f_7rubbish_4core_5parse_parse(CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_5parse_parse *__pyx_optional_args) {
   PyObject *__pyx_v_input = ((PyObject*)Py_None);
-  int __pyx_v_result;
   char *__pyx_v_temp;
+  int __pyx_v_result;
   struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_v_command = 0;
   COMMAND *__pyx_v_c_command;
+  PyObject *__pyx_v_commands = NULL;
   PyObject *__pyx_v_f = NULL;
   PyObject *__pyx_v_input_bytes = NULL;
-  struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_r = NULL;
+  PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
@@ -1548,6 +1566,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
   PyObject *__pyx_t_11 = NULL;
   int __pyx_t_12;
   char *__pyx_t_13;
+  int __pyx_t_14;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -1559,29 +1578,59 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
   }
   __Pyx_INCREF(__pyx_v_input);
 
-  /* "rubbish/core/parse.pyx":44
+  /* "rubbish/core/parse.pyx":47
  * 
- *     # reset state
+ *     # init parse
+ *     result = 0             # <<<<<<<<<<<<<<
+ *     commands = []
+ *     command_end = 1
+ */
+  __pyx_v_result = 0;
+
+  /* "rubbish/core/parse.pyx":48
+ *     # init parse
+ *     result = 0
+ *     commands = []             # <<<<<<<<<<<<<<
+ *     command_end = 1
+ *     eof_encountered = 0
+ */
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_commands = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "rubbish/core/parse.pyx":49
+ *     result = 0
+ *     commands = []
  *     command_end = 1             # <<<<<<<<<<<<<<
+ *     eof_encountered = 0
  *     _is_interactive = global_config.interactive
- * 
  */
   command_end = 1;
 
-  /* "rubbish/core/parse.pyx":45
- *     # reset state
+  /* "rubbish/core/parse.pyx":50
+ *     commands = []
  *     command_end = 1
+ *     eof_encountered = 0             # <<<<<<<<<<<<<<
+ *     _is_interactive = global_config.interactive
+ * 
+ */
+  eof_encountered = 0;
+
+  /* "rubbish/core/parse.pyx":51
+ *     command_end = 1
+ *     eof_encountered = 0
  *     _is_interactive = global_config.interactive             # <<<<<<<<<<<<<<
  * 
  *     if not _is_interactive:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_interactive); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_interactive); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   is_interactive = __pyx_t_2;
 
-  /* "rubbish/core/parse.pyx":47
+  /* "rubbish/core/parse.pyx":53
  *     _is_interactive = global_config.interactive
  * 
  *     if not _is_interactive:             # <<<<<<<<<<<<<<
@@ -1591,7 +1640,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
   __pyx_t_3 = ((!(is_interactive != 0)) != 0);
   if (__pyx_t_3) {
 
-    /* "rubbish/core/parse.pyx":48
+    /* "rubbish/core/parse.pyx":54
  * 
  *     if not _is_interactive:
  *         with open(global_config.file, "r") as f:             # <<<<<<<<<<<<<<
@@ -1599,9 +1648,9 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  * 
  */
     /*with:*/ {
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_file); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_6config_global_config), __pyx_n_s_file); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_1);
       PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
@@ -1609,12 +1658,12 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
       __Pyx_GIVEREF(__pyx_n_u_r);
       PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_n_u_r);
       __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_5 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_exit); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_exit); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_enter); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 48, __pyx_L4_error)
+      __pyx_t_6 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_enter); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L4_error)
       __Pyx_GOTREF(__pyx_t_6);
       __pyx_t_7 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -1628,7 +1677,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
       }
       __pyx_t_4 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L4_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L4_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_6 = __pyx_t_4;
@@ -1646,14 +1695,14 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
             __pyx_v_f = __pyx_t_6;
             __pyx_t_6 = 0;
 
-            /* "rubbish/core/parse.pyx":49
+            /* "rubbish/core/parse.pyx":55
  *     if not _is_interactive:
  *         with open(global_config.file, "r") as f:
  *             input = f.read()             # <<<<<<<<<<<<<<
  * 
  * 
  */
-            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_read); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L8_error)
+            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_read); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_1);
             __pyx_t_4 = NULL;
             if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -1667,14 +1716,14 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
             }
             __pyx_t_6 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L8_error)
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 55, __pyx_L8_error)
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            if (!(likely(PyUnicode_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_6)->tp_name), 0))) __PYX_ERR(0, 49, __pyx_L8_error)
+            if (!(likely(PyUnicode_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_6)->tp_name), 0))) __PYX_ERR(0, 55, __pyx_L8_error)
             __Pyx_DECREF_SET(__pyx_v_input, ((PyObject*)__pyx_t_6));
             __pyx_t_6 = 0;
 
-            /* "rubbish/core/parse.pyx":48
+            /* "rubbish/core/parse.pyx":54
  * 
  *     if not _is_interactive:
  *         with open(global_config.file, "r") as f:             # <<<<<<<<<<<<<<
@@ -1693,20 +1742,20 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
           __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
           /*except:*/ {
             __Pyx_AddTraceback("rubbish.core.parse.parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
-            if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_1, &__pyx_t_4) < 0) __PYX_ERR(0, 48, __pyx_L10_except_error)
+            if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_1, &__pyx_t_4) < 0) __PYX_ERR(0, 54, __pyx_L10_except_error)
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_GOTREF(__pyx_t_4);
-            __pyx_t_7 = PyTuple_Pack(3, __pyx_t_6, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 48, __pyx_L10_except_error)
+            __pyx_t_7 = PyTuple_Pack(3, __pyx_t_6, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 54, __pyx_L10_except_error)
             __Pyx_GOTREF(__pyx_t_7);
             __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL);
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 48, __pyx_L10_except_error)
+            if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 54, __pyx_L10_except_error)
             __Pyx_GOTREF(__pyx_t_11);
             __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_11);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-            if (__pyx_t_3 < 0) __PYX_ERR(0, 48, __pyx_L10_except_error)
+            if (__pyx_t_3 < 0) __PYX_ERR(0, 54, __pyx_L10_except_error)
             __pyx_t_12 = ((!(__pyx_t_3 != 0)) != 0);
             if (__pyx_t_12) {
               __Pyx_GIVEREF(__pyx_t_6);
@@ -1714,7 +1763,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
               __Pyx_XGIVEREF(__pyx_t_4);
               __Pyx_ErrRestoreWithState(__pyx_t_6, __pyx_t_1, __pyx_t_4);
               __pyx_t_6 = 0; __pyx_t_1 = 0; __pyx_t_4 = 0; 
-              __PYX_ERR(0, 48, __pyx_L10_except_error)
+              __PYX_ERR(0, 54, __pyx_L10_except_error)
             }
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -1740,7 +1789,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
           if (__pyx_t_5) {
             __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_tuple_, NULL);
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-            if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 48, __pyx_L1_error)
+            if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 54, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_10);
             __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
           }
@@ -1755,7 +1804,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
       __pyx_L17:;
     }
 
-    /* "rubbish/core/parse.pyx":47
+    /* "rubbish/core/parse.pyx":53
  *     _is_interactive = global_config.interactive
  * 
  *     if not _is_interactive:             # <<<<<<<<<<<<<<
@@ -1764,16 +1813,16 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  */
   }
 
-  /* "rubbish/core/parse.pyx":53
+  /* "rubbish/core/parse.pyx":59
  * 
  *     # ensure not ended with escaped newline
  *     if input.rstrip().endswith("\\"):             # <<<<<<<<<<<<<<
  *         if _is_interactive:
  *             raise MoreInputNeeded
  */
-  __pyx_t_1 = __Pyx_CallUnboundCMethod0(&__pyx_umethod_PyUnicode_Type_rstrip, __pyx_v_input); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CallUnboundCMethod0(&__pyx_umethod_PyUnicode_Type_rstrip, __pyx_v_input); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_endswith); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_endswith); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -1788,14 +1837,14 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
   }
   __pyx_t_4 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_1, __pyx_kp_u__2) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_kp_u__2);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_12 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (__pyx_t_12) {
 
-    /* "rubbish/core/parse.pyx":54
+    /* "rubbish/core/parse.pyx":60
  *     # ensure not ended with escaped newline
  *     if input.rstrip().endswith("\\"):
  *         if _is_interactive:             # <<<<<<<<<<<<<<
@@ -1805,20 +1854,20 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
     __pyx_t_12 = (is_interactive != 0);
     if (unlikely(__pyx_t_12)) {
 
-      /* "rubbish/core/parse.pyx":55
+      /* "rubbish/core/parse.pyx":61
  *     if input.rstrip().endswith("\\"):
  *         if _is_interactive:
  *             raise MoreInputNeeded             # <<<<<<<<<<<<<<
  *         else:
  *             raise SyntaxError("Syntax error")
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_MoreInputNeeded); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_MoreInputNeeded); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_Raise(__pyx_t_4, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __PYX_ERR(0, 55, __pyx_L1_error)
+      __PYX_ERR(0, 61, __pyx_L1_error)
 
-      /* "rubbish/core/parse.pyx":54
+      /* "rubbish/core/parse.pyx":60
  *     # ensure not ended with escaped newline
  *     if input.rstrip().endswith("\\"):
  *         if _is_interactive:             # <<<<<<<<<<<<<<
@@ -1827,7 +1876,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  */
     }
 
-    /* "rubbish/core/parse.pyx":57
+    /* "rubbish/core/parse.pyx":63
  *             raise MoreInputNeeded
  *         else:
  *             raise SyntaxError("Syntax error")             # <<<<<<<<<<<<<<
@@ -1835,14 +1884,14 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  *     # write to input buffer
  */
     /*else*/ {
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_SyntaxError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_SyntaxError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_Raise(__pyx_t_4, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __PYX_ERR(0, 57, __pyx_L1_error)
+      __PYX_ERR(0, 63, __pyx_L1_error)
     }
 
-    /* "rubbish/core/parse.pyx":53
+    /* "rubbish/core/parse.pyx":59
  * 
  *     # ensure not ended with escaped newline
  *     if input.rstrip().endswith("\\"):             # <<<<<<<<<<<<<<
@@ -1851,7 +1900,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  */
   }
 
-  /* "rubbish/core/parse.pyx":60
+  /* "rubbish/core/parse.pyx":66
  * 
  *     # write to input buffer
  *     if input:             # <<<<<<<<<<<<<<
@@ -1861,7 +1910,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
   __pyx_t_12 = (__pyx_v_input != Py_None)&&(__Pyx_PyUnicode_IS_TRUE(__pyx_v_input) != 0);
   if (__pyx_t_12) {
 
-    /* "rubbish/core/parse.pyx":61
+    /* "rubbish/core/parse.pyx":67
  *     # write to input buffer
  *     if input:
  *         input_bytes = input.encode("utf-8")             # <<<<<<<<<<<<<<
@@ -1870,24 +1919,24 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  */
     if (unlikely(__pyx_v_input == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "encode");
-      __PYX_ERR(0, 61, __pyx_L1_error)
+      __PYX_ERR(0, 67, __pyx_L1_error)
     }
-    __pyx_t_4 = PyUnicode_AsUTF8String(__pyx_v_input); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+    __pyx_t_4 = PyUnicode_AsUTF8String(__pyx_v_input); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_v_input_bytes = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "rubbish/core/parse.pyx":62
+    /* "rubbish/core/parse.pyx":68
  *     if input:
  *         input_bytes = input.encode("utf-8")
  *         temp = input_bytes             # <<<<<<<<<<<<<<
  *         fwrite(temp, sizeof(char), strlen(temp), fake_input)
  * 
  */
-    __pyx_t_13 = __Pyx_PyObject_AsWritableString(__pyx_v_input_bytes); if (unlikely((!__pyx_t_13) && PyErr_Occurred())) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyObject_AsWritableString(__pyx_v_input_bytes); if (unlikely((!__pyx_t_13) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L1_error)
     __pyx_v_temp = __pyx_t_13;
 
-    /* "rubbish/core/parse.pyx":63
+    /* "rubbish/core/parse.pyx":69
  *         input_bytes = input.encode("utf-8")
  *         temp = input_bytes
  *         fwrite(temp, sizeof(char), strlen(temp), fake_input)             # <<<<<<<<<<<<<<
@@ -1896,7 +1945,7 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  */
     (void)(fwrite(__pyx_v_temp, (sizeof(char)), strlen(__pyx_v_temp), __pyx_v_7rubbish_4core_5parse_fake_input));
 
-    /* "rubbish/core/parse.pyx":60
+    /* "rubbish/core/parse.pyx":66
  * 
  *     # write to input buffer
  *     if input:             # <<<<<<<<<<<<<<
@@ -1905,156 +1954,193 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
  */
   }
 
-  /* "rubbish/core/parse.pyx":66
+  /* "rubbish/core/parse.pyx":72
  * 
  *     # parse result
- *     result = yyparse()             # <<<<<<<<<<<<<<
+ *     while result == 0 and eof_encountered == 0:             # <<<<<<<<<<<<<<
  * 
- *     c_command = global_command
+ *         result = yyparse()
  */
-  __pyx_v_result = yyparse();
-
-  /* "rubbish/core/parse.pyx":68
- *     result = yyparse()
- * 
- *     c_command = global_command             # <<<<<<<<<<<<<<
- * 
- *     if result == 0 and c_command is not NULL:
- */
-  __pyx_v_c_command = global_command;
-
-  /* "rubbish/core/parse.pyx":70
- *     c_command = global_command
- * 
- *     if result == 0 and c_command is not NULL:             # <<<<<<<<<<<<<<
- *         command = Command.from_ptr(c_command)
- *         return command
- */
-  __pyx_t_3 = ((__pyx_v_result == 0) != 0);
-  if (__pyx_t_3) {
-  } else {
+  while (1) {
+    __pyx_t_3 = ((__pyx_v_result == 0) != 0);
+    if (__pyx_t_3) {
+    } else {
+      __pyx_t_12 = __pyx_t_3;
+      goto __pyx_L23_bool_binop_done;
+    }
+    __pyx_t_3 = ((eof_encountered == 0) != 0);
     __pyx_t_12 = __pyx_t_3;
-    goto __pyx_L22_bool_binop_done;
-  }
-  __pyx_t_3 = ((__pyx_v_c_command != NULL) != 0);
-  __pyx_t_12 = __pyx_t_3;
-  __pyx_L22_bool_binop_done:;
-  if (__pyx_t_12) {
-
-    /* "rubbish/core/parse.pyx":71
- * 
- *     if result == 0 and c_command is not NULL:
- *         command = Command.from_ptr(c_command)             # <<<<<<<<<<<<<<
- *         return command
- *     elif command_end == 0:
- */
-    __pyx_t_4 = ((PyObject *)__pyx_vtabptr_7rubbish_4core_7command_Command->from_ptr(__pyx_v_c_command, NULL)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_v_command = ((struct __pyx_obj_7rubbish_4core_7command_Command *)__pyx_t_4);
-    __pyx_t_4 = 0;
-
-    /* "rubbish/core/parse.pyx":72
- *     if result == 0 and c_command is not NULL:
- *         command = Command.from_ptr(c_command)
- *         return command             # <<<<<<<<<<<<<<
- *     elif command_end == 0:
- *         raise MoreInputNeeded
- */
-    __Pyx_XDECREF(((PyObject *)__pyx_r));
-    __Pyx_INCREF(((PyObject *)__pyx_v_command));
-    __pyx_r = __pyx_v_command;
-    goto __pyx_L0;
-
-    /* "rubbish/core/parse.pyx":70
- *     c_command = global_command
- * 
- *     if result == 0 and c_command is not NULL:             # <<<<<<<<<<<<<<
- *         command = Command.from_ptr(c_command)
- *         return command
- */
-  }
-
-  /* "rubbish/core/parse.pyx":73
- *         command = Command.from_ptr(c_command)
- *         return command
- *     elif command_end == 0:             # <<<<<<<<<<<<<<
- *         raise MoreInputNeeded
- *     elif result == 0:
- */
-  __pyx_t_12 = ((command_end == 0) != 0);
-  if (unlikely(__pyx_t_12)) {
+    __pyx_L23_bool_binop_done:;
+    if (!__pyx_t_12) break;
 
     /* "rubbish/core/parse.pyx":74
- *         return command
- *     elif command_end == 0:
- *         raise MoreInputNeeded             # <<<<<<<<<<<<<<
- *     elif result == 0:
- *         return None
+ *     while result == 0 and eof_encountered == 0:
+ * 
+ *         result = yyparse()             # <<<<<<<<<<<<<<
+ * 
+ *         c_command = global_command
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_MoreInputNeeded); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
+    __pyx_v_result = yyparse();
+
+    /* "rubbish/core/parse.pyx":76
+ *         result = yyparse()
+ * 
+ *         c_command = global_command             # <<<<<<<<<<<<<<
+ * 
+ *         # parsed single command
+ */
+    __pyx_v_c_command = global_command;
+
+    /* "rubbish/core/parse.pyx":79
+ * 
+ *         # parsed single command
+ *         if result == 0 and c_command is not NULL:             # <<<<<<<<<<<<<<
+ *             command = Command.from_ptr(c_command)
+ *             commands.append(command)
+ */
+    __pyx_t_3 = ((__pyx_v_result == 0) != 0);
+    if (__pyx_t_3) {
+    } else {
+      __pyx_t_12 = __pyx_t_3;
+      goto __pyx_L26_bool_binop_done;
+    }
+    __pyx_t_3 = ((__pyx_v_c_command != NULL) != 0);
+    __pyx_t_12 = __pyx_t_3;
+    __pyx_L26_bool_binop_done:;
+    if (__pyx_t_12) {
+
+      /* "rubbish/core/parse.pyx":80
+ *         # parsed single command
+ *         if result == 0 and c_command is not NULL:
+ *             command = Command.from_ptr(c_command)             # <<<<<<<<<<<<<<
+ *             commands.append(command)
+ *             continue
+ */
+      __pyx_t_4 = ((PyObject *)__pyx_vtabptr_7rubbish_4core_7command_Command->from_ptr(__pyx_v_c_command, NULL)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_XDECREF_SET(__pyx_v_command, ((struct __pyx_obj_7rubbish_4core_7command_Command *)__pyx_t_4));
+      __pyx_t_4 = 0;
+
+      /* "rubbish/core/parse.pyx":81
+ *         if result == 0 and c_command is not NULL:
+ *             command = Command.from_ptr(c_command)
+ *             commands.append(command)             # <<<<<<<<<<<<<<
+ *             continue
+ *         # single line input continue in interactive mode
+ */
+      __pyx_t_14 = __Pyx_PyList_Append(__pyx_v_commands, ((PyObject *)__pyx_v_command)); if (unlikely(__pyx_t_14 == ((int)-1))) __PYX_ERR(0, 81, __pyx_L1_error)
+
+      /* "rubbish/core/parse.pyx":82
+ *             command = Command.from_ptr(c_command)
+ *             commands.append(command)
+ *             continue             # <<<<<<<<<<<<<<
+ *         # single line input continue in interactive mode
+ *         elif command_end == 0:
+ */
+      goto __pyx_L21_continue;
+
+      /* "rubbish/core/parse.pyx":79
+ * 
+ *         # parsed single command
+ *         if result == 0 and c_command is not NULL:             # <<<<<<<<<<<<<<
+ *             command = Command.from_ptr(c_command)
+ *             commands.append(command)
+ */
+    }
+
+    /* "rubbish/core/parse.pyx":84
+ *             continue
+ *         # single line input continue in interactive mode
+ *         elif command_end == 0:             # <<<<<<<<<<<<<<
+ *             raise MoreInputNeeded
+ *         # input get nothing but valid
+ */
+    __pyx_t_12 = ((command_end == 0) != 0);
+    if (unlikely(__pyx_t_12)) {
+
+      /* "rubbish/core/parse.pyx":85
+ *         # single line input continue in interactive mode
+ *         elif command_end == 0:
+ *             raise MoreInputNeeded             # <<<<<<<<<<<<<<
+ *         # input get nothing but valid
+ *         elif result == 0:
+ */
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_MoreInputNeeded); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_Raise(__pyx_t_4, 0, 0, 0);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __PYX_ERR(0, 85, __pyx_L1_error)
+
+      /* "rubbish/core/parse.pyx":84
+ *             continue
+ *         # single line input continue in interactive mode
+ *         elif command_end == 0:             # <<<<<<<<<<<<<<
+ *             raise MoreInputNeeded
+ *         # input get nothing but valid
+ */
+    }
+
+    /* "rubbish/core/parse.pyx":87
+ *             raise MoreInputNeeded
+ *         # input get nothing but valid
+ *         elif result == 0:             # <<<<<<<<<<<<<<
+ *             continue
+ *         raise SyntaxError("Syntax error")
+ */
+    __pyx_t_12 = ((__pyx_v_result == 0) != 0);
+    if (__pyx_t_12) {
+
+      /* "rubbish/core/parse.pyx":88
+ *         # input get nothing but valid
+ *         elif result == 0:
+ *             continue             # <<<<<<<<<<<<<<
+ *         raise SyntaxError("Syntax error")
+ *     return commands
+ */
+      goto __pyx_L21_continue;
+
+      /* "rubbish/core/parse.pyx":87
+ *             raise MoreInputNeeded
+ *         # input get nothing but valid
+ *         elif result == 0:             # <<<<<<<<<<<<<<
+ *             continue
+ *         raise SyntaxError("Syntax error")
+ */
+    }
+
+    /* "rubbish/core/parse.pyx":89
+ *         elif result == 0:
+ *             continue
+ *         raise SyntaxError("Syntax error")             # <<<<<<<<<<<<<<
+ *     return commands
+ * 
+ */
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_SyntaxError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_Raise(__pyx_t_4, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 74, __pyx_L1_error)
-
-    /* "rubbish/core/parse.pyx":73
- *         command = Command.from_ptr(c_command)
- *         return command
- *     elif command_end == 0:             # <<<<<<<<<<<<<<
- *         raise MoreInputNeeded
- *     elif result == 0:
- */
+    __PYX_ERR(0, 89, __pyx_L1_error)
+    __pyx_L21_continue:;
   }
 
-  /* "rubbish/core/parse.pyx":75
- *     elif command_end == 0:
- *         raise MoreInputNeeded
- *     elif result == 0:             # <<<<<<<<<<<<<<
- *         return None
- *     raise SyntaxError("Syntax error")
- */
-  __pyx_t_12 = ((__pyx_v_result == 0) != 0);
-  if (__pyx_t_12) {
-
-    /* "rubbish/core/parse.pyx":76
- *         raise MoreInputNeeded
- *     elif result == 0:
- *         return None             # <<<<<<<<<<<<<<
- *     raise SyntaxError("Syntax error")
- * 
- */
-    __Pyx_XDECREF(((PyObject *)__pyx_r));
-    __pyx_r = ((struct __pyx_obj_7rubbish_4core_7command_Command *)Py_None); __Pyx_INCREF(Py_None);
-    goto __pyx_L0;
-
-    /* "rubbish/core/parse.pyx":75
- *     elif command_end == 0:
- *         raise MoreInputNeeded
- *     elif result == 0:             # <<<<<<<<<<<<<<
- *         return None
- *     raise SyntaxError("Syntax error")
- */
-  }
-
-  /* "rubbish/core/parse.pyx":77
- *     elif result == 0:
- *         return None
- *     raise SyntaxError("Syntax error")             # <<<<<<<<<<<<<<
+  /* "rubbish/core/parse.pyx":90
+ *             continue
+ *         raise SyntaxError("Syntax error")
+ *     return commands             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_SyntaxError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_Raise(__pyx_t_4, 0, 0, 0);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __PYX_ERR(0, 77, __pyx_L1_error)
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_commands);
+  __pyx_r = __pyx_v_commands;
+  goto __pyx_L0;
 
-  /* "rubbish/core/parse.pyx":34
+  /* "rubbish/core/parse.pyx":36
  * 
  * 
- * cpdef Command parse(unicode input = None):             # <<<<<<<<<<<<<<
- *     cdef int result
+ * cpdef list parse(unicode input = None):             # <<<<<<<<<<<<<<
  *     cdef char *temp
+ *     cdef int result
  */
 
   /* function exit code */
@@ -2067,10 +2153,11 @@ static struct __pyx_obj_7rubbish_4core_7command_Command *__pyx_f_7rubbish_4core_
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_command);
+  __Pyx_XDECREF(__pyx_v_commands);
   __Pyx_XDECREF(__pyx_v_f);
   __Pyx_XDECREF(__pyx_v_input_bytes);
   __Pyx_XDECREF(__pyx_v_input);
-  __Pyx_XGIVEREF((PyObject *)__pyx_r);
+  __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
@@ -2107,7 +2194,7 @@ static PyObject *__pyx_pw_7rubbish_4core_5parse_1parse(PyObject *__pyx_self, PyO
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "parse") < 0)) __PYX_ERR(0, 34, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "parse") < 0)) __PYX_ERR(0, 36, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2121,13 +2208,13 @@ static PyObject *__pyx_pw_7rubbish_4core_5parse_1parse(PyObject *__pyx_self, PyO
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("parse", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 34, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("parse", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 36, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rubbish.core.parse.parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input), (&PyUnicode_Type), 1, "input", 1))) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_input), (&PyUnicode_Type), 1, "input", 1))) __PYX_ERR(0, 36, __pyx_L1_error)
   __pyx_r = __pyx_pf_7rubbish_4core_5parse_parse(__pyx_self, __pyx_v_input);
 
   /* function exit code */
@@ -2151,7 +2238,7 @@ static PyObject *__pyx_pf_7rubbish_4core_5parse_parse(CYTHON_UNUSED PyObject *__
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.input = __pyx_v_input;
-  __pyx_t_1 = ((PyObject *)__pyx_f_7rubbish_4core_5parse_parse(0, &__pyx_t_2)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_7rubbish_4core_5parse_parse(0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2246,8 +2333,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 48, __pyx_L1_error)
-  __pyx_builtin_SyntaxError = __Pyx_GetBuiltinName(__pyx_n_s_SyntaxError); if (!__pyx_builtin_SyntaxError) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_builtin_SyntaxError = __Pyx_GetBuiltinName(__pyx_n_s_SyntaxError); if (!__pyx_builtin_SyntaxError) __PYX_ERR(0, 63, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -2257,25 +2344,25 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "rubbish/core/parse.pyx":48
+  /* "rubbish/core/parse.pyx":54
  * 
  *     if not _is_interactive:
  *         with open(global_config.file, "r") as f:             # <<<<<<<<<<<<<<
  *             input = f.read()
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "rubbish/core/parse.pyx":57
+  /* "rubbish/core/parse.pyx":63
  *             raise MoreInputNeeded
  *         else:
  *             raise SyntaxError("Syntax error")             # <<<<<<<<<<<<<<
  * 
  *     # write to input buffer
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Syntax_error); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Syntax_error); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
   __Pyx_RefNannyFinishContext();
@@ -2623,7 +2710,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "rubbish/core/parse.pyx":25
+  /* "rubbish/core/parse.pyx":27
  * cdef char *input_bp
  * cdef size_t input_size
  * cdef FILE *fake_input = open_memstream(&input_bp, &input_size)             # <<<<<<<<<<<<<<
@@ -2632,7 +2719,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_7rubbish_4core_5parse_fake_input = open_memstream((&__pyx_v_7rubbish_4core_5parse_input_bp), (&__pyx_v_7rubbish_4core_5parse_input_size));
 
-  /* "rubbish/core/parse.pyx":26
+  /* "rubbish/core/parse.pyx":28
  * cdef size_t input_size
  * cdef FILE *fake_input = open_memstream(&input_bp, &input_size)
  * yyset_in(fake_input)             # <<<<<<<<<<<<<<
@@ -2641,24 +2728,24 @@ if (!__Pyx_RefNanny) {
  */
   yyset_in(__pyx_v_7rubbish_4core_5parse_fake_input);
 
-  /* "rubbish/core/parse.pyx":80
+  /* "rubbish/core/parse.pyx":93
  * 
  * 
  * class MoreInputNeeded(Exception):             # <<<<<<<<<<<<<<
  *     pass
  */
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
   __Pyx_GIVEREF(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
   PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
-  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CalculateMetaclass(NULL, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_MoreInputNeeded, __pyx_n_s_MoreInputNeeded, (PyObject *) NULL, __pyx_n_s_rubbish_core_parse, (PyObject *) NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_MoreInputNeeded, __pyx_n_s_MoreInputNeeded, (PyObject *) NULL, __pyx_n_s_rubbish_core_parse, (PyObject *) NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_MoreInputNeeded, __pyx_t_2, __pyx_t_3, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_1, __pyx_n_s_MoreInputNeeded, __pyx_t_2, __pyx_t_3, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MoreInputNeeded, __pyx_t_4) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MoreInputNeeded, __pyx_t_4) < 0) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;

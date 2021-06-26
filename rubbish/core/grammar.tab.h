@@ -67,7 +67,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 20 "rubbish/core/grammar.y"
+#line 21 "rubbish/core/grammar.y"
 
   char *word;
   COMMAND *command;

@@ -10,11 +10,13 @@ cdef extern from "<stdio.h>":
     cdef FILE * open_memstream(char **, size_t *)
 
 cdef extern from "lexical.yy.c":
+    # cdef int yylex ()
     cdef void yyset_in (FILE * input)
-    cdef void yyset_out (FILE * output)
+    # cdef void yyset_out (FILE * output)
 
 cdef extern from "grammar.tab.c":
     cdef int command_end
+    cdef int eof_encountered
     cdef int _is_interactive "is_interactive"
     cdef int yyparse ()
     cdef COMMAND *global_command
@@ -31,17 +33,21 @@ yyset_in(fake_input)
 # yyset_out(fake_output)
 
 
-cpdef Command parse(unicode input = None):
-    cdef int result
+cpdef list parse(unicode input = None):
     cdef char *temp
+    cdef int result
     cdef Command command
     cdef COMMAND *c_command
 
     global command_end
     global _is_interactive
+    global eof_encountered
 
-    # reset state
+    # init parse
+    result = 0
+    commands = []
     command_end = 1
+    eof_encountered = 0
     _is_interactive = global_config.interactive
 
     if not _is_interactive:
@@ -63,18 +69,25 @@ cpdef Command parse(unicode input = None):
         fwrite(temp, sizeof(char), strlen(temp), fake_input)
 
     # parse result
-    result = yyparse()
+    while result == 0 and eof_encountered == 0:
 
-    c_command = global_command
+        result = yyparse()
 
-    if result == 0 and c_command is not NULL:
-        command = Command.from_ptr(c_command)
-        return command
-    elif command_end == 0:
-        raise MoreInputNeeded
-    elif result == 0:
-        return None
-    raise SyntaxError("Syntax error")
+        c_command = global_command
+
+        # parsed single command
+        if result == 0 and c_command is not NULL:
+            command = Command.from_ptr(c_command)
+            commands.append(command)
+            continue
+        # single line input continue in interactive mode
+        elif command_end == 0:
+            raise MoreInputNeeded
+        # input get nothing but valid
+        elif result == 0:
+            continue
+        raise SyntaxError("Syntax error")
+    return commands
 
 
 class MoreInputNeeded(Exception):

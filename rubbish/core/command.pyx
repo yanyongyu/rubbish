@@ -85,6 +85,9 @@ cdef class Redirect:
         wrapper.ptr_set = auto_dealloc
         return wrapper
 
+    def __str__(self):
+        return f"Redirect({self.redirector} {self.instruction} {self.redirectee})"
+
 
 cdef class Command:
 
@@ -191,4 +194,4 @@ cdef class SimpleCommand(Command):
         return self._redirects
 
     def __str__(self):
-        return f"SimpleCommand({self.words}, {self.redirects})"
+        return f"SimpleCommand({self.words}, ({', '.join(map(str, self.redirects))}))"

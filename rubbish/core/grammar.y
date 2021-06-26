@@ -3,6 +3,7 @@
 
 int command_end = 1;
 int is_interactive = 0;
+int eof_encountered = 0;
 static REDIRECTOR source;
 static REDIRECTOR destination;
 COMMAND *global_command = (COMMAND *)NULL;
@@ -41,22 +42,27 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 input:
     simple_list simple_list_terminator {
       global_command = $1;
+      eof_encountered = 0;
       YYACCEPT;
     }
   | NEWLINE {
       global_command = (COMMAND *)NULL;
+      eof_encountered = 0;
       YYACCEPT;
     }
   | error NEWLINE {
       global_command = (COMMAND *)NULL;
+      eof_encountered = 0;
       YYABORT;
     }
   | YACCEOF {
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYACCEPT;
     }
   | error YACCEOF {
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   ;
@@ -85,6 +91,7 @@ simple_list_inner:
         command_end = 0;
       }
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   | simple_list_inner OR_OR simple_list_inner {
@@ -98,6 +105,7 @@ simple_list_inner:
         command_end = 0;
       }
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   | simple_list_inner AND simple_list_inner {
@@ -130,6 +138,7 @@ pipeline_command:
         command_end = 0;
       }
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   | command {

@@ -19,10 +19,11 @@ def main(config: Config = None):
     if config.file:
         result = parse()
         if result:
-            print(result)
-            return_code = execute_command(
-                result, sys.stdin.fileno(), sys.stdout.fileno()
-            )
+            for command in result:
+                print(command)
+                return_code = execute_command(
+                    command, sys.stdin.fileno(), sys.stdout.fileno()
+                )
         return
 
     session = PromptSession()
@@ -36,14 +37,15 @@ def main(config: Config = None):
                 prompt = ANSI(get_prompt())
             input = session.prompt(prompt)
             input_stuck.append(input)
-            result = parse("\n".join(input_stuck) + "\n")
+            result = parse("\n".join(input_stuck))
             more = False
             input_stuck = []
             if result:
-                print(result)
-                return_code = execute_command(
-                    result, sys.stdin.fileno(), sys.stdout.fileno()
-                )
+                for command in result:
+                    print(command)
+                    return_code = execute_command(
+                        command, sys.stdin.fileno(), sys.stdout.fileno()
+                    )
         except MoreInputNeeded:
             more = True
         except SyntaxError:
