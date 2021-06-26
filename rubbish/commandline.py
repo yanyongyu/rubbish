@@ -7,6 +7,7 @@ from rubbish.core import (
     get_config,
     get_prompt,
     parse,
+    MoreInputNeeded,
     execute_command,
 )
 
@@ -28,12 +29,13 @@ def main(config: Config = None):
             input = session.prompt(prompt)
             input_stuck.append(input)
             result = parse("\n".join(input_stuck) + "\n")
-            if not result:
-                more = True
-                continue
             more = False
             input_stuck = []
-            return_code = execute_command(result, sys.stdin, sys.stdout)
+            if result:
+                print(result)
+                return_code = execute_command(result, sys.stdin, sys.stdout)
+        except MoreInputNeeded:
+            more = True
         except SyntaxError:
             print("Syntax error")
             more = False

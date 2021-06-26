@@ -81,7 +81,9 @@ simple_list_inner:
       $$ = create_connection($1, $5, AND_AND);
     }
   | simple_list_inner AND_AND NEWLINE YACCEOF {
-      command_end = 0;
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
       YYABORT;
     }
@@ -92,7 +94,9 @@ simple_list_inner:
       $$ = create_connection($1, $5, OR_OR);
     }
   | simple_list_inner OR_OR NEWLINE YACCEOF {
-      command_end = 0;
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
       YYABORT;
     }
@@ -122,7 +126,9 @@ pipeline_command:
       $$ = create_connection($1, $5, OR);
     }
   | pipeline_command OR NEWLINE YACCEOF {
-      command_end = 0;
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
       YYABORT;
     }

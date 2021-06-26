@@ -23,7 +23,6 @@
 "<" { return LESS; }
 <<EOF>> { return YACCEOF; }
 
-\\/[:blank:]*\n { return NEWLINE; }
 ([^ \n\r\t\\&|<>;]|"\\ ")+ {
   yylval.word = strdup(yytext);
   return WORD;
@@ -33,6 +32,7 @@
   return WORD;
 }
 
-[ \t\r]   /* ignore whitespace */ ;
+[ \t\r] /* ignore whitespace */ ;
+\\/[:blank:]*\n /* ignore escaped newline */ ;
 
 %%

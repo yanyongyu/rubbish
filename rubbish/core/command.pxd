@@ -39,6 +39,20 @@ cdef extern from "_command.h":
         WORD_LIST *words
         REDIRECT *redirects
 
+cdef extern from "grammar.tab.h":
+    cpdef enum TokenType "yytokentype":
+        WORD
+        NEWLINE
+        AND
+        AND_AND
+        SEMI
+        OR
+        OR_OR
+        GREATER
+        GREATER_GREATER
+        LESS
+        YACCEOF
+
 cdef class Redirect:
     cdef REDIRECT *_redirect
     cdef bint ptr_set

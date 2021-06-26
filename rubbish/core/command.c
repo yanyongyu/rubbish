@@ -627,9 +627,9 @@ static CYTHON_INLINE float __PYX_NAN() {
 #define __PYX_HAVE_API__rubbish__core__command
 /* Early includes */
 #include "_command.h"
+#include "grammar.tab.h"
 #include <string.h>
 #include <stdlib.h>
-#include "grammar.tab.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -851,7 +851,7 @@ struct __pyx_obj___Pyx_EnumMeta;
 struct __pyx_opt_args_7rubbish_4core_7command_8Redirect_from_ptr;
 struct __pyx_opt_args_7rubbish_4core_7command_7Command_from_ptr;
 
-/* "rubbish/core/command.pxd":47
+/* "rubbish/core/command.pxd":61
  * 
  *     @staticmethod
  *     cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = *)             # <<<<<<<<<<<<<<
@@ -863,7 +863,7 @@ struct __pyx_opt_args_7rubbish_4core_7command_8Redirect_from_ptr {
   int auto_dealloc;
 };
 
-/* "rubbish/core/command.pxd":55
+/* "rubbish/core/command.pxd":69
  * 
  *     @staticmethod
  *     cdef Command from_ptr(COMMAND *ptr, bint auto_dealloc = *)             # <<<<<<<<<<<<<<
@@ -875,8 +875,8 @@ struct __pyx_opt_args_7rubbish_4core_7command_7Command_from_ptr {
   int auto_dealloc;
 };
 
-/* "rubbish/core/command.pxd":42
- *         REDIRECT *redirects
+/* "rubbish/core/command.pxd":56
+ *         YACCEOF
  * 
  * cdef class Redirect:             # <<<<<<<<<<<<<<
  *     cdef REDIRECT *_redirect
@@ -890,7 +890,7 @@ struct __pyx_obj_7rubbish_4core_7command_Redirect {
 };
 
 
-/* "rubbish/core/command.pxd":50
+/* "rubbish/core/command.pxd":64
  * 
  * 
  * cdef class Command:             # <<<<<<<<<<<<<<
@@ -905,7 +905,7 @@ struct __pyx_obj_7rubbish_4core_7command_Command {
 };
 
 
-/* "rubbish/core/command.pxd":58
+/* "rubbish/core/command.pxd":72
  * 
  * 
  * cdef class Connection(Command):             # <<<<<<<<<<<<<<
@@ -917,7 +917,7 @@ struct __pyx_obj_7rubbish_4core_7command_Connection {
 };
 
 
-/* "rubbish/core/command.pxd":62
+/* "rubbish/core/command.pxd":76
  * 
  * 
  * cdef class SimpleCommand(Command):             # <<<<<<<<<<<<<<

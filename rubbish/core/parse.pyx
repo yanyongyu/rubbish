@@ -56,8 +56,11 @@ cpdef Command parse(unicode input):
         command = Command.from_ptr(c_command)
         return command
     elif command_end == 0:
-        return None
+        raise MoreInputNeeded
     elif result == 0:
-        # FIXME: input is empty
-        pass
+        return None
     raise SyntaxError("Syntax error")
+
+
+class MoreInputNeeded(Exception):
+    pass

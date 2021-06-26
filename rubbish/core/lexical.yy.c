@@ -366,9 +366,9 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[27] =
     {   0,
-        0,    0,   15,   11,   13,    1,   11,    2,    4,    9,
-        7,   14,    5,   11,    0,   11,    0,    0,    3,    8,
-       10,    0,    6,   11,   12,    0
+        0,    0,   15,   10,   12,    1,   10,    2,    4,    9,
+        7,   14,    5,   10,    0,   10,    0,    0,    3,    8,
+       13,    0,    6,   10,   11,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -792,36 +792,36 @@ case YY_STATE_EOF(INITIAL):
 { return YACCEOF; }
 	YY_BREAK
 case 10:
-/* rule 10 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
-YY_LINENO_REWIND_TO(yy_bp + 1);
-(yy_c_buf_p) = yy_cp = yy_bp + 1;
-YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
 #line 26 "rubbish/core/lexical.l"
-{ return NEWLINE; }
+{
+  yylval.word = strdup(yytext);
+  return WORD;
+}
 	YY_BREAK
 case 11:
+/* rule 11 can match eol */
 YY_RULE_SETUP
-#line 27 "rubbish/core/lexical.l"
+#line 30 "rubbish/core/lexical.l"
 {
   yylval.word = strdup(yytext);
   return WORD;
 }
 	YY_BREAK
 case 12:
-/* rule 12 can match eol */
 YY_RULE_SETUP
-#line 31 "rubbish/core/lexical.l"
-{
-  yylval.word = strdup(yytext);
-  return WORD;
-}
+#line 35 "rubbish/core/lexical.l"
+/* ignore whitespace */ ;
 	YY_BREAK
 case 13:
+/* rule 13 can match eol */
+*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
+YY_LINENO_REWIND_TO(yy_bp + 1);
+(yy_c_buf_p) = yy_cp = yy_bp + 1;
+YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
 #line 36 "rubbish/core/lexical.l"
-/* ignore whitespace */ ;
+/* ignore escaped newline */ ;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP

@@ -535,9 +535,9 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    42,    42,    46,    50,    54,    58,    65,    68,    71,
-      77,    80,    83,    88,    91,    94,    99,   102,   105,   109,
-     110,   113,   114,   118,   121,   124,   129,   135,   141,   144,
-     150,   154,   161,   166,   171
+      77,    80,    83,    90,    93,    96,   103,   106,   109,   113,
+     114,   117,   118,   122,   125,   128,   135,   141,   147,   150,
+     156,   160,   167,   172,   177
 };
 #endif
 
@@ -1445,163 +1445,169 @@ yyreduce:
   case 12:
 #line 83 "rubbish/core/grammar.y"
                                               {
-      command_end = 0;
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
       YYABORT;
     }
-#line 1453 "rubbish/core/grammar.tab.c"
+#line 1455 "rubbish/core/grammar.tab.c"
     break;
 
   case 13:
-#line 88 "rubbish/core/grammar.y"
+#line 90 "rubbish/core/grammar.y"
                                               {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), OR_OR);
     }
-#line 1461 "rubbish/core/grammar.tab.c"
+#line 1463 "rubbish/core/grammar.tab.c"
     break;
 
   case 14:
-#line 91 "rubbish/core/grammar.y"
+#line 93 "rubbish/core/grammar.y"
                                                                    {
       (yyval.command) = create_connection((yyvsp[-4].command), (yyvsp[0].command), OR_OR);
     }
-#line 1469 "rubbish/core/grammar.tab.c"
+#line 1471 "rubbish/core/grammar.tab.c"
     break;
 
   case 15:
-#line 94 "rubbish/core/grammar.y"
+#line 96 "rubbish/core/grammar.y"
                                             {
-      command_end = 0;
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
       YYABORT;
     }
-#line 1479 "rubbish/core/grammar.tab.c"
+#line 1483 "rubbish/core/grammar.tab.c"
     break;
 
   case 16:
-#line 99 "rubbish/core/grammar.y"
+#line 103 "rubbish/core/grammar.y"
                                             {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), AND);
     }
-#line 1487 "rubbish/core/grammar.tab.c"
+#line 1491 "rubbish/core/grammar.tab.c"
     break;
 
   case 17:
-#line 102 "rubbish/core/grammar.y"
+#line 106 "rubbish/core/grammar.y"
                                              {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), SEMI);
     }
-#line 1495 "rubbish/core/grammar.tab.c"
+#line 1499 "rubbish/core/grammar.tab.c"
     break;
 
   case 23:
-#line 118 "rubbish/core/grammar.y"
+#line 122 "rubbish/core/grammar.y"
                                 {
       (yyval.command) = create_connection((yyvsp[-2].command), (yyvsp[0].command), OR);
     }
-#line 1503 "rubbish/core/grammar.tab.c"
+#line 1507 "rubbish/core/grammar.tab.c"
     break;
 
   case 24:
-#line 121 "rubbish/core/grammar.y"
+#line 125 "rubbish/core/grammar.y"
                                                      {
       (yyval.command) = create_connection((yyvsp[-4].command), (yyvsp[0].command), OR);
     }
-#line 1511 "rubbish/core/grammar.tab.c"
+#line 1515 "rubbish/core/grammar.tab.c"
     break;
 
   case 25:
-#line 124 "rubbish/core/grammar.y"
+#line 128 "rubbish/core/grammar.y"
                                         {
-      command_end = 0;
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
       YYABORT;
     }
-#line 1521 "rubbish/core/grammar.tab.c"
+#line 1527 "rubbish/core/grammar.tab.c"
     break;
 
   case 26:
-#line 129 "rubbish/core/grammar.y"
+#line 135 "rubbish/core/grammar.y"
             {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1529 "rubbish/core/grammar.tab.c"
+#line 1535 "rubbish/core/grammar.tab.c"
     break;
 
   case 27:
-#line 135 "rubbish/core/grammar.y"
+#line 141 "rubbish/core/grammar.y"
                    {
       (yyval.command) = (yyvsp[0].command);
     }
-#line 1537 "rubbish/core/grammar.tab.c"
+#line 1543 "rubbish/core/grammar.tab.c"
     break;
 
   case 28:
-#line 141 "rubbish/core/grammar.y"
+#line 147 "rubbish/core/grammar.y"
                            {
       (yyval.command) = merge_simple_command((yyvsp[0].element), (COMMAND *)NULL);
     }
-#line 1545 "rubbish/core/grammar.tab.c"
+#line 1551 "rubbish/core/grammar.tab.c"
     break;
 
   case 29:
-#line 144 "rubbish/core/grammar.y"
+#line 150 "rubbish/core/grammar.y"
                                           {
       (yyval.command) = merge_simple_command((yyvsp[0].element), (yyvsp[-1].command));
     }
-#line 1553 "rubbish/core/grammar.tab.c"
+#line 1559 "rubbish/core/grammar.tab.c"
     break;
 
   case 30:
-#line 150 "rubbish/core/grammar.y"
+#line 156 "rubbish/core/grammar.y"
          {
       (yyval.element).word = (yyvsp[0].word);
       (yyval.element).redirect = 0;
     }
-#line 1562 "rubbish/core/grammar.tab.c"
+#line 1568 "rubbish/core/grammar.tab.c"
     break;
 
   case 31:
-#line 154 "rubbish/core/grammar.y"
+#line 160 "rubbish/core/grammar.y"
                 {
       (yyval.element).redirect = (yyvsp[0].redirect);
       (yyval.element).word = 0;
     }
-#line 1571 "rubbish/core/grammar.tab.c"
+#line 1577 "rubbish/core/grammar.tab.c"
     break;
 
   case 32:
-#line 161 "rubbish/core/grammar.y"
+#line 167 "rubbish/core/grammar.y"
                  {
       source.dest = 1;
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_output_direction, destination);
     }
-#line 1581 "rubbish/core/grammar.tab.c"
+#line 1587 "rubbish/core/grammar.tab.c"
     break;
 
   case 33:
-#line 166 "rubbish/core/grammar.y"
+#line 172 "rubbish/core/grammar.y"
               {
       source.dest = 0;
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_input_direction, destination);
     }
-#line 1591 "rubbish/core/grammar.tab.c"
+#line 1597 "rubbish/core/grammar.tab.c"
     break;
 
   case 34:
-#line 171 "rubbish/core/grammar.y"
+#line 177 "rubbish/core/grammar.y"
                          {
       source.dest = 1;
       destination.filename = (yyvsp[0].word);
       (yyval.redirect) = create_redirection(source, r_appending_to, destination);
     }
-#line 1601 "rubbish/core/grammar.tab.c"
+#line 1607 "rubbish/core/grammar.tab.c"
     break;
 
 
-#line 1605 "rubbish/core/grammar.tab.c"
+#line 1611 "rubbish/core/grammar.tab.c"
 
       default: break;
     }
@@ -1833,7 +1839,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 178 "rubbish/core/grammar.y"
+#line 184 "rubbish/core/grammar.y"
 
 
 void yyerror(const char *s) {
