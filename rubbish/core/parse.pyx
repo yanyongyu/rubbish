@@ -11,7 +11,7 @@ cdef extern from "<stdio.h>":
 
 cdef extern from "lexical.yy.c":
     cdef void yyset_in (FILE * input)
-    # cdef void yyset_out (FILE * output)
+    cdef void yyset_out (FILE * output)
 
 cdef extern from "grammar.tab.c":
     cdef int command_end
@@ -31,7 +31,7 @@ yyset_in(fake_input)
 # yyset_out(fake_output)
 
 
-cpdef Command parse(unicode input):
+cpdef Command parse(unicode input = None):
     cdef int result
     cdef char *temp
     cdef Command command
@@ -40,14 +40,29 @@ cpdef Command parse(unicode input):
     global command_end
     global _is_interactive
 
-    input_bytes = input.encode("utf-8")
-    temp = input_bytes
-    fwrite(temp, sizeof(char), strlen(temp), fake_input)
-
     # reset state
     command_end = 1
     _is_interactive = global_config.interactive
 
+    if not _is_interactive:
+        with open(global_config.file, "r") as f:
+            input = f.read()
+
+
+    # ensure not ended with escaped newline
+    if input.rstrip().endswith("\\"):
+        if _is_interactive:
+            raise MoreInputNeeded
+        else:
+            raise SyntaxError("Syntax error")
+
+    # write to input buffer
+    if input:
+        input_bytes = input.encode("utf-8")
+        temp = input_bytes
+        fwrite(temp, sizeof(char), strlen(temp), fake_input)
+
+    # parse result
     result = yyparse()
 
     c_command = global_command

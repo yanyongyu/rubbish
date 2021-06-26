@@ -14,8 +14,14 @@ from rubbish.core import (
 
 def main(config: Config = None):
     config = config or get_config()
-    config.interactive = True
     set_config(config)
+
+    if config.file:
+        result = parse()
+        if result:
+            print(result)
+            return_code = execute_command(result, sys.stdin, sys.stdout)
+        return
 
     session = PromptSession()
     input_stuck = []

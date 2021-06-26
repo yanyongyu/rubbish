@@ -33,6 +33,6 @@
 }
 
 [ \t\r] /* ignore whitespace */ ;
-\\/[:blank:]*\n /* ignore escaped newline */ ;
+\\[:blank:]*\n /* ignore escaped newline */ ;
 
 %%

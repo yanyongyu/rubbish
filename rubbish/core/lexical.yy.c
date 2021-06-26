@@ -815,10 +815,6 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
-YY_LINENO_REWIND_TO(yy_bp + 1);
-(yy_c_buf_p) = yy_cp = yy_bp + 1;
-YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
 #line 36 "rubbish/core/lexical.l"
 /* ignore escaped newline */ ;
@@ -828,7 +824,7 @@ YY_RULE_SETUP
 #line 38 "rubbish/core/lexical.l"
 ECHO;
 	YY_BREAK
-#line 832 "rubbish/core/lexical.yy.c"
+#line 828 "rubbish/core/lexical.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{

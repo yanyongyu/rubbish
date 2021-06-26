@@ -1,16 +1,22 @@
 cdef class Config:
 
-    def __cinit__(self, bint interactive = False, bint use_ansi = True):
-        self._interactive = interactive
+    def __cinit__(self, unicode file = "", bint use_ansi = True):
+        file_bytes = file.encode("utf-8")
+        self._file = file_bytes
         self._use_ansi = use_ansi
 
     @property
-    def interactive(self):
-        return self._interactive
+    def file(self):
+        return self._file.decode("utf-8") or None
 
-    @interactive.setter
-    def interactive(self, value):
-        self._interactive = value
+    @file.setter
+    def file(self, value):
+        value_bytes = value.encode("utf-8") if value else b""
+        self._file = value_bytes
+
+    @property
+    def interactive(self):
+        return not bool(self._file)
 
     @property
     def use_ansi(self):

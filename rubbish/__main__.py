@@ -15,11 +15,14 @@ parser.add_argument(
     dest="use_ansi",
     help="disable ANSI output.",
 )
+parser.add_argument(
+    "file", action="store", nargs="?", default=None, metavar="FILE", help="input file."
+)
 
 
 def start():
-    result = parser.parse_args(namespace=Config())
-    main(result)
+    config = parser.parse_args(namespace=Config())
+    main(config)
 
 
 if __name__ == "__main__":

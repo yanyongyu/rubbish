@@ -842,12 +842,12 @@ struct __pyx_obj_7rubbish_4core_13color_control_BackWrap;
  * 
  * cdef class Config:             # <<<<<<<<<<<<<<
  *     cdef bint _use_ansi
- *     cdef bint _interactive
+ *     cdef char *_file
  */
 struct __pyx_obj_7rubbish_4core_6config_Config {
   PyObject_HEAD
   int _use_ansi;
-  int _interactive;
+  char *_file;
 };
 
 
