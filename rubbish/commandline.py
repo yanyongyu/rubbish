@@ -20,7 +20,7 @@ def main(config: Config = None):
         result = parse()
         if result:
             for command in result:
-                print(command)
+                print(repr(command))
                 return_code = execute_command(
                     command, sys.stdin.fileno(), sys.stdout.fileno(), False
                 )
@@ -42,7 +42,7 @@ def main(config: Config = None):
             input_stuck = []
             if result:
                 for command in result:
-                    print(command)
+                    print(repr(command))
                     return_code = execute_command(
                         command, sys.stdin.fileno(), sys.stdout.fileno(), False
                     )

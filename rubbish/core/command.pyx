@@ -72,7 +72,7 @@ cdef class Redirect:
 
     @property
     def instruction(self):
-        return self._redirect.instruction
+        return RedirectInstruction(self._redirect.instruction)
 
     @property
     def redirectee(self):
@@ -86,7 +86,10 @@ cdef class Redirect:
         return wrapper
 
     def __str__(self):
-        return f"Redirect({self.redirector} {self.instruction} {self.redirectee})"
+        return f"({self.redirector} {self.instruction!s} {self.redirectee})"
+
+    def __repr__(self):
+        return f"Redirect({self.redirector} {self.instruction!s} {self.redirectee})"
 
 
 cdef class Command:
@@ -144,6 +147,9 @@ cdef class Connection(Command):
         return TokenType(self._command.info.Connection.connector)
 
     def __str__(self):
+        return f"({self.first}) {self.connector!s} ({self.second})"
+
+    def __repr__(self):
         return f"Connection({self.first} {self.connector!s} {self.second})"
 
 
@@ -196,4 +202,7 @@ cdef class SimpleCommand(Command):
         return self._redirects
 
     def __str__(self):
-        return f"SimpleCommand({self.words}, ({', '.join(map(str, self.redirects))}))"
+        return f"{' '.join(self.words)} {' '.join(map(str, self.redirects))}".strip()
+
+    def __repr__(self):
+        return f"SimpleCommand({self.words}, {self.redirects})"

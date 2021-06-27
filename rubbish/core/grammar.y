@@ -80,13 +80,10 @@ simple_list:
   ;
 
 simple_list_inner:
-    simple_list_inner AND_AND simple_list_inner {
-      $$ = create_connection($1, $3, AND_AND);
+    simple_list_inner AND_AND newline_list simple_list_inner {
+      $$ = create_connection($1, $4, AND_AND);
     }
-  | simple_list_inner AND_AND NEWLINE newline_list simple_list_inner {
-      $$ = create_connection($1, $5, AND_AND);
-    }
-  | simple_list_inner AND_AND NEWLINE YACCEOF {
+  | simple_list_inner AND_AND newline_list YACCEOF {
       if (is_interactive) {
         command_end = 0;
       }
@@ -94,13 +91,10 @@ simple_list_inner:
       eof_encountered = 1;
       YYABORT;
     }
-  | simple_list_inner OR_OR simple_list_inner {
-      $$ = create_connection($1, $3, OR_OR);
+  | simple_list_inner OR_OR newline_list simple_list_inner {
+      $$ = create_connection($1, $4, OR_OR);
     }
-  | simple_list_inner OR_OR NEWLINE newline_list simple_list_inner {
-      $$ = create_connection($1, $5, OR_OR);
-    }
-  | simple_list_inner OR_OR NEWLINE YACCEOF {
+  | simple_list_inner OR_OR newline_list YACCEOF {
       if (is_interactive) {
         command_end = 0;
       }
@@ -127,13 +121,10 @@ newline_list:
   ;
 
 pipeline_command:
-    pipeline_command OR command {
-      $$ = create_connection($1, $3, OR);
+    pipeline_command OR newline_list command {
+      $$ = create_connection($1, $4, OR);
     }
-  | pipeline_command OR NEWLINE newline_list command {
-      $$ = create_connection($1, $5, OR);
-    }
-  | pipeline_command OR NEWLINE YACCEOF {
+  | pipeline_command OR newline_list YACCEOF {
       if (is_interactive) {
         command_end = 0;
       }
