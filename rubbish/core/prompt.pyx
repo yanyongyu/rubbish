@@ -38,5 +38,5 @@ cpdef unicode get_prompt():
     prompt += Fore.GREEN + hostname + Fore.RESET
     prompt += "]:"
     prompt += Fore.CYAN + cwd + Fore.RESET
-    prompt += promptchar
+    prompt += "\n" + promptchar
     return prompt

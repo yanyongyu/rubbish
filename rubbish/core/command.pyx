@@ -135,6 +135,8 @@ cdef class Connection(Command):
 
     @property
     def second(self):
+        if self._command.info.Connection.second is NULL:
+            return None
         return Command.from_ptr(self._command.info.Connection.second)
 
     @property

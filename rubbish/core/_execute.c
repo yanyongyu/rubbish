@@ -7,13 +7,13 @@ int execute(char **parameters, int input, int output) {
   int status;
   pid_t pid = fork();
   if (pid == -1) {
-    printf("create fork failed\n");
+    dprintf(output, "create fork failed\n");
   } else if (pid == 0) {
     dup2(input, 0);
     dup2(output, 1);
     int result = execvp(parameters[0], parameters);
     if (result < 0) {
-      printf("%s: command not found!\n", parameters[0]);
+      dprintf(output, "%s: command not found!\n", parameters[0]);
     }
     exit(errno);
   } else {

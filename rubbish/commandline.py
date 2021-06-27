@@ -22,7 +22,7 @@ def main(config: Config = None):
             for command in result:
                 print(command)
                 return_code = execute_command(
-                    command, sys.stdin.fileno(), sys.stdout.fileno()
+                    command, sys.stdin.fileno(), sys.stdout.fileno(), False
                 )
         return
 
@@ -32,7 +32,7 @@ def main(config: Config = None):
     while True:
         try:
             if more:
-                prompt = "... "
+                prompt = ".     "
             else:
                 prompt = ANSI(get_prompt())
             input = session.prompt(prompt)
@@ -44,7 +44,7 @@ def main(config: Config = None):
                 for command in result:
                     print(command)
                     return_code = execute_command(
-                        command, sys.stdin.fileno(), sys.stdout.fileno()
+                        command, sys.stdin.fileno(), sys.stdout.fileno(), False
                     )
         except MoreInputNeeded:
             more = True

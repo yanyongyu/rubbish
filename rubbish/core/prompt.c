@@ -11,7 +11,7 @@
         ],
         "name": "rubbish.core.prompt",
         "sources": [
-            "/mnt/e/desktop/\u5927\u4e09\u4e0b/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/prompt.pyx"
+            "/media/yan/\u6570\u636e/\u5171\u4eab\u6587\u4ef6/\u64cd\u4f5c\u7cfb\u7edf\u8bfe\u7a0b\u8bbe\u8ba1/rubbish/rubbish/core/prompt.pyx"
         ]
     },
     "module_name": "rubbish.core.prompt"
@@ -1192,6 +1192,7 @@ static const char __pyx_k_[] = "~";
 static const char __pyx_k__2[] = "[";
 static const char __pyx_k__3[] = "@";
 static const char __pyx_k__4[] = "]:";
+static const char __pyx_k__5[] = "\n";
 static const char __pyx_k_os[] = "os";
 static const char __pyx_k_RED[] = "RED";
 static const char __pyx_k_CYAN[] = "CYAN";
@@ -1215,6 +1216,7 @@ static PyObject *__pyx_n_s_RESET;
 static PyObject *__pyx_kp_u__2;
 static PyObject *__pyx_kp_u__3;
 static PyObject *__pyx_kp_u__4;
+static PyObject *__pyx_kp_u__5;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_expanduser;
 static PyObject *__pyx_n_s_import;
@@ -1890,7 +1892,7 @@ static PyObject *__pyx_f_7rubbish_4core_6prompt_get_prompt(CYTHON_UNUSED int __p
  *     prompt += Fore.GREEN + hostname + Fore.RESET
  *     prompt += "]:"             # <<<<<<<<<<<<<<
  *     prompt += Fore.CYAN + cwd + Fore.RESET
- *     prompt += promptchar
+ *     prompt += "\n" + promptchar
  */
   __pyx_t_1 = __Pyx_PyUnicode_ConcatSafe(__pyx_v_prompt, __pyx_kp_u__4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1901,7 +1903,7 @@ static PyObject *__pyx_f_7rubbish_4core_6prompt_get_prompt(CYTHON_UNUSED int __p
  *     prompt += Fore.GREEN + hostname + Fore.RESET
  *     prompt += "]:"
  *     prompt += Fore.CYAN + cwd + Fore.RESET             # <<<<<<<<<<<<<<
- *     prompt += promptchar
+ *     prompt += "\n" + promptchar
  *     return prompt
  */
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_7rubbish_4core_13color_control_Fore), __pyx_n_s_CYAN); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
@@ -1925,17 +1927,20 @@ static PyObject *__pyx_f_7rubbish_4core_6prompt_get_prompt(CYTHON_UNUSED int __p
   /* "rubbish/core/prompt.pyx":41
  *     prompt += "]:"
  *     prompt += Fore.CYAN + cwd + Fore.RESET
- *     prompt += promptchar             # <<<<<<<<<<<<<<
+ *     prompt += "\n" + promptchar             # <<<<<<<<<<<<<<
  *     return prompt
  */
-  __pyx_t_1 = __Pyx_PyUnicode_ConcatSafe(__pyx_v_prompt, __pyx_v_promptchar); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_ConcatSafe(__pyx_kp_u__5, __pyx_v_promptchar); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_prompt, ((PyObject*)__pyx_t_1));
-  __pyx_t_1 = 0;
+  __pyx_t_3 = __Pyx_PyUnicode_ConcatSafe(__pyx_v_prompt, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(__pyx_v_prompt, ((PyObject*)__pyx_t_3));
+  __pyx_t_3 = 0;
 
   /* "rubbish/core/prompt.pyx":42
  *     prompt += Fore.CYAN + cwd + Fore.RESET
- *     prompt += promptchar
+ *     prompt += "\n" + promptchar
  *     return prompt             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
@@ -2067,6 +2072,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
   {&__pyx_kp_u__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 1, 0, 0},
   {&__pyx_kp_u__4, __pyx_k__4, sizeof(__pyx_k__4), 0, 1, 0, 0},
+  {&__pyx_kp_u__5, __pyx_k__5, sizeof(__pyx_k__5), 0, 1, 0, 0},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_expanduser, __pyx_k_expanduser, sizeof(__pyx_k_expanduser), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},

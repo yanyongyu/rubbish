@@ -1419,7 +1419,7 @@ yyreduce:
   case 8:
 #line 74 "rubbish/core/grammar.y"
                           {
-      (yyval.command) = (yyvsp[-1].command);
+      (yyval.command) = create_connection((yyvsp[-1].command), (COMMAND *)NULL, AND);
     }
 #line 1425 "rubbish/core/grammar.tab.c"
     break;

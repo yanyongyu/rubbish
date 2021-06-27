@@ -986,7 +986,7 @@ struct __pyx_vtabstruct_7rubbish_4core_7command_Connection {
 static struct __pyx_vtabstruct_7rubbish_4core_7command_Connection *__pyx_vtabptr_7rubbish_4core_7command_Connection;
 
 
-/* "rubbish/core/command.pyx":148
+/* "rubbish/core/command.pyx":150
  * 
  * 
  * cdef class SimpleCommand(Command):             # <<<<<<<<<<<<<<
@@ -3178,8 +3178,8 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_5first___get__(st
  * 
  *     @property
  *     def second(self):             # <<<<<<<<<<<<<<
- *         return Command.from_ptr(self._command.info.Connection.second)
- * 
+ *         if self._command.info.Connection.second is NULL:
+ *             return None
  */
 
 /* Python wrapper */
@@ -3198,7 +3198,8 @@ static PyObject *__pyx_pw_7rubbish_4core_7command_10Connection_6second_1__get__(
 static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_6second___get__(struct __pyx_obj_7rubbish_4core_7command_Connection *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3207,28 +3208,58 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_6second___get__(s
   /* "rubbish/core/command.pyx":138
  *     @property
  *     def second(self):
+ *         if self._command.info.Connection.second is NULL:             # <<<<<<<<<<<<<<
+ *             return None
+ *         return Command.from_ptr(self._command.info.Connection.second)
+ */
+  __pyx_t_1 = ((__pyx_v_self->__pyx_base._command->info.Connection->second == NULL) != 0);
+  if (__pyx_t_1) {
+
+    /* "rubbish/core/command.pyx":139
+ *     def second(self):
+ *         if self._command.info.Connection.second is NULL:
+ *             return None             # <<<<<<<<<<<<<<
+ *         return Command.from_ptr(self._command.info.Connection.second)
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+
+    /* "rubbish/core/command.pyx":138
+ *     @property
+ *     def second(self):
+ *         if self._command.info.Connection.second is NULL:             # <<<<<<<<<<<<<<
+ *             return None
+ *         return Command.from_ptr(self._command.info.Connection.second)
+ */
+  }
+
+  /* "rubbish/core/command.pyx":140
+ *         if self._command.info.Connection.second is NULL:
+ *             return None
  *         return Command.from_ptr(self._command.info.Connection.second)             # <<<<<<<<<<<<<<
  * 
  *     @property
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_vtabptr_7rubbish_4core_7command_Command->from_ptr(__pyx_v_self->__pyx_base._command->info.Connection->second, NULL)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 138, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_2 = ((PyObject *)__pyx_vtabptr_7rubbish_4core_7command_Command->from_ptr(__pyx_v_self->__pyx_base._command->info.Connection->second, NULL)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 140, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
   goto __pyx_L0;
 
   /* "rubbish/core/command.pyx":137
  * 
  *     @property
  *     def second(self):             # <<<<<<<<<<<<<<
- *         return Command.from_ptr(self._command.info.Connection.second)
- * 
+ *         if self._command.info.Connection.second is NULL:
+ *             return None
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_AddTraceback("rubbish.core.command.Connection.second.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3237,7 +3268,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_6second___get__(s
   return __pyx_r;
 }
 
-/* "rubbish/core/command.pyx":141
+/* "rubbish/core/command.pyx":143
  * 
  *     @property
  *     def connector(self):             # <<<<<<<<<<<<<<
@@ -3270,7 +3301,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_9connector___get_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "rubbish/core/command.pyx":142
+  /* "rubbish/core/command.pyx":144
  *     @property
  *     def connector(self):
  *         return TokenType(self._command.info.Connection.connector)             # <<<<<<<<<<<<<<
@@ -3278,9 +3309,9 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_9connector___get_
  *     def __str__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_TokenType); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 142, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_TokenType); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base._command->info.Connection->connector); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 142, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base._command->info.Connection->connector); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -3295,14 +3326,14 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_9connector___get_
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 142, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rubbish/core/command.pyx":141
+  /* "rubbish/core/command.pyx":143
  * 
  *     @property
  *     def connector(self):             # <<<<<<<<<<<<<<
@@ -3324,7 +3355,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_9connector___get_
   return __pyx_r;
 }
 
-/* "rubbish/core/command.pyx":144
+/* "rubbish/core/command.pyx":146
  *         return TokenType(self._command.info.Connection.connector)
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -3358,7 +3389,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_2__str__(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "rubbish/core/command.pyx":145
+  /* "rubbish/core/command.pyx":147
  * 
  *     def __str__(self):
  *         return f"Connection({self.first} {self.connector!s} {self.second})"             # <<<<<<<<<<<<<<
@@ -3366,7 +3397,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_2__str__(struct _
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(7); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(7); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = 0;
   __pyx_t_3 = 127;
@@ -3374,9 +3405,9 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_2__str__(struct _
   __pyx_t_2 += 11;
   __Pyx_GIVEREF(__pyx_kp_u_Connection);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_Connection);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_first); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_first); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
@@ -3388,9 +3419,9 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_2__str__(struct _
   __pyx_t_2 += 1;
   __Pyx_GIVEREF(__pyx_kp_u_);
   PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_connector); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_connector); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Unicode(__pyx_t_5), __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_FormatSimpleAndDecref(PyObject_Unicode(__pyx_t_5), __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
@@ -3402,9 +3433,9 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_2__str__(struct _
   __pyx_t_2 += 1;
   __Pyx_GIVEREF(__pyx_kp_u_);
   PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_second); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_second); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
@@ -3416,14 +3447,14 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_2__str__(struct _
   __pyx_t_2 += 1;
   __Pyx_GIVEREF(__pyx_kp_u__2);
   PyTuple_SET_ITEM(__pyx_t_1, 6, __pyx_kp_u__2);
-  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_1, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_1, 7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_5;
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "rubbish/core/command.pyx":144
+  /* "rubbish/core/command.pyx":146
  *         return TokenType(self._command.info.Connection.connector)
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -3557,7 +3588,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_10Connection_6__setstate_cytho
   return __pyx_r;
 }
 
-/* "rubbish/core/command.pyx":150
+/* "rubbish/core/command.pyx":152
  * cdef class SimpleCommand(Command):
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3588,7 +3619,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
   REDIRECT *__pyx_t_4;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "rubbish/core/command.pyx":155
+  /* "rubbish/core/command.pyx":157
  *         cdef REDIRECT *redirect
  *         cdef REDIRECT *temp2
  *         if self._command is not NULL and self.ptr_set is True:             # <<<<<<<<<<<<<<
@@ -3606,7 +3637,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "rubbish/core/command.pyx":156
+    /* "rubbish/core/command.pyx":158
  *         cdef REDIRECT *temp2
  *         if self._command is not NULL and self.ptr_set is True:
  *             word = self._command.info.Simple.words             # <<<<<<<<<<<<<<
@@ -3616,7 +3647,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
     __pyx_t_3 = __pyx_v_self->__pyx_base._command->info.Simple->words;
     __pyx_v_word = __pyx_t_3;
 
-    /* "rubbish/core/command.pyx":157
+    /* "rubbish/core/command.pyx":159
  *         if self._command is not NULL and self.ptr_set is True:
  *             word = self._command.info.Simple.words
  *             while word:             # <<<<<<<<<<<<<<
@@ -3627,7 +3658,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
       __pyx_t_1 = (__pyx_v_word != 0);
       if (!__pyx_t_1) break;
 
-      /* "rubbish/core/command.pyx":158
+      /* "rubbish/core/command.pyx":160
  *             word = self._command.info.Simple.words
  *             while word:
  *                 temp1 = word             # <<<<<<<<<<<<<<
@@ -3636,7 +3667,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
  */
       __pyx_v_temp1 = __pyx_v_word;
 
-      /* "rubbish/core/command.pyx":159
+      /* "rubbish/core/command.pyx":161
  *             while word:
  *                 temp1 = word
  *                 word = word.next             # <<<<<<<<<<<<<<
@@ -3646,7 +3677,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
       __pyx_t_3 = __pyx_v_word->next;
       __pyx_v_word = __pyx_t_3;
 
-      /* "rubbish/core/command.pyx":160
+      /* "rubbish/core/command.pyx":162
  *                 temp1 = word
  *                 word = word.next
  *                 free(word)             # <<<<<<<<<<<<<<
@@ -3656,7 +3687,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
       free(__pyx_v_word);
     }
 
-    /* "rubbish/core/command.pyx":161
+    /* "rubbish/core/command.pyx":163
  *                 word = word.next
  *                 free(word)
  *             redirect = self._command.info.Simple.redirects             # <<<<<<<<<<<<<<
@@ -3666,7 +3697,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
     __pyx_t_4 = __pyx_v_self->__pyx_base._command->info.Simple->redirects;
     __pyx_v_redirect = __pyx_t_4;
 
-    /* "rubbish/core/command.pyx":162
+    /* "rubbish/core/command.pyx":164
  *                 free(word)
  *             redirect = self._command.info.Simple.redirects
  *             while redirect:             # <<<<<<<<<<<<<<
@@ -3677,7 +3708,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
       __pyx_t_1 = (__pyx_v_redirect != 0);
       if (!__pyx_t_1) break;
 
-      /* "rubbish/core/command.pyx":163
+      /* "rubbish/core/command.pyx":165
  *             redirect = self._command.info.Simple.redirects
  *             while redirect:
  *                 temp2 = redirect             # <<<<<<<<<<<<<<
@@ -3686,7 +3717,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
  */
       __pyx_v_temp2 = __pyx_v_redirect;
 
-      /* "rubbish/core/command.pyx":164
+      /* "rubbish/core/command.pyx":166
  *             while redirect:
  *                 temp2 = redirect
  *                 redirect = redirect.next             # <<<<<<<<<<<<<<
@@ -3696,7 +3727,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
       __pyx_t_4 = __pyx_v_redirect->next;
       __pyx_v_redirect = __pyx_t_4;
 
-      /* "rubbish/core/command.pyx":165
+      /* "rubbish/core/command.pyx":167
  *                 temp2 = redirect
  *                 redirect = redirect.next
  *                 free(redirect)             # <<<<<<<<<<<<<<
@@ -3706,7 +3737,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
       free(__pyx_v_redirect);
     }
 
-    /* "rubbish/core/command.pyx":166
+    /* "rubbish/core/command.pyx":168
  *                 redirect = redirect.next
  *                 free(redirect)
  *             free(self._command.info.Simple)             # <<<<<<<<<<<<<<
@@ -3715,7 +3746,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
  */
     free(__pyx_v_self->__pyx_base._command->info.Simple);
 
-    /* "rubbish/core/command.pyx":167
+    /* "rubbish/core/command.pyx":169
  *                 free(redirect)
  *             free(self._command.info.Simple)
  *             free(self._command)             # <<<<<<<<<<<<<<
@@ -3724,7 +3755,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
  */
     free(__pyx_v_self->__pyx_base._command);
 
-    /* "rubbish/core/command.pyx":168
+    /* "rubbish/core/command.pyx":170
  *             free(self._command.info.Simple)
  *             free(self._command)
  *             self._command = NULL             # <<<<<<<<<<<<<<
@@ -3733,7 +3764,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
  */
     __pyx_v_self->__pyx_base._command = NULL;
 
-    /* "rubbish/core/command.pyx":155
+    /* "rubbish/core/command.pyx":157
  *         cdef REDIRECT *redirect
  *         cdef REDIRECT *temp2
  *         if self._command is not NULL and self.ptr_set is True:             # <<<<<<<<<<<<<<
@@ -3742,7 +3773,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
  */
   }
 
-  /* "rubbish/core/command.pyx":150
+  /* "rubbish/core/command.pyx":152
  * cdef class SimpleCommand(Command):
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3754,7 +3785,7 @@ static void __pyx_pf_7rubbish_4core_7command_13SimpleCommand___dealloc__(struct 
   __Pyx_RefNannyFinishContext();
 }
 
-/* "rubbish/core/command.pyx":171
+/* "rubbish/core/command.pyx":173
  * 
  *     @property
  *     def words(self):             # <<<<<<<<<<<<<<
@@ -3791,7 +3822,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "rubbish/core/command.pyx":174
+  /* "rubbish/core/command.pyx":176
  *         cdef list words
  *         cdef WORD_LIST *word
  *         if not self._words:             # <<<<<<<<<<<<<<
@@ -3802,19 +3833,19 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "rubbish/core/command.pyx":175
+    /* "rubbish/core/command.pyx":177
  *         cdef WORD_LIST *word
  *         if not self._words:
  *             words = []             # <<<<<<<<<<<<<<
  *             word = self._command.info.Simple.words
  *             while word:
  */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 175, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_words = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "rubbish/core/command.pyx":176
+    /* "rubbish/core/command.pyx":178
  *         if not self._words:
  *             words = []
  *             word = self._command.info.Simple.words             # <<<<<<<<<<<<<<
@@ -3824,7 +3855,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
     __pyx_t_4 = __pyx_v_self->__pyx_base._command->info.Simple->words;
     __pyx_v_word = __pyx_t_4;
 
-    /* "rubbish/core/command.pyx":177
+    /* "rubbish/core/command.pyx":179
  *             words = []
  *             word = self._command.info.Simple.words
  *             while word:             # <<<<<<<<<<<<<<
@@ -3835,7 +3866,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
       __pyx_t_2 = (__pyx_v_word != 0);
       if (!__pyx_t_2) break;
 
-      /* "rubbish/core/command.pyx":178
+      /* "rubbish/core/command.pyx":180
  *             word = self._command.info.Simple.words
  *             while word:
  *                 words.insert(0, word.word.decode("utf-8"))             # <<<<<<<<<<<<<<
@@ -3843,12 +3874,12 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
  *             self._words = tuple(words)
  */
       __pyx_t_5 = __pyx_v_word->word;
-      __pyx_t_3 = __Pyx_decode_c_string(__pyx_t_5, 0, strlen(__pyx_t_5), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 178, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_decode_c_string(__pyx_t_5, 0, strlen(__pyx_t_5), NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 180, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = PyList_Insert(__pyx_v_words, 0, __pyx_t_3); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(1, 178, __pyx_L1_error)
+      __pyx_t_6 = PyList_Insert(__pyx_v_words, 0, __pyx_t_3); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(1, 180, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "rubbish/core/command.pyx":179
+      /* "rubbish/core/command.pyx":181
  *             while word:
  *                 words.insert(0, word.word.decode("utf-8"))
  *                 word = word.next             # <<<<<<<<<<<<<<
@@ -3859,14 +3890,14 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
       __pyx_v_word = __pyx_t_4;
     }
 
-    /* "rubbish/core/command.pyx":180
+    /* "rubbish/core/command.pyx":182
  *                 words.insert(0, word.word.decode("utf-8"))
  *                 word = word.next
  *             self._words = tuple(words)             # <<<<<<<<<<<<<<
  *         return self._words
  * 
  */
-    __pyx_t_3 = PyList_AsTuple(__pyx_v_words); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 180, __pyx_L1_error)
+    __pyx_t_3 = PyList_AsTuple(__pyx_v_words); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->_words);
@@ -3874,7 +3905,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
     __pyx_v_self->_words = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "rubbish/core/command.pyx":174
+    /* "rubbish/core/command.pyx":176
  *         cdef list words
  *         cdef WORD_LIST *word
  *         if not self._words:             # <<<<<<<<<<<<<<
@@ -3883,7 +3914,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
  */
   }
 
-  /* "rubbish/core/command.pyx":181
+  /* "rubbish/core/command.pyx":183
  *                 word = word.next
  *             self._words = tuple(words)
  *         return self._words             # <<<<<<<<<<<<<<
@@ -3895,7 +3926,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
   __pyx_r = __pyx_v_self->_words;
   goto __pyx_L0;
 
-  /* "rubbish/core/command.pyx":171
+  /* "rubbish/core/command.pyx":173
  * 
  *     @property
  *     def words(self):             # <<<<<<<<<<<<<<
@@ -3915,7 +3946,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_5words___get__
   return __pyx_r;
 }
 
-/* "rubbish/core/command.pyx":184
+/* "rubbish/core/command.pyx":186
  * 
  *     @property
  *     def redirects(self):             # <<<<<<<<<<<<<<
@@ -3951,7 +3982,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "rubbish/core/command.pyx":187
+  /* "rubbish/core/command.pyx":189
  *         cdef list redirects
  *         cdef REDIRECT *redirect
  *         if not self._redirects:             # <<<<<<<<<<<<<<
@@ -3962,19 +3993,19 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "rubbish/core/command.pyx":188
+    /* "rubbish/core/command.pyx":190
  *         cdef REDIRECT *redirect
  *         if not self._redirects:
  *             redirects = []             # <<<<<<<<<<<<<<
  *             redirect = self._command.info.Simple.redirects
  *             while redirect:
  */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 188, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 190, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_redirects = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "rubbish/core/command.pyx":189
+    /* "rubbish/core/command.pyx":191
  *         if not self._redirects:
  *             redirects = []
  *             redirect = self._command.info.Simple.redirects             # <<<<<<<<<<<<<<
@@ -3984,7 +4015,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
     __pyx_t_4 = __pyx_v_self->__pyx_base._command->info.Simple->redirects;
     __pyx_v_redirect = __pyx_t_4;
 
-    /* "rubbish/core/command.pyx":190
+    /* "rubbish/core/command.pyx":192
  *             redirects = []
  *             redirect = self._command.info.Simple.redirects
  *             while redirect:             # <<<<<<<<<<<<<<
@@ -3995,19 +4026,19 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
       __pyx_t_2 = (__pyx_v_redirect != 0);
       if (!__pyx_t_2) break;
 
-      /* "rubbish/core/command.pyx":191
+      /* "rubbish/core/command.pyx":193
  *             redirect = self._command.info.Simple.redirects
  *             while redirect:
  *                 redirects.append(Redirect.from_ptr(redirect))             # <<<<<<<<<<<<<<
  *                 redirect = redirect.next
  *             self._redirects = tuple(redirects)
  */
-      __pyx_t_3 = ((PyObject *)__pyx_vtabptr_7rubbish_4core_7command_Redirect->from_ptr(__pyx_v_redirect, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 191, __pyx_L1_error)
+      __pyx_t_3 = ((PyObject *)__pyx_vtabptr_7rubbish_4core_7command_Redirect->from_ptr(__pyx_v_redirect, NULL)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 193, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_redirects, __pyx_t_3); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 191, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_redirects, __pyx_t_3); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 193, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "rubbish/core/command.pyx":192
+      /* "rubbish/core/command.pyx":194
  *             while redirect:
  *                 redirects.append(Redirect.from_ptr(redirect))
  *                 redirect = redirect.next             # <<<<<<<<<<<<<<
@@ -4018,14 +4049,14 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
       __pyx_v_redirect = __pyx_t_4;
     }
 
-    /* "rubbish/core/command.pyx":193
+    /* "rubbish/core/command.pyx":195
  *                 redirects.append(Redirect.from_ptr(redirect))
  *                 redirect = redirect.next
  *             self._redirects = tuple(redirects)             # <<<<<<<<<<<<<<
  *         return self._redirects
  * 
  */
-    __pyx_t_3 = PyList_AsTuple(__pyx_v_redirects); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 193, __pyx_L1_error)
+    __pyx_t_3 = PyList_AsTuple(__pyx_v_redirects); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 195, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->_redirects);
@@ -4033,7 +4064,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
     __pyx_v_self->_redirects = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "rubbish/core/command.pyx":187
+    /* "rubbish/core/command.pyx":189
  *         cdef list redirects
  *         cdef REDIRECT *redirect
  *         if not self._redirects:             # <<<<<<<<<<<<<<
@@ -4042,7 +4073,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
  */
   }
 
-  /* "rubbish/core/command.pyx":194
+  /* "rubbish/core/command.pyx":196
  *                 redirect = redirect.next
  *             self._redirects = tuple(redirects)
  *         return self._redirects             # <<<<<<<<<<<<<<
@@ -4054,7 +4085,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
   __pyx_r = __pyx_v_self->_redirects;
   goto __pyx_L0;
 
-  /* "rubbish/core/command.pyx":184
+  /* "rubbish/core/command.pyx":186
  * 
  *     @property
  *     def redirects(self):             # <<<<<<<<<<<<<<
@@ -4074,7 +4105,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_9redirects___g
   return __pyx_r;
 }
 
-/* "rubbish/core/command.pyx":196
+/* "rubbish/core/command.pyx":198
  *         return self._redirects
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -4107,13 +4138,13 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_2__str__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "rubbish/core/command.pyx":197
+  /* "rubbish/core/command.pyx":199
  * 
  *     def __str__(self):
  *         return f"SimpleCommand({self.words}, ({', '.join(map(str, self.redirects))}))"             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = 0;
   __pyx_t_3 = 127;
@@ -4121,9 +4152,9 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_2__str__(struc
   __pyx_t_2 += 14;
   __Pyx_GIVEREF(__pyx_kp_u_SimpleCommand);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_SimpleCommand);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_words); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_words); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
@@ -4135,9 +4166,9 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_2__str__(struc
   __pyx_t_2 += 3;
   __Pyx_GIVEREF(__pyx_kp_u__10);
   PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u__10);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_redirects); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_redirects); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(((PyObject *)(&PyUnicode_Type)));
   __Pyx_GIVEREF(((PyObject *)(&PyUnicode_Type)));
@@ -4145,10 +4176,10 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_2__str__(struc
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_map, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_map, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyUnicode_Join(__pyx_kp_u__11, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_4 = PyUnicode_Join(__pyx_kp_u__11, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
@@ -4160,14 +4191,14 @@ static PyObject *__pyx_pf_7rubbish_4core_7command_13SimpleCommand_2__str__(struc
   __pyx_t_2 += 2;
   __Pyx_GIVEREF(__pyx_kp_u__12);
   PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u__12);
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "rubbish/core/command.pyx":196
+  /* "rubbish/core/command.pyx":198
  *         return self._redirects
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -6663,7 +6694,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 2, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 116, __pyx_L1_error)
-  __pyx_builtin_map = __Pyx_GetBuiltinName(__pyx_n_s_map); if (!__pyx_builtin_map) __PYX_ERR(1, 197, __pyx_L1_error)
+  __pyx_builtin_map = __Pyx_GetBuiltinName(__pyx_n_s_map); if (!__pyx_builtin_map) __PYX_ERR(1, 199, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -6908,16 +6939,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtabptr_7rubbish_4core_7command_SimpleCommand = &__pyx_vtable_7rubbish_4core_7command_SimpleCommand;
   __pyx_vtable_7rubbish_4core_7command_SimpleCommand.__pyx_base = *__pyx_vtabptr_7rubbish_4core_7command_Command;
   __pyx_type_7rubbish_4core_7command_SimpleCommand.tp_base = __pyx_ptype_7rubbish_4core_7command_Command;
-  if (PyType_Ready(&__pyx_type_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 148, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 150, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_7rubbish_4core_7command_SimpleCommand.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7rubbish_4core_7command_SimpleCommand.tp_dictoffset && __pyx_type_7rubbish_4core_7command_SimpleCommand.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_7rubbish_4core_7command_SimpleCommand.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_7rubbish_4core_7command_SimpleCommand.tp_dict, __pyx_vtabptr_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 148, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_SimpleCommand_2, (PyObject *)&__pyx_type_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 148, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 148, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_7rubbish_4core_7command_SimpleCommand.tp_dict, __pyx_vtabptr_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 150, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_SimpleCommand_2, (PyObject *)&__pyx_type_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 150, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7rubbish_4core_7command_SimpleCommand) < 0) __PYX_ERR(1, 150, __pyx_L1_error)
   __pyx_ptype_7rubbish_4core_7command_SimpleCommand = &__pyx_type_7rubbish_4core_7command_SimpleCommand;
   __Pyx_EnumMeta.tp_base = (&PyType_Type);
   if (PyType_Ready(&__Pyx_EnumMeta) < 0) __PYX_ERR(0, 15, __pyx_L1_error)

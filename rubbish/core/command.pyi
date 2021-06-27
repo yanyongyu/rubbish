@@ -1,5 +1,5 @@
-from typing import Tuple
 from enum import IntEnum
+from typing import Tuple, Optional
 
 class CommandType(IntEnum):
     cm_simple = 0
@@ -26,7 +26,7 @@ class Connection(Command):
     @property
     def first(self) -> Command: ...
     @property
-    def second(self) -> Command: ...
+    def second(self) -> Optional[Command]: ...
     @property
     def connector(self) -> int: ...
 

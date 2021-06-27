@@ -72,7 +72,7 @@ simple_list:
       $$ = $1;
     }
   | simple_list_inner AND {
-      $$ = $1;
+      $$ = create_connection($1, (COMMAND *)NULL, AND);
     }
   | simple_list_inner SEMI {
       $$ = $1;
