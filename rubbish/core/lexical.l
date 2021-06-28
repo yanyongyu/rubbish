@@ -14,10 +14,9 @@ long number_value;
 enum yytokentype last_token;
 
 int legal_number(const char *string, long *result);
-void filter_string(char *string);
+void filter_string(const char *string, char *output);
 %}
 
-%option nounput
 %option noyywrap
 
 %%
@@ -36,29 +35,41 @@ void filter_string(char *string);
 <<EOF>> { last_token = YACCEOF; return YACCEOF; }
 
 [^ "\n\r\t&|<>;]+ {
+  // meet escaped special character, more input needed
   if (yytext[yyleng - 1] == '\\') {
     temp = input();
     yytext[yyleng] = temp;
     yymore();
   } else {
-    if (last_token == GREATER_AND || last_token == LESS_AND) {
-      if (legal_number(yytext, &number_value) && (int)number_value == number_value) {
+    // yylval.word = strdup(yytext);
+    temp_str = strdup(yytext);
+
+    // lookahead one character
+    temp = input();
+    if (temp) {
+      unput(temp);
+    }
+
+    // only convert to int if last_token is '>&' '<&' or next token is '>' '<'
+    if (last_token == GREATER_AND || last_token == LESS_AND || temp == '>' || temp == '<') {
+      if (legal_number(temp_str, &number_value) && (int)number_value == number_value) {
         yylval.number = number_value;
+        free(temp_str);
         last_token = NUMBER;
         return NUMBER;
       }
     }
 
-    // yylval.word = strdup(yytext);
-    yylval.word = (char *)malloc(strlen(yytext) * sizeof(char));
-    filter_string(yytext);
-    strcpy(yylval.word, yytext);
+    yylval.word = (char *)malloc(strlen(temp_str) * sizeof(char));
+    filter_string(temp_str, yylval.word);
+    free(temp_str);
     last_token = WORD;
     return WORD;
   }
 
 }
 \"[^"]* {
+  // meet escaped quote character, more input needed
   if (yytext[yyleng - 1] == '\\') {
     yymore();
   } else {
@@ -66,15 +77,19 @@ void filter_string(char *string);
     if (temp == '"') {
       // yylval.word = strdup(yytext);
       yylval.word = (char *)malloc(strlen(yytext) * sizeof(char));
-      filter_string(yytext + 1);
-      strcpy(yylval.word, yytext + 1);
+      filter_string(yytext + 1, yylval.word);
       last_token = WORD;
       return WORD;
     }
 
+    // input not complete
+    if (temp) {
+      unput(temp);
+    }
     if (is_interactive) {
       command_end = 0;
     }
+    return ERROR;
   }
 }
 
@@ -99,12 +114,13 @@ int legal_number(const char *string, long *result) {
   return 0;
 }
 
-void filter_string(char *string) {
-  char *p_read = string;
-  char *p_write = string;
+void filter_string(const char *string, char * output) {
+  const char *p_read = string;
+  char *p_write = output;
   while (*p_read) {
-    *p_write = *p_read++;
-    p_write += (*p_write != '\\' || *(p_write + 1) == '\\');
+    *p_write = *p_read;
+    p_read++;
+    p_write += (*p_write != '\\' || *p_read == '\\');
   }
   *p_write = '\0';
 }

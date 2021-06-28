@@ -1,4 +1,7 @@
 import sys
+import traceback
+
+from colorama import Fore
 from prompt_toolkit import PromptSession, ANSI
 
 from rubbish.core import (
@@ -32,7 +35,7 @@ def main(config: Config = None):
     while True:
         try:
             if more:
-                prompt = ".     "
+                prompt = ANSI(f"· {Fore.YELLOW}····{Fore.RESET}")
             else:
                 prompt = ANSI(get_prompt())
             input = session.prompt(prompt)
@@ -49,7 +52,7 @@ def main(config: Config = None):
         except MoreInputNeeded:
             more = True
         except SyntaxError:
-            print("Syntax error")
+            traceback.print_exc()
             more = False
             input_stuck = []
         except KeyboardInterrupt:

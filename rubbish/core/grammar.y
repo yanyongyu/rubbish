@@ -28,7 +28,8 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 
 %token <word> WORD
 %token <number> NUMBER
-%token NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER GREATER_AND LESS LESS_AND YACCEOF
+%token NEWLINE SEMI YACCEOF ERROR
+%token AND AND_AND OR OR_OR GREATER GREATER_GREATER GREATER_AND LESS LESS_AND
 
 %type <redirect> redirection
 %type <element> simple_command_element
@@ -171,9 +172,19 @@ redirection:
       destination.filename = $2;
       $$ = create_redirection(source, r_output_direction, destination);
     }
+  | NUMBER GREATER WORD {
+      source.dest = $1;
+      destination.filename = $3;
+      $$ = create_redirection(source, r_output_direction, destination);
+    }
   | LESS WORD {
       source.dest = 0;
       destination.filename = $2;
+      $$ = create_redirection(source, r_input_direction, destination);
+    }
+  | NUMBER LESS WORD {
+      source.dest = $1;
+      destination.filename = $3;
       $$ = create_redirection(source, r_input_direction, destination);
     }
   | GREATER_GREATER WORD {
@@ -197,6 +208,26 @@ redirection:
       $$ = create_redirection(source, r_duplicating_output_word, destination);
     }
   | NUMBER GREATER_AND WORD {
+      source.dest = $1;
+      destination.filename = $3;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | LESS_AND NUMBER {
+      source.dest = 0;
+      destination.dest = $2;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | NUMBER LESS_AND NUMBER {
+      source.dest = $1;
+      destination.dest = $3;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | LESS_AND WORD {
+      source.dest = 0;
+      destination.filename = $2;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | NUMBER LESS_AND WORD {
       source.dest = $1;
       destination.filename = $3;
       $$ = create_redirection(source, r_duplicating_output_word, destination);

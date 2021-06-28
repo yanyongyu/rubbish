@@ -473,7 +473,7 @@ long number_value;
 enum yytokentype last_token;
 
 int legal_number(const char *string, long *result);
-void filter_string(char *string);
+void filter_string(const char *string, char *output);
 #line 478 "rubbish/core/lexical.yy.c"
 #line 479 "rubbish/core/lexical.yy.c"
 
@@ -535,6 +535,8 @@ extern int yywrap ( void );
 #endif
 
 #ifndef YY_NO_UNPUT
+    
+    static void yyunput ( int c, char *buf_ptr  );
     
 #endif
 
@@ -690,10 +692,10 @@ YY_DECL
 		}
 
 	{
-#line 23 "rubbish/core/lexical.l"
+#line 22 "rubbish/core/lexical.l"
 
 
-#line 697 "rubbish/core/lexical.yy.c"
+#line 699 "rubbish/core/lexical.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -759,84 +761,95 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 25 "rubbish/core/lexical.l"
+#line 24 "rubbish/core/lexical.l"
 { last_token = NEWLINE; return NEWLINE; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 26 "rubbish/core/lexical.l"
+#line 25 "rubbish/core/lexical.l"
 { last_token = AND; return AND; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 27 "rubbish/core/lexical.l"
+#line 26 "rubbish/core/lexical.l"
 { last_token = AND_AND; return AND_AND; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "rubbish/core/lexical.l"
+#line 27 "rubbish/core/lexical.l"
 { last_token = SEMI; return SEMI; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "rubbish/core/lexical.l"
+#line 28 "rubbish/core/lexical.l"
 { last_token = OR; return OR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "rubbish/core/lexical.l"
+#line 29 "rubbish/core/lexical.l"
 { last_token = OR_OR; return OR_OR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "rubbish/core/lexical.l"
+#line 30 "rubbish/core/lexical.l"
 { last_token = GREATER; return GREATER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "rubbish/core/lexical.l"
+#line 31 "rubbish/core/lexical.l"
 { last_token = GREATER_GREATER; return GREATER_GREATER; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "rubbish/core/lexical.l"
+#line 32 "rubbish/core/lexical.l"
 { last_token = GREATER_AND; return GREATER_AND; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "rubbish/core/lexical.l"
+#line 33 "rubbish/core/lexical.l"
 { last_token = LESS; return LESS; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 35 "rubbish/core/lexical.l"
+#line 34 "rubbish/core/lexical.l"
 { last_token = LESS_AND; return LESS_AND; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 36 "rubbish/core/lexical.l"
+#line 35 "rubbish/core/lexical.l"
 { last_token = YACCEOF; return YACCEOF; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 38 "rubbish/core/lexical.l"
+#line 37 "rubbish/core/lexical.l"
 {
+  // meet escaped special character, more input needed
   if (yytext[yyleng - 1] == '\\') {
     temp = input();
     yytext[yyleng] = temp;
     yymore();
   } else {
-    if (last_token == GREATER_AND || last_token == LESS_AND) {
-      if (legal_number(yytext, &number_value) && (int)number_value == number_value) {
+    // yylval.word = strdup(yytext);
+    temp_str = strdup(yytext);
+
+    // lookahead one character
+    temp = input();
+    if (temp) {
+      unput(temp);
+    }
+
+    // only convert to int if last_token is '>&' '<&' or next token is '>' '<'
+    if (last_token == GREATER_AND || last_token == LESS_AND || temp == '>' || temp == '<') {
+      if (legal_number(temp_str, &number_value) && (int)number_value == number_value) {
         yylval.number = number_value;
+        free(temp_str);
         last_token = NUMBER;
         return NUMBER;
       }
     }
 
-    // yylval.word = strdup(yytext);
-    yylval.word = (char *)malloc(strlen(yytext) * sizeof(char));
-    filter_string(yytext);
-    strcpy(yylval.word, yytext);
+    yylval.word = (char *)malloc(strlen(temp_str) * sizeof(char));
+    filter_string(temp_str, yylval.word);
+    free(temp_str);
     last_token = WORD;
     return WORD;
   }
@@ -846,8 +859,9 @@ YY_RULE_SETUP
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 61 "rubbish/core/lexical.l"
+#line 71 "rubbish/core/lexical.l"
 {
+  // meet escaped quote character, more input needed
   if (yytext[yyleng - 1] == '\\') {
     yymore();
   } else {
@@ -855,35 +869,39 @@ YY_RULE_SETUP
     if (temp == '"') {
       // yylval.word = strdup(yytext);
       yylval.word = (char *)malloc(strlen(yytext) * sizeof(char));
-      filter_string(yytext + 1);
-      strcpy(yylval.word, yytext + 1);
+      filter_string(yytext + 1, yylval.word);
       last_token = WORD;
       return WORD;
     }
 
+    // input not complete
+    if (temp) {
+      unput(temp);
+    }
     if (is_interactive) {
       command_end = 0;
     }
+    return ERROR;
   }
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 81 "rubbish/core/lexical.l"
+#line 96 "rubbish/core/lexical.l"
 /* ignore whitespace */ ;
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 82 "rubbish/core/lexical.l"
+#line 97 "rubbish/core/lexical.l"
 /* ignore escaped newline */ ;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 84 "rubbish/core/lexical.l"
+#line 99 "rubbish/core/lexical.l"
 ECHO;
 	YY_BREAK
-#line 887 "rubbish/core/lexical.yy.c"
+#line 905 "rubbish/core/lexical.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1216,6 +1234,43 @@ static int yy_get_next_buffer (void)
 }
 
 #ifndef YY_NO_UNPUT
+
+    static void yyunput (int c, char * yy_bp )
+{
+	char *yy_cp;
+    
+    yy_cp = (yy_c_buf_p);
+
+	/* undo effects of setting up yytext */
+	*yy_cp = (yy_hold_char);
+
+	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
+		{ /* need to shift things up to make room */
+		/* +2 for EOB chars. */
+		int number_to_move = (yy_n_chars) + 2;
+		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
+		char *source =
+				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
+
+		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			*--dest = *--source;
+
+		yy_cp += (int) (dest - source);
+		yy_bp += (int) (dest - source);
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
+			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+
+		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
+			YY_FATAL_ERROR( "flex scanner push-back overflow" );
+		}
+
+	*--yy_cp = (char) c;
+
+	(yytext_ptr) = yy_bp;
+	(yy_hold_char) = *yy_cp;
+	(yy_c_buf_p) = yy_cp;
+}
 
 #endif
 
@@ -1849,7 +1904,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 84 "rubbish/core/lexical.l"
+#line 99 "rubbish/core/lexical.l"
 
 
 int legal_number(const char *string, long *result) {
@@ -1868,12 +1923,13 @@ int legal_number(const char *string, long *result) {
   return 0;
 }
 
-void filter_string(char *string) {
-  char *p_read = string;
-  char *p_write = string;
+void filter_string(const char *string, char * output) {
+  const char *p_read = string;
+  char *p_write = output;
   while (*p_read) {
-    *p_write = *p_read++;
-    p_write += (*p_write != '\\' || *(p_write + 1) == '\\');
+    *p_write = *p_read;
+    p_read++;
+    p_write += (*p_write != '\\' || *p_read == '\\');
   }
   *p_write = '\0';
 }

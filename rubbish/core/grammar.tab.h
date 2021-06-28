@@ -52,17 +52,18 @@ extern int yydebug;
     WORD = 258,
     NUMBER = 259,
     NEWLINE = 260,
-    AND = 261,
-    AND_AND = 262,
-    SEMI = 263,
-    OR = 264,
-    OR_OR = 265,
-    GREATER = 266,
-    GREATER_GREATER = 267,
-    GREATER_AND = 268,
-    LESS = 269,
-    LESS_AND = 270,
-    YACCEOF = 271
+    SEMI = 261,
+    YACCEOF = 262,
+    ERROR = 263,
+    AND = 264,
+    AND_AND = 265,
+    OR = 266,
+    OR_OR = 267,
+    GREATER = 268,
+    GREATER_GREATER = 269,
+    GREATER_AND = 270,
+    LESS = 271,
+    LESS_AND = 272
   };
 #endif
 
@@ -78,7 +79,7 @@ union YYSTYPE
   ELEMENT element;
   REDIRECT *redirect;
 
-#line 82 "rubbish/core/grammar.tab.h"
+#line 83 "rubbish/core/grammar.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

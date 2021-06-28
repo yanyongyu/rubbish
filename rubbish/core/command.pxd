@@ -9,6 +9,8 @@ cdef extern from "_command.h":
         r_appending_to
         r_duplicating_output
         r_duplicating_output_word
+        r_duplicating_input
+        r_duplicating_input_word
 
     ctypedef struct WORD_LIST:
         WORD_LIST *next
@@ -43,17 +45,21 @@ cdef extern from "_command.h":
 
 cdef extern from "grammar.tab.h":
     cpdef enum TokenType "yytokentype":
-        WORD
-        NEWLINE
-        AND
-        AND_AND
-        SEMI
-        OR
-        OR_OR
-        GREATER
-        GREATER_GREATER
-        LESS
-        YACCEOF
+        WORD = 258
+        NUMBER = 259
+        NEWLINE = 260
+        SEMI = 261
+        YACCEOF = 262
+        ERROR = 263
+        AND = 264
+        AND_AND = 265
+        OR = 266
+        OR_OR = 267
+        GREATER = 268
+        GREATER_GREATER = 269
+        GREATER_AND = 270
+        LESS = 271
+        LESS_AND = 272
 
 cdef class Redirect:
     cdef REDIRECT *_redirect
