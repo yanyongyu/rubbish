@@ -1,22 +1,37 @@
+import os.path
+
 cdef class Config:
 
-    def __cinit__(self, unicode file = "", bint use_ansi = True):
-        file_bytes = file.encode("utf-8")
-        self._file = file_bytes
+    def __cinit__(self, unicode init_file = "", unicode history_file = "", bint use_ansi = True, **args):
+        init_file_bytes = init_file.encode("utf-8")
+        self._init_file = init_file_bytes
+
+        history_file_bytes = history_file.encode("utf-8")
+        self._history_file = history_file_bytes
+
         self._use_ansi = use_ansi
 
     @property
-    def file(self):
-        return self._file.decode("utf-8") or None
+    def init_file(self):
+        return (
+            self._init_file.decode("utf-8") or os.path.expanduser("~/.rubbishrc")
+        )
 
-    @file.setter
-    def file(self, value):
+    @init_file.setter
+    def init_file(self, value):
         value_bytes = value.encode("utf-8") if value else b""
-        self._file = value_bytes
+        self._init_file = value_bytes
 
     @property
-    def interactive(self):
-        return not bool(self._file)
+    def history_file(self):
+        return (
+            self._history_file.encode("utf-8") or os.path.expanduser("~/.rubbish_history")
+        )
+
+    @history_file.setter
+    def history_file(self, value):
+        value_bytes = value.encode("utf-8") if value else b""
+        self._history_file = value_bytes
 
     @property
     def use_ansi(self):

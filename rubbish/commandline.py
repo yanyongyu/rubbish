@@ -5,29 +5,36 @@ from colorama import Fore
 from prompt_toolkit import PromptSession, ANSI
 
 from rubbish.core import (
+    init,
     Config,
     set_config,
     get_config,
     get_prompt,
     parse,
+    parse_file,
     MoreInputNeeded,
     execute_command,
 )
 
 
-def main(config: Config = None):
+def run_file(filename: str, config: Config = None):
     config = config or get_config()
     set_config(config)
+    init()
 
-    if config.file:
-        result = parse()
-        if result:
-            for command in result:
-                print(repr(command))
-                return_code = execute_command(
-                    command, sys.stdin.fileno(), sys.stdout.fileno(), False
-                )
-        return
+    result = parse_file(filename)
+    if result:
+        for command in result:
+            print(repr(command))
+            return_code = execute_command(
+                command, sys.stdin.fileno(), sys.stdout.fileno()
+            )
+
+
+def run_console(config: Config = None):
+    config = config or get_config()
+    set_config(config)
+    init()
 
     session = PromptSession()
     input_stuck = []
@@ -47,7 +54,7 @@ def main(config: Config = None):
                 for command in result:
                     print(repr(command))
                     return_code = execute_command(
-                        command, sys.stdin.fileno(), sys.stdout.fileno(), False
+                        command, sys.stdin.fileno(), sys.stdout.fileno()
                     )
         except MoreInputNeeded:
             more = True

@@ -33,7 +33,7 @@ yyset_in(fake_input)
 # yyset_out(fake_output)
 
 
-cpdef list parse(unicode input = None):
+cpdef list parse(unicode input, bint interactive = True):
     cdef char *temp
     cdef int result
     cdef Command command
@@ -48,11 +48,7 @@ cpdef list parse(unicode input = None):
     commands = []
     command_end = 1
     eof_encountered = 0
-    _is_interactive = global_config.interactive
-
-    if not _is_interactive:
-        with open(global_config.file, "r") as f:
-            input = f.read()
+    _is_interactive = interactive
 
 
     # ensure not ended with escaped newline
@@ -67,6 +63,8 @@ cpdef list parse(unicode input = None):
         input_bytes = input.encode("utf-8")
         temp = input_bytes
         fwrite(temp, sizeof(char), strlen(temp), fake_input)
+    else:
+        return commands
 
     # parse result
     while result == 0 and eof_encountered == 0:
@@ -86,8 +84,17 @@ cpdef list parse(unicode input = None):
         # input get nothing but valid
         elif result == 0:
             continue
+
+        fflush(fake_input)
         raise SyntaxError("Syntax error")
     return commands
+
+
+cpdef list parse_file(unicode filename):
+    with open(filename, "r") as f:
+        input = f.read()
+
+    return parse(input, True)
 
 
 class MoreInputNeeded(Exception):

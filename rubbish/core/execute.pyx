@@ -10,7 +10,7 @@ cdef extern from "<unistd.h>":
     cdef pid_t fork ()
     cdef int close (int fd)
     cdef int pipe (int fd[2])
-    cdef void exit (int status)
+    cdef void c_exit "exit" (int status)
     cdef int chdir (char* path)
 
 cdef extern from "<stdio.h>":
@@ -21,7 +21,7 @@ cdef extern from "_execute.c":
     cdef int _execute "execute" (char ** parameters, int input, int output)
 
 
-cpdef int execute_command(Command command, int input, int output, int async):
+cpdef int execute_command(Command command, int input, int output, bint async = False) except? -1:
     if command is None:
         return 0
 
@@ -41,10 +41,10 @@ cpdef int execute_command(Command command, int input, int output, int async):
             elif command.type == CommandType.cm_connection:
                 status = execute_connection(<Connection>command, input, output)
             dprintf(output, "[!] Job %s ended with status %d\n", temp, status)
-            exit(status)
+            c_exit(status)
         else:
             dprintf(output, "[+] PID %d: Job %s start running\n", pid, temp)
-            return pid
+            return 0
 
     if command.type == CommandType.cm_simple:
         return execute_simplecommand(<SimpleCommand>command, input, output)
@@ -52,12 +52,14 @@ cpdef int execute_command(Command command, int input, int output, int async):
         return execute_connection(<Connection>command, input, output)
 
 
-cpdef int execute_simplecommand(SimpleCommand command, int input, int output):
+cpdef int execute_simplecommand(SimpleCommand command, int input, int output) except? -1:
     cdef char ** parameters
     cdef int i = 0, result
 
     if command.words[0] == "cd":
         return cd(command.words[1] if len(command.words) == 2 else None)
+    elif command.words[0] == "exit":
+        return exit()
 
     parameters = <char **>malloc(100 * sizeof(char *))
     memset(parameters, 0, 100 * sizeof(char *))
@@ -77,7 +79,7 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output):
 
 
 
-cpdef int execute_connection(Connection command, int input, int output):
+cpdef int execute_connection(Connection command, int input, int output) except? -1:
     cdef int status = -1
     cdef int fd, fds[2]
     cdef FILE *fp
@@ -107,7 +109,7 @@ cpdef int execute_connection(Connection command, int input, int output):
         status = execute_command(command.second, input, output, 0)
     return status
 
-cpdef int cd(unicode dir = None):
+cpdef int cd(unicode dir = None) except? -1:
     cdef int result
     if dir is None:
         dir = os.path.expanduser("~")
@@ -116,3 +118,6 @@ cpdef int cd(unicode dir = None):
     if result == -1:
         print("cd: %s: No such file or directory" % dir)
     return result
+
+cpdef int exit() except? -1:
+    raise EOFError("Shell exit")
