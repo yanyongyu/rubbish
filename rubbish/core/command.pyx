@@ -9,6 +9,8 @@ cdef extern from "_command.h":
         r_output_direction
         r_input_direction
         r_appending_to
+        r_duplicating_output
+        r_duplicating_output_word
 
     ctypedef struct WORD_LIST:
         WORD_LIST *next

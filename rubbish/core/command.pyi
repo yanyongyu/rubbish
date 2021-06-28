@@ -9,6 +9,8 @@ class RedirectInstruction(IntEnum):
     r_output_direction = 0
     r_input_direction = 1
     r_appending_to = 2
+    r_duplicating_output = 3
+    r_duplicating_output_word = 4
 
 class Redirect:
     @property

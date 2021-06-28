@@ -20,13 +20,15 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 
 %union {
   char *word;
+  int number;
   COMMAND *command;
   ELEMENT element;
   REDIRECT *redirect;
 }
 
 %token <word> WORD
-%token NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER LESS YACCEOF
+%token <number> NUMBER
+%token NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER GREATER_AND LESS LESS_AND YACCEOF
 
 %type <redirect> redirection
 %type <element> simple_command_element
@@ -178,6 +180,26 @@ redirection:
       source.dest = 1;
       destination.filename = $2;
       $$ = create_redirection(source, r_appending_to, destination);
+    }
+  | GREATER_AND NUMBER {
+      source.dest = 1;
+      destination.dest = $2;
+      $$ = create_redirection(source, r_duplicating_output, destination);
+    }
+  | NUMBER GREATER_AND NUMBER {
+      source.dest = $1;
+      destination.dest = $3;
+      $$ = create_redirection(source, r_duplicating_output, destination);
+    }
+  | GREATER_AND WORD {
+      source.dest = 1;
+      destination.filename = $2;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | NUMBER GREATER_AND WORD {
+      source.dest = $1;
+      destination.filename = $3;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
     }
   ;
 
