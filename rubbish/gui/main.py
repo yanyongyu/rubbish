@@ -1,8 +1,8 @@
-import os
+import os.path
 
 from threading import Timer
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QUrl, QFileInfo, pyqtProperty
+from PyQt5.QtCore import QUrl, QFileInfo, pyqtProperty, qInstallMessageHandler, Qt
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QMessageBox
@@ -59,10 +59,18 @@ class MainWindow(QMainWindow):
     def getRoute(self):
         return self.route
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_D and event.modifiers() == Qt.ControlModifier:
+            QApplication.instance().quit()
+        elif event.key() == Qt.Key_C and event.modifiers() == Qt.ControlModifier:
+            # 结束正在运行的程序或命令
+            pass
+
 
 def main():
     app = QApplication([])
     win = MainWindow()
+    qInstallMessageHandler(lambda *args: None)
     channel = QWebChannel()
     shared = Myshared(win)
     channel.registerObject("con", shared)
