@@ -1,5 +1,30 @@
 from libc.stdlib cimport free
 
+cdef class Redirector:
+
+    def __cinit__(self):
+        self.ptr_set = False
+
+    def __dealloc__(self):
+        if self._redirector is not NULL and self.ptr_set is True:
+            self._redirector = NULL
+
+    @property
+    def dest(self):
+        return self._redirector.dest
+
+    @property
+    def filename(self):
+        return self._redirector.filename.decode("utf-8")
+
+    @staticmethod
+    cdef Redirector from_ptr(REDIRECTOR *ptr, bint auto_dealloc = False):
+        cdef Redirector wrapper = Redirector.__new__(Redirector)
+        wrapper._redirector = ptr
+        wrapper.ptr_set = auto_dealloc
+        return wrapper
+
+
 cdef class Redirect:
 
     def __cinit__(self):
@@ -13,7 +38,7 @@ cdef class Redirect:
 
     @property
     def redirector(self):
-        return self._redirect.redirector.dest or self._redirect.redirector.filename.decode("utf-8")
+        return Redirector.from_ptr(&self._redirect.redirector)
 
     @property
     def instruction(self):
@@ -21,7 +46,7 @@ cdef class Redirect:
 
     @property
     def redirectee(self):
-        return self._redirect.redirectee.dest or self._redirect.redirectee.filename.decode("utf-8")
+        return Redirector.from_ptr(&self._redirect.redirectee)
 
     @staticmethod
     cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = False):

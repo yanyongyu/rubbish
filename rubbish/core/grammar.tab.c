@@ -1673,7 +1673,7 @@ yyreduce:
                     {
       source.dest = 0;
       destination.dest = (yyvsp[0].number);
-      (yyval.redirect) = create_redirection(source, r_duplicating_output_word, destination);
+      (yyval.redirect) = create_redirection(source, r_duplicating_input, destination);
     }
 #line 1679 "rubbish/core/grammar.tab.c"
     break;
@@ -1683,7 +1683,7 @@ yyreduce:
                            {
       source.dest = (yyvsp[-2].number);
       destination.dest = (yyvsp[0].number);
-      (yyval.redirect) = create_redirection(source, r_duplicating_output_word, destination);
+      (yyval.redirect) = create_redirection(source, r_duplicating_input, destination);
     }
 #line 1689 "rubbish/core/grammar.tab.c"
     break;
@@ -1693,7 +1693,7 @@ yyreduce:
                   {
       source.dest = 0;
       destination.filename = (yyvsp[0].word);
-      (yyval.redirect) = create_redirection(source, r_duplicating_output_word, destination);
+      (yyval.redirect) = create_redirection(source, r_duplicating_input_word, destination);
     }
 #line 1699 "rubbish/core/grammar.tab.c"
     break;
@@ -1703,7 +1703,7 @@ yyreduce:
                          {
       source.dest = (yyvsp[-2].number);
       destination.filename = (yyvsp[0].word);
-      (yyval.redirect) = create_redirection(source, r_duplicating_output_word, destination);
+      (yyval.redirect) = create_redirection(source, r_duplicating_input_word, destination);
     }
 #line 1709 "rubbish/core/grammar.tab.c"
     break;
