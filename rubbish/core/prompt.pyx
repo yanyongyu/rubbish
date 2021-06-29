@@ -1,5 +1,5 @@
 import os.path
-from typing import Iterable
+from typing import Set, Iterable
 
 from prompt_toolkit.document import Document
 from prompt_toolkit.history import FileHistory
@@ -56,6 +56,7 @@ class Completer(PathCompleter):
     def get_completions(
         self, document: Document, complete_event: CompleteEvent
     ) -> Iterable[Completion]:
+        found_so_far: Set[str] = set()
         text = document.text_before_cursor.split()[-1]
 
         if len(text) < self.min_input_len:
@@ -96,6 +97,19 @@ class Completer(PathCompleter):
                 if not self.file_filter(full_name):
                     continue
 
-                yield Completion(completion, 0, display=filename)
+                completion = Completion(completion, 0, display=filename)
+                text_if_applied = (
+                    document.text[:document.cursor_position + completion.start_position]
+                    + completion.text
+                    + document.text[document.cursor_position:]
+                )
+                if text_if_applied == document.text:
+                    continue
+
+                if text_if_applied in found_so_far:
+                    continue
+
+                found_so_far.add(text_if_applied)
+                yield completion
         except OSError:
             pass

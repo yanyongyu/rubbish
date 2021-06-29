@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -48,7 +49,9 @@ def init():
     # init rubbish history file
     Path(config.history_file).touch()
     _history = History(config.history_file)
-    _completer = Completer()
+    _completer = Completer(
+        get_paths=lambda: ["."] + os.environ.get("PATH", "").split(os.pathsep)
+    )
 
 
 def get_history() -> History:

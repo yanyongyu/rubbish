@@ -882,11 +882,13 @@ struct __pyx_obj_7rubbish_4core_6prompt___pyx_scope_struct__get_completions {
   PyObject *__pyx_v_document;
   PyObject *__pyx_v_filename;
   PyObject *__pyx_v_filenames;
+  PyObject *__pyx_v_found_so_far;
   PyObject *__pyx_v_full_name;
   PyObject *__pyx_7genexpr__pyx_v_p;
   PyObject *__pyx_v_prefix;
   PyObject *__pyx_v_self;
   PyObject *__pyx_v_text;
+  PyObject *__pyx_v_text_if_applied;
   PyObject *__pyx_t_0;
   Py_ssize_t __pyx_t_1;
   PyObject *__pyx_t_2;
@@ -1253,6 +1255,12 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(
         PyObject** py_start, PyObject** py_stop, PyObject** py_slice,
         int has_cstart, int has_cstop, int wraparound);
 
+/* pyfrozenset_new.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyFrozenSet_New(PyObject* it);
+
+/* PySetContains.proto */
+static CYTHON_INLINE int __Pyx_PySet_ContainsTF(PyObject* key, PyObject* set, int eq);
+
 /* GetTopmostException.proto */
 #if CYTHON_USE_EXC_INFO_STACK
 static _PyErr_StackItem * __Pyx_PyErr_GetTopmostException(PyThreadState *tstate);
@@ -1544,6 +1552,7 @@ static const char __pyx_k__5[] = "\n";
 static const char __pyx_k__7[] = "/";
 static const char __pyx_k_os[] = "os";
 static const char __pyx_k_RED[] = "RED";
+static const char __pyx_k_Set[] = "Set";
 static const char __pyx_k_doc[] = "__doc__";
 static const char __pyx_k_key[] = "key";
 static const char __pyx_k_CYAN[] = "CYAN";
@@ -1596,11 +1605,15 @@ static const char __pyx_k_startswith[] = "startswith";
 static const char __pyx_k_FileHistory[] = "FileHistory";
 static const char __pyx_k_directories[] = "directories";
 static const char __pyx_k_file_filter[] = "file_filter";
+static const char __pyx_k_found_so_far[] = "found_so_far";
 static const char __pyx_k_CompleteEvent[] = "CompleteEvent";
 static const char __pyx_k_PathCompleter[] = "PathCompleter";
 static const char __pyx_k_min_input_len[] = "min_input_len";
 static const char __pyx_k_complete_event[] = "complete_event";
+static const char __pyx_k_start_position[] = "start_position";
+static const char __pyx_k_cursor_position[] = "cursor_position";
 static const char __pyx_k_get_completions[] = "get_completions";
+static const char __pyx_k_text_if_applied[] = "text_if_applied";
 static const char __pyx_k_only_directories[] = "only_directories";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_text_before_cursor[] = "text_before_cursor";
@@ -1627,6 +1640,7 @@ static PyObject *__pyx_n_s_OSError;
 static PyObject *__pyx_n_s_PathCompleter;
 static PyObject *__pyx_n_s_RED;
 static PyObject *__pyx_n_s_RESET;
+static PyObject *__pyx_n_s_Set;
 static PyObject *__pyx_kp_u__2;
 static PyObject *__pyx_kp_u__3;
 static PyObject *__pyx_kp_u__4;
@@ -1639,6 +1653,7 @@ static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_close;
 static PyObject *__pyx_n_s_complete_event;
 static PyObject *__pyx_n_s_completion;
+static PyObject *__pyx_n_s_cursor_position;
 static PyObject *__pyx_n_s_directories;
 static PyObject *__pyx_n_s_directory;
 static PyObject *__pyx_n_s_dirname;
@@ -1649,6 +1664,7 @@ static PyObject *__pyx_n_s_expanduser;
 static PyObject *__pyx_n_s_file_filter;
 static PyObject *__pyx_n_s_filename;
 static PyObject *__pyx_n_s_filenames;
+static PyObject *__pyx_n_s_found_so_far;
 static PyObject *__pyx_n_s_full_name;
 static PyObject *__pyx_n_s_get_completions;
 static PyObject *__pyx_n_s_get_paths;
@@ -1681,10 +1697,12 @@ static PyObject *__pyx_n_s_self;
 static PyObject *__pyx_n_s_send;
 static PyObject *__pyx_n_s_sorted;
 static PyObject *__pyx_n_s_split;
+static PyObject *__pyx_n_s_start_position;
 static PyObject *__pyx_n_s_startswith;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_text;
 static PyObject *__pyx_n_s_text_before_cursor;
+static PyObject *__pyx_n_s_text_if_applied;
 static PyObject *__pyx_n_s_throw;
 static PyObject *__pyx_n_s_typing;
 static PyObject *__pyx_pf_7rubbish_4core_6prompt_get_username(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
@@ -2566,7 +2584,7 @@ static PyObject *__pyx_pw_7rubbish_4core_6prompt_9Completer_1get_completions(PyO
   return __pyx_r;
 }
 
-/* "rubbish/core/prompt.pyx":85
+/* "rubbish/core/prompt.pyx":86
  *                             filenames.append((directory, filename))
  * 
  *             filenames = sorted(filenames, key=lambda k: k[1])             # <<<<<<<<<<<<<<
@@ -2597,7 +2615,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("lambda", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2695,7 +2713,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
   __Pyx_RefNannySetupContext("get_completions", 0);
   switch (__pyx_generator->resume_label) {
     case 0: goto __pyx_L3_first_run;
-    case 1: goto __pyx_L27_resume_from_yield;
+    case 1: goto __pyx_L29_resume_from_yield;
     default: /* CPython raises the right error here */
     __Pyx_RefNannyFinishContext();
     return NULL;
@@ -2706,13 +2724,26 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
   /* "rubbish/core/prompt.pyx":59
  *         self, document: Document, complete_event: CompleteEvent
  *     ) -> Iterable[Completion]:
+ *         found_so_far: Set[str] = set()             # <<<<<<<<<<<<<<
+ *         text = document.text_before_cursor.split()[-1]
+ * 
+ */
+  __pyx_t_1 = PySet_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_cur_scope->__pyx_v_found_so_far = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "rubbish/core/prompt.pyx":60
+ *     ) -> Iterable[Completion]:
+ *         found_so_far: Set[str] = set()
  *         text = document.text_before_cursor.split()[-1]             # <<<<<<<<<<<<<<
  * 
  *         if len(text) < self.min_input_len:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_text_before_cursor); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_text_before_cursor); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_split); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_split); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2727,36 +2758,36 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_GIVEREF(__pyx_t_3);
   __pyx_cur_scope->__pyx_v_text = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "rubbish/core/prompt.pyx":61
+  /* "rubbish/core/prompt.pyx":62
  *         text = document.text_before_cursor.split()[-1]
  * 
  *         if len(text) < self.min_input_len:             # <<<<<<<<<<<<<<
  *             return
  * 
  */
-  __pyx_t_4 = PyObject_Length(__pyx_cur_scope->__pyx_v_text); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 61, __pyx_L1_error)
-  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_cur_scope->__pyx_v_text); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_min_input_len); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_min_input_len); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_3, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_3, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_5) {
 
-    /* "rubbish/core/prompt.pyx":62
+    /* "rubbish/core/prompt.pyx":63
  * 
  *         if len(text) < self.min_input_len:
  *             return             # <<<<<<<<<<<<<<
@@ -2767,7 +2798,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
     __pyx_r = NULL;
     goto __pyx_L0;
 
-    /* "rubbish/core/prompt.pyx":61
+    /* "rubbish/core/prompt.pyx":62
  *         text = document.text_before_cursor.split()[-1]
  * 
  *         if len(text) < self.min_input_len:             # <<<<<<<<<<<<<<
@@ -2776,7 +2807,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  */
   }
 
-  /* "rubbish/core/prompt.pyx":64
+  /* "rubbish/core/prompt.pyx":65
  *             return
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -2790,32 +2821,32 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
     __Pyx_XGOTREF(__pyx_t_8);
     /*try:*/ {
 
-      /* "rubbish/core/prompt.pyx":65
+      /* "rubbish/core/prompt.pyx":66
  * 
  *         try:
  *             if self.expanduser:             # <<<<<<<<<<<<<<
  *                 text = os.path.expanduser(text)
  * 
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_expanduser); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L5_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_expanduser); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 65, __pyx_L5_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 66, __pyx_L5_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       if (__pyx_t_5) {
 
-        /* "rubbish/core/prompt.pyx":66
+        /* "rubbish/core/prompt.pyx":67
  *         try:
  *             if self.expanduser:
  *                 text = os.path.expanduser(text)             # <<<<<<<<<<<<<<
  * 
  *             dirname = os.path.dirname(text)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_expanduser); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_expanduser); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_3 = NULL;
@@ -2830,7 +2861,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         }
         __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_3, __pyx_cur_scope->__pyx_v_text) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_text);
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L5_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_text);
@@ -2838,7 +2869,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __Pyx_GIVEREF(__pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "rubbish/core/prompt.pyx":65
+        /* "rubbish/core/prompt.pyx":66
  * 
  *         try:
  *             if self.expanduser:             # <<<<<<<<<<<<<<
@@ -2847,19 +2878,19 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  */
       }
 
-      /* "rubbish/core/prompt.pyx":68
+      /* "rubbish/core/prompt.pyx":69
  *                 text = os.path.expanduser(text)
  * 
  *             dirname = os.path.dirname(text)             # <<<<<<<<<<<<<<
  *             if dirname:
  *                 directories = [
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L5_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L5_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_dirname); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L5_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_dirname); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_3 = NULL;
@@ -2874,24 +2905,24 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
       }
       __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_3, __pyx_cur_scope->__pyx_v_text) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_text);
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L5_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GIVEREF(__pyx_t_2);
       __pyx_cur_scope->__pyx_v_dirname = __pyx_t_2;
       __pyx_t_2 = 0;
 
-      /* "rubbish/core/prompt.pyx":69
+      /* "rubbish/core/prompt.pyx":70
  * 
  *             dirname = os.path.dirname(text)
  *             if dirname:             # <<<<<<<<<<<<<<
  *                 directories = [
  *                     os.path.dirname(os.path.join(p, text)) for p in self.get_paths()
  */
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_dirname); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 69, __pyx_L5_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_dirname); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 70, __pyx_L5_error)
       if (__pyx_t_5) {
 
-        /* "rubbish/core/prompt.pyx":70
+        /* "rubbish/core/prompt.pyx":71
  *             dirname = os.path.dirname(text)
  *             if dirname:
  *                 directories = [             # <<<<<<<<<<<<<<
@@ -2899,17 +2930,17 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  *                 ]
  */
         { /* enter inner scope */
-          __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L5_error)
+          __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_2);
 
-          /* "rubbish/core/prompt.pyx":71
+          /* "rubbish/core/prompt.pyx":72
  *             if dirname:
  *                 directories = [
  *                     os.path.dirname(os.path.join(p, text)) for p in self.get_paths()             # <<<<<<<<<<<<<<
  *                 ]
  *             else:
  */
-          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_get_paths); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L5_error)
+          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_get_paths); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_3);
           __pyx_t_9 = NULL;
           if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -2923,16 +2954,16 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           }
           __pyx_t_1 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L5_error)
+          if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
             __pyx_t_3 = __pyx_t_1; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
             __pyx_t_10 = NULL;
           } else {
-            __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_10 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __pyx_t_10 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 72, __pyx_L5_error)
           }
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           for (;;) {
@@ -2940,17 +2971,17 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
               if (likely(PyList_CheckExact(__pyx_t_3))) {
                 if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
                 #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 71, __pyx_L5_error)
+                __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 72, __pyx_L5_error)
                 #else
-                __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L5_error)
+                __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L5_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 #endif
               } else {
                 if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
                 #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 71, __pyx_L5_error)
+                __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 72, __pyx_L5_error)
                 #else
-                __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L5_error)
+                __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L5_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 #endif
               }
@@ -2960,7 +2991,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
                 PyObject* exc_type = PyErr_Occurred();
                 if (exc_type) {
                   if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                  else __PYX_ERR(0, 71, __pyx_L5_error)
+                  else __PYX_ERR(0, 72, __pyx_L5_error)
                 }
                 break;
               }
@@ -2970,20 +3001,20 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_7genexpr__pyx_v_p, __pyx_t_1);
             __Pyx_GIVEREF(__pyx_t_1);
             __pyx_t_1 = 0;
-            __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_os); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_os); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_9);
-            __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_path); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_path); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_11);
             __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-            __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_dirname); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_dirname); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_9);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-            __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_os); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_os); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_12);
-            __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_path); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_path); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_13);
             __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-            __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_n_s_join); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 71, __pyx_L5_error)
+            __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_n_s_join); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_12);
             __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
             __pyx_t_13 = NULL;
@@ -3001,7 +3032,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             #if CYTHON_FAST_PYCALL
             if (PyFunction_Check(__pyx_t_12)) {
               PyObject *__pyx_temp[3] = {__pyx_t_13, __pyx_cur_scope->__pyx_7genexpr__pyx_v_p, __pyx_cur_scope->__pyx_v_text};
-              __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 71, __pyx_L5_error)
+              __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 72, __pyx_L5_error)
               __Pyx_XDECREF(__pyx_t_13); __pyx_t_13 = 0;
               __Pyx_GOTREF(__pyx_t_11);
             } else
@@ -3009,13 +3040,13 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             #if CYTHON_FAST_PYCCALL
             if (__Pyx_PyFastCFunction_Check(__pyx_t_12)) {
               PyObject *__pyx_temp[3] = {__pyx_t_13, __pyx_cur_scope->__pyx_7genexpr__pyx_v_p, __pyx_cur_scope->__pyx_v_text};
-              __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 71, __pyx_L5_error)
+              __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 72, __pyx_L5_error)
               __Pyx_XDECREF(__pyx_t_13); __pyx_t_13 = 0;
               __Pyx_GOTREF(__pyx_t_11);
             } else
             #endif
             {
-              __pyx_t_15 = PyTuple_New(2+__pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 71, __pyx_L5_error)
+              __pyx_t_15 = PyTuple_New(2+__pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 72, __pyx_L5_error)
               __Pyx_GOTREF(__pyx_t_15);
               if (__pyx_t_13) {
                 __Pyx_GIVEREF(__pyx_t_13); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_13); __pyx_t_13 = NULL;
@@ -3026,7 +3057,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
               __Pyx_INCREF(__pyx_cur_scope->__pyx_v_text);
               __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_text);
               PyTuple_SET_ITEM(__pyx_t_15, 1+__pyx_t_14, __pyx_cur_scope->__pyx_v_text);
-              __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_15, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 71, __pyx_L5_error)
+              __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_15, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 72, __pyx_L5_error)
               __Pyx_GOTREF(__pyx_t_11);
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
             }
@@ -3044,10 +3075,10 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             __pyx_t_1 = (__pyx_t_12) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_12, __pyx_t_11) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_11);
             __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L5_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-            if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_1))) __PYX_ERR(0, 70, __pyx_L5_error)
+            if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_1))) __PYX_ERR(0, 71, __pyx_L5_error)
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           }
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -3056,7 +3087,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __pyx_cur_scope->__pyx_v_directories = __pyx_t_2;
         __pyx_t_2 = 0;
 
-        /* "rubbish/core/prompt.pyx":69
+        /* "rubbish/core/prompt.pyx":70
  * 
  *             dirname = os.path.dirname(text)
  *             if dirname:             # <<<<<<<<<<<<<<
@@ -3066,7 +3097,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         goto __pyx_L12;
       }
 
-      /* "rubbish/core/prompt.pyx":74
+      /* "rubbish/core/prompt.pyx":75
  *                 ]
  *             else:
  *                 directories = self.get_paths()             # <<<<<<<<<<<<<<
@@ -3074,7 +3105,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  *             prefix = os.path.basename(text)
  */
       /*else*/ {
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_get_paths); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_get_paths); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_1 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -3088,7 +3119,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         }
         __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L5_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GIVEREF(__pyx_t_2);
@@ -3097,19 +3128,19 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
       }
       __pyx_L12:;
 
-      /* "rubbish/core/prompt.pyx":76
+      /* "rubbish/core/prompt.pyx":77
  *                 directories = self.get_paths()
  * 
  *             prefix = os.path.basename(text)             # <<<<<<<<<<<<<<
  * 
  *             filenames = []
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L5_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L5_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_basename); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L5_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_basename); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_1 = NULL;
@@ -3124,27 +3155,27 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
       }
       __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_1, __pyx_cur_scope->__pyx_v_text) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_cur_scope->__pyx_v_text);
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L5_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GIVEREF(__pyx_t_2);
       __pyx_cur_scope->__pyx_v_prefix = __pyx_t_2;
       __pyx_t_2 = 0;
 
-      /* "rubbish/core/prompt.pyx":78
+      /* "rubbish/core/prompt.pyx":79
  *             prefix = os.path.basename(text)
  * 
  *             filenames = []             # <<<<<<<<<<<<<<
  *             for directory in directories:
  *                 if os.path.isdir(directory):
  */
-      __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L5_error)
+      __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GIVEREF(__pyx_t_2);
       __pyx_cur_scope->__pyx_v_filenames = __pyx_t_2;
       __pyx_t_2 = 0;
 
-      /* "rubbish/core/prompt.pyx":79
+      /* "rubbish/core/prompt.pyx":80
  * 
  *             filenames = []
  *             for directory in directories:             # <<<<<<<<<<<<<<
@@ -3155,26 +3186,26 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __pyx_t_2 = __pyx_cur_scope->__pyx_v_directories; __Pyx_INCREF(__pyx_t_2); __pyx_t_4 = 0;
         __pyx_t_10 = NULL;
       } else {
-        __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_directories); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L5_error)
+        __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_directories); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_10 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 79, __pyx_L5_error)
+        __pyx_t_10 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 80, __pyx_L5_error)
       }
       for (;;) {
         if (likely(!__pyx_t_10)) {
           if (likely(PyList_CheckExact(__pyx_t_2))) {
             if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_2)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 79, __pyx_L5_error)
+            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 80, __pyx_L5_error)
             #else
-            __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L5_error)
+            __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
           } else {
             if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 79, __pyx_L5_error)
+            __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 80, __pyx_L5_error)
             #else
-            __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L5_error)
+            __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
           }
@@ -3184,7 +3215,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 79, __pyx_L5_error)
+              else __PYX_ERR(0, 80, __pyx_L5_error)
             }
             break;
           }
@@ -3195,19 +3226,19 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __Pyx_GIVEREF(__pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "rubbish/core/prompt.pyx":80
+        /* "rubbish/core/prompt.pyx":81
  *             filenames = []
  *             for directory in directories:
  *                 if os.path.isdir(directory):             # <<<<<<<<<<<<<<
  *                     for filename in os.listdir(directory):
  *                         if filename.startswith(prefix):
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L5_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 80, __pyx_L5_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 81, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_isdir); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L5_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_isdir); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_9 = NULL;
@@ -3222,23 +3253,23 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         }
         __pyx_t_3 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_9, __pyx_cur_scope->__pyx_v_directory) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_directory);
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L5_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 80, __pyx_L5_error)
+        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 81, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         if (__pyx_t_5) {
 
-          /* "rubbish/core/prompt.pyx":81
+          /* "rubbish/core/prompt.pyx":82
  *             for directory in directories:
  *                 if os.path.isdir(directory):
  *                     for filename in os.listdir(directory):             # <<<<<<<<<<<<<<
  *                         if filename.startswith(prefix):
  *                             filenames.append((directory, filename))
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L5_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_listdir); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 81, __pyx_L5_error)
+          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_listdir); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 82, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_1 = NULL;
@@ -3253,16 +3284,16 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           }
           __pyx_t_3 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_1, __pyx_cur_scope->__pyx_v_directory) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_cur_scope->__pyx_v_directory);
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L5_error)
+          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
             __pyx_t_9 = __pyx_t_3; __Pyx_INCREF(__pyx_t_9); __pyx_t_16 = 0;
             __pyx_t_17 = NULL;
           } else {
-            __pyx_t_16 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 81, __pyx_L5_error)
+            __pyx_t_16 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 82, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_9);
-            __pyx_t_17 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 81, __pyx_L5_error)
+            __pyx_t_17 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 82, __pyx_L5_error)
           }
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           for (;;) {
@@ -3270,17 +3301,17 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
               if (likely(PyList_CheckExact(__pyx_t_9))) {
                 if (__pyx_t_16 >= PyList_GET_SIZE(__pyx_t_9)) break;
                 #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                __pyx_t_3 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_16); __Pyx_INCREF(__pyx_t_3); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 81, __pyx_L5_error)
+                __pyx_t_3 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_16); __Pyx_INCREF(__pyx_t_3); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 82, __pyx_L5_error)
                 #else
-                __pyx_t_3 = PySequence_ITEM(__pyx_t_9, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L5_error)
+                __pyx_t_3 = PySequence_ITEM(__pyx_t_9, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L5_error)
                 __Pyx_GOTREF(__pyx_t_3);
                 #endif
               } else {
                 if (__pyx_t_16 >= PyTuple_GET_SIZE(__pyx_t_9)) break;
                 #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_16); __Pyx_INCREF(__pyx_t_3); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 81, __pyx_L5_error)
+                __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_16); __Pyx_INCREF(__pyx_t_3); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 82, __pyx_L5_error)
                 #else
-                __pyx_t_3 = PySequence_ITEM(__pyx_t_9, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L5_error)
+                __pyx_t_3 = PySequence_ITEM(__pyx_t_9, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L5_error)
                 __Pyx_GOTREF(__pyx_t_3);
                 #endif
               }
@@ -3290,7 +3321,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
                 PyObject* exc_type = PyErr_Occurred();
                 if (exc_type) {
                   if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                  else __PYX_ERR(0, 81, __pyx_L5_error)
+                  else __PYX_ERR(0, 82, __pyx_L5_error)
                 }
                 break;
               }
@@ -3301,14 +3332,14 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             __Pyx_GIVEREF(__pyx_t_3);
             __pyx_t_3 = 0;
 
-            /* "rubbish/core/prompt.pyx":82
+            /* "rubbish/core/prompt.pyx":83
  *                 if os.path.isdir(directory):
  *                     for filename in os.listdir(directory):
  *                         if filename.startswith(prefix):             # <<<<<<<<<<<<<<
  *                             filenames.append((directory, filename))
  * 
  */
-            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_filename, __pyx_n_s_startswith); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L5_error)
+            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_filename, __pyx_n_s_startswith); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_1);
             __pyx_t_11 = NULL;
             if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -3322,21 +3353,21 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             }
             __pyx_t_3 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_11, __pyx_cur_scope->__pyx_v_prefix) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_prefix);
             __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-            if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L5_error)
+            if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_3);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 82, __pyx_L5_error)
+            __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 83, __pyx_L5_error)
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
             if (__pyx_t_5) {
 
-              /* "rubbish/core/prompt.pyx":83
+              /* "rubbish/core/prompt.pyx":84
  *                     for filename in os.listdir(directory):
  *                         if filename.startswith(prefix):
  *                             filenames.append((directory, filename))             # <<<<<<<<<<<<<<
  * 
  *             filenames = sorted(filenames, key=lambda k: k[1])
  */
-              __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L5_error)
+              __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L5_error)
               __Pyx_GOTREF(__pyx_t_3);
               __Pyx_INCREF(__pyx_cur_scope->__pyx_v_directory);
               __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_directory);
@@ -3344,10 +3375,10 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
               __Pyx_INCREF(__pyx_cur_scope->__pyx_v_filename);
               __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_filename);
               PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_cur_scope->__pyx_v_filename);
-              __pyx_t_18 = __Pyx_PyObject_Append(__pyx_cur_scope->__pyx_v_filenames, __pyx_t_3); if (unlikely(__pyx_t_18 == ((int)-1))) __PYX_ERR(0, 83, __pyx_L5_error)
+              __pyx_t_18 = __Pyx_PyObject_Append(__pyx_cur_scope->__pyx_v_filenames, __pyx_t_3); if (unlikely(__pyx_t_18 == ((int)-1))) __PYX_ERR(0, 84, __pyx_L5_error)
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-              /* "rubbish/core/prompt.pyx":82
+              /* "rubbish/core/prompt.pyx":83
  *                 if os.path.isdir(directory):
  *                     for filename in os.listdir(directory):
  *                         if filename.startswith(prefix):             # <<<<<<<<<<<<<<
@@ -3356,7 +3387,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  */
             }
 
-            /* "rubbish/core/prompt.pyx":81
+            /* "rubbish/core/prompt.pyx":82
  *             for directory in directories:
  *                 if os.path.isdir(directory):
  *                     for filename in os.listdir(directory):             # <<<<<<<<<<<<<<
@@ -3366,7 +3397,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           }
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-          /* "rubbish/core/prompt.pyx":80
+          /* "rubbish/core/prompt.pyx":81
  *             filenames = []
  *             for directory in directories:
  *                 if os.path.isdir(directory):             # <<<<<<<<<<<<<<
@@ -3375,7 +3406,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  */
         }
 
-        /* "rubbish/core/prompt.pyx":79
+        /* "rubbish/core/prompt.pyx":80
  * 
  *             filenames = []
  *             for directory in directories:             # <<<<<<<<<<<<<<
@@ -3385,25 +3416,25 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "rubbish/core/prompt.pyx":85
+      /* "rubbish/core/prompt.pyx":86
  *                             filenames.append((directory, filename))
  * 
  *             filenames = sorted(filenames, key=lambda k: k[1])             # <<<<<<<<<<<<<<
  * 
  *             for directory, filename in filenames:
  */
-      __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L5_error)
+      __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_INCREF(__pyx_cur_scope->__pyx_v_filenames);
       __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_filenames);
       PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_cur_scope->__pyx_v_filenames);
-      __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 85, __pyx_L5_error)
+      __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 86, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_7rubbish_4core_6prompt_9Completer_15get_completions_lambda, 0, __pyx_n_s_Completer_get_completions_locals, NULL, __pyx_n_s_rubbish_core_prompt, __pyx_d, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L5_error)
+      __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_7rubbish_4core_6prompt_9Completer_15get_completions_lambda, 0, __pyx_n_s_Completer_get_completions_locals, NULL, __pyx_n_s_rubbish_core_prompt, __pyx_d, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_key, __pyx_t_3) < 0) __PYX_ERR(0, 85, __pyx_L5_error)
+      if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_key, __pyx_t_3) < 0) __PYX_ERR(0, 86, __pyx_L5_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_2, __pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L5_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_2, __pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -3412,7 +3443,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
       __Pyx_GIVEREF(__pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "rubbish/core/prompt.pyx":87
+      /* "rubbish/core/prompt.pyx":88
  *             filenames = sorted(filenames, key=lambda k: k[1])
  * 
  *             for directory, filename in filenames:             # <<<<<<<<<<<<<<
@@ -3423,26 +3454,26 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __pyx_t_3 = __pyx_cur_scope->__pyx_v_filenames; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
         __pyx_t_10 = NULL;
       } else {
-        __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_filenames); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L5_error)
+        __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_filenames); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_10 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 87, __pyx_L5_error)
+        __pyx_t_10 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 88, __pyx_L5_error)
       }
       for (;;) {
         if (likely(!__pyx_t_10)) {
           if (likely(PyList_CheckExact(__pyx_t_3))) {
             if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_9 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_9); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 87, __pyx_L5_error)
+            __pyx_t_9 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_9); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 88, __pyx_L5_error)
             #else
-            __pyx_t_9 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 87, __pyx_L5_error)
+            __pyx_t_9 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 88, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_9);
             #endif
           } else {
             if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_9 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_9); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 87, __pyx_L5_error)
+            __pyx_t_9 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_9); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 88, __pyx_L5_error)
             #else
-            __pyx_t_9 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 87, __pyx_L5_error)
+            __pyx_t_9 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 88, __pyx_L5_error)
             __Pyx_GOTREF(__pyx_t_9);
             #endif
           }
@@ -3452,7 +3483,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 87, __pyx_L5_error)
+              else __PYX_ERR(0, 88, __pyx_L5_error)
             }
             break;
           }
@@ -3464,7 +3495,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           if (unlikely(size != 2)) {
             if (size > 2) __Pyx_RaiseTooManyValuesError(2);
             else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-            __PYX_ERR(0, 87, __pyx_L5_error)
+            __PYX_ERR(0, 88, __pyx_L5_error)
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
           if (likely(PyTuple_CheckExact(sequence))) {
@@ -3477,15 +3508,15 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           __Pyx_INCREF(__pyx_t_2);
           __Pyx_INCREF(__pyx_t_1);
           #else
-          __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L5_error)
+          __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_1 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L5_error)
+          __pyx_t_1 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_1);
           #endif
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         } else {
           Py_ssize_t index = -1;
-          __pyx_t_11 = PyObject_GetIter(__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 87, __pyx_L5_error)
+          __pyx_t_11 = PyObject_GetIter(__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 88, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_11);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           __pyx_t_19 = Py_TYPE(__pyx_t_11)->tp_iternext;
@@ -3493,7 +3524,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           __Pyx_GOTREF(__pyx_t_2);
           index = 1; __pyx_t_1 = __pyx_t_19(__pyx_t_11); if (unlikely(!__pyx_t_1)) goto __pyx_L23_unpacking_failed;
           __Pyx_GOTREF(__pyx_t_1);
-          if (__Pyx_IternextUnpackEndCheck(__pyx_t_19(__pyx_t_11), 2) < 0) __PYX_ERR(0, 87, __pyx_L5_error)
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_19(__pyx_t_11), 2) < 0) __PYX_ERR(0, 88, __pyx_L5_error)
           __pyx_t_19 = NULL;
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           goto __pyx_L24_unpacking_done;
@@ -3501,7 +3532,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           __pyx_t_19 = NULL;
           if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-          __PYX_ERR(0, 87, __pyx_L5_error)
+          __PYX_ERR(0, 88, __pyx_L5_error)
           __pyx_L24_unpacking_done:;
         }
         __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_directory);
@@ -3513,34 +3544,34 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __Pyx_GIVEREF(__pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "rubbish/core/prompt.pyx":88
+        /* "rubbish/core/prompt.pyx":89
  * 
  *             for directory, filename in filenames:
  *                 completion = filename[len(prefix) :]             # <<<<<<<<<<<<<<
  *                 full_name = os.path.join(directory, filename)
  * 
  */
-        __pyx_t_16 = PyObject_Length(__pyx_cur_scope->__pyx_v_prefix); if (unlikely(__pyx_t_16 == ((Py_ssize_t)-1))) __PYX_ERR(0, 88, __pyx_L5_error)
-        __pyx_t_9 = __Pyx_PyObject_GetSlice(__pyx_cur_scope->__pyx_v_filename, __pyx_t_16, 0, NULL, NULL, NULL, 1, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 88, __pyx_L5_error)
+        __pyx_t_16 = PyObject_Length(__pyx_cur_scope->__pyx_v_prefix); if (unlikely(__pyx_t_16 == ((Py_ssize_t)-1))) __PYX_ERR(0, 89, __pyx_L5_error)
+        __pyx_t_9 = __Pyx_PyObject_GetSlice(__pyx_cur_scope->__pyx_v_filename, __pyx_t_16, 0, NULL, NULL, NULL, 1, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 89, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_completion);
         __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_completion, __pyx_t_9);
         __Pyx_GIVEREF(__pyx_t_9);
         __pyx_t_9 = 0;
 
-        /* "rubbish/core/prompt.pyx":89
+        /* "rubbish/core/prompt.pyx":90
  *             for directory, filename in filenames:
  *                 completion = filename[len(prefix) :]
  *                 full_name = os.path.join(directory, filename)             # <<<<<<<<<<<<<<
  * 
  *                 if os.path.isdir(full_name):
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L5_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 89, __pyx_L5_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L5_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __pyx_t_2 = NULL;
@@ -3558,7 +3589,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_cur_scope->__pyx_v_directory, __pyx_cur_scope->__pyx_v_filename};
-          __pyx_t_9 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 89, __pyx_L5_error)
+          __pyx_t_9 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 90, __pyx_L5_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_9);
         } else
@@ -3566,13 +3597,13 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_cur_scope->__pyx_v_directory, __pyx_cur_scope->__pyx_v_filename};
-          __pyx_t_9 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 89, __pyx_L5_error)
+          __pyx_t_9 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 90, __pyx_L5_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_9);
         } else
         #endif
         {
-          __pyx_t_11 = PyTuple_New(2+__pyx_t_14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 89, __pyx_L5_error)
+          __pyx_t_11 = PyTuple_New(2+__pyx_t_14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 90, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_11);
           if (__pyx_t_2) {
             __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -3583,7 +3614,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           __Pyx_INCREF(__pyx_cur_scope->__pyx_v_filename);
           __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_filename);
           PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_14, __pyx_cur_scope->__pyx_v_filename);
-          __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 89, __pyx_L5_error)
+          __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 90, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         }
@@ -3593,19 +3624,19 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __Pyx_GIVEREF(__pyx_t_9);
         __pyx_t_9 = 0;
 
-        /* "rubbish/core/prompt.pyx":91
+        /* "rubbish/core/prompt.pyx":92
  *                 full_name = os.path.join(directory, filename)
  * 
  *                 if os.path.isdir(full_name):             # <<<<<<<<<<<<<<
  *                     filename += "/"
  *                 elif self.only_directories:
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L5_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 91, __pyx_L5_error)
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 92, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_isdir); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L5_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_isdir); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         __pyx_t_11 = NULL;
@@ -3620,28 +3651,28 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         }
         __pyx_t_9 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_11, __pyx_cur_scope->__pyx_v_full_name) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_full_name);
         __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-        if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 91, __pyx_L5_error)
+        if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 92, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 91, __pyx_L5_error)
+        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 92, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         if (__pyx_t_5) {
 
-          /* "rubbish/core/prompt.pyx":92
+          /* "rubbish/core/prompt.pyx":93
  * 
  *                 if os.path.isdir(full_name):
  *                     filename += "/"             # <<<<<<<<<<<<<<
  *                 elif self.only_directories:
  *                     continue
  */
-          __pyx_t_9 = PyNumber_InPlaceAdd(__pyx_cur_scope->__pyx_v_filename, __pyx_kp_u__7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 92, __pyx_L5_error)
+          __pyx_t_9 = PyNumber_InPlaceAdd(__pyx_cur_scope->__pyx_v_filename, __pyx_kp_u__7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 93, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_filename);
           __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_filename, __pyx_t_9);
           __Pyx_GIVEREF(__pyx_t_9);
           __pyx_t_9 = 0;
 
-          /* "rubbish/core/prompt.pyx":91
+          /* "rubbish/core/prompt.pyx":92
  *                 full_name = os.path.join(directory, filename)
  * 
  *                 if os.path.isdir(full_name):             # <<<<<<<<<<<<<<
@@ -3651,20 +3682,20 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
           goto __pyx_L25;
         }
 
-        /* "rubbish/core/prompt.pyx":93
+        /* "rubbish/core/prompt.pyx":94
  *                 if os.path.isdir(full_name):
  *                     filename += "/"
  *                 elif self.only_directories:             # <<<<<<<<<<<<<<
  *                     continue
  * 
  */
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_only_directories); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 93, __pyx_L5_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_only_directories); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 94, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 93, __pyx_L5_error)
+        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 94, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         if (__pyx_t_5) {
 
-          /* "rubbish/core/prompt.pyx":94
+          /* "rubbish/core/prompt.pyx":95
  *                     filename += "/"
  *                 elif self.only_directories:
  *                     continue             # <<<<<<<<<<<<<<
@@ -3673,7 +3704,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  */
           goto __pyx_L21_continue;
 
-          /* "rubbish/core/prompt.pyx":93
+          /* "rubbish/core/prompt.pyx":94
  *                 if os.path.isdir(full_name):
  *                     filename += "/"
  *                 elif self.only_directories:             # <<<<<<<<<<<<<<
@@ -3683,14 +3714,14 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         }
         __pyx_L25:;
 
-        /* "rubbish/core/prompt.pyx":96
+        /* "rubbish/core/prompt.pyx":97
  *                     continue
  * 
  *                 if not self.file_filter(full_name):             # <<<<<<<<<<<<<<
  *                     continue
  * 
  */
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_file_filter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L5_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self, __pyx_n_s_file_filter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_11 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -3704,24 +3735,24 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         }
         __pyx_t_9 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_11, __pyx_cur_scope->__pyx_v_full_name) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_cur_scope->__pyx_v_full_name);
         __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-        if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 96, __pyx_L5_error)
+        if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 97, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 96, __pyx_L5_error)
+        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 97, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_20 = ((!__pyx_t_5) != 0);
         if (__pyx_t_20) {
 
-          /* "rubbish/core/prompt.pyx":97
+          /* "rubbish/core/prompt.pyx":98
  * 
  *                 if not self.file_filter(full_name):
  *                     continue             # <<<<<<<<<<<<<<
  * 
- *                 yield Completion(completion, 0, display=filename)
+ *                 completion = Completion(completion, 0, display=filename)
  */
           goto __pyx_L21_continue;
 
-          /* "rubbish/core/prompt.pyx":96
+          /* "rubbish/core/prompt.pyx":97
  *                     continue
  * 
  *                 if not self.file_filter(full_name):             # <<<<<<<<<<<<<<
@@ -3730,16 +3761,16 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
  */
         }
 
-        /* "rubbish/core/prompt.pyx":99
+        /* "rubbish/core/prompt.pyx":100
  *                     continue
  * 
- *                 yield Completion(completion, 0, display=filename)             # <<<<<<<<<<<<<<
- *         except OSError:
- *             pass
+ *                 completion = Completion(completion, 0, display=filename)             # <<<<<<<<<<<<<<
+ *                 text_if_applied = (
+ *                     document.text[:document.cursor_position + completion.start_position]
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_Completion); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 99, __pyx_L5_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_Completion); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 100, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L5_error)
+        __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_INCREF(__pyx_cur_scope->__pyx_v_completion);
         __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_completion);
@@ -3747,16 +3778,159 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __Pyx_INCREF(__pyx_int_0);
         __Pyx_GIVEREF(__pyx_int_0);
         PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_int_0);
-        __pyx_t_11 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 99, __pyx_L5_error)
+        __pyx_t_11 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 100, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_11);
-        if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_display, __pyx_cur_scope->__pyx_v_filename) < 0) __PYX_ERR(0, 99, __pyx_L5_error)
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_1, __pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L5_error)
+        if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_display, __pyx_cur_scope->__pyx_v_filename) < 0) __PYX_ERR(0, 100, __pyx_L5_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_1, __pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __pyx_r = __pyx_t_2;
+        __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_completion);
+        __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_completion, __pyx_t_2);
+        __Pyx_GIVEREF(__pyx_t_2);
         __pyx_t_2 = 0;
+
+        /* "rubbish/core/prompt.pyx":102
+ *                 completion = Completion(completion, 0, display=filename)
+ *                 text_if_applied = (
+ *                     document.text[:document.cursor_position + completion.start_position]             # <<<<<<<<<<<<<<
+ *                     + completion.text
+ *                     + document.text[document.cursor_position:]
+ */
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_text); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 102, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_cursor_position); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 102, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_completion, __pyx_n_s_start_position); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_9 = PyNumber_Add(__pyx_t_11, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 102, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_t_2, 0, 0, NULL, &__pyx_t_9, NULL, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 102, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+
+        /* "rubbish/core/prompt.pyx":103
+ *                 text_if_applied = (
+ *                     document.text[:document.cursor_position + completion.start_position]
+ *                     + completion.text             # <<<<<<<<<<<<<<
+ *                     + document.text[document.cursor_position:]
+ *                 )
+ */
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_completion, __pyx_n_s_text); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 103, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_2 = PyNumber_Add(__pyx_t_1, __pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+
+        /* "rubbish/core/prompt.pyx":104
+ *                     document.text[:document.cursor_position + completion.start_position]
+ *                     + completion.text
+ *                     + document.text[document.cursor_position:]             # <<<<<<<<<<<<<<
+ *                 )
+ *                 if text_if_applied == document.text:
+ */
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_text); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 104, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_cursor_position); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_11 = __Pyx_PyObject_GetSlice(__pyx_t_9, 0, 0, &__pyx_t_1, NULL, NULL, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 104, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_t_1 = PyNumber_Add(__pyx_t_2, __pyx_t_11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_text_if_applied);
+        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_text_if_applied, __pyx_t_1);
+        __Pyx_GIVEREF(__pyx_t_1);
+        __pyx_t_1 = 0;
+
+        /* "rubbish/core/prompt.pyx":106
+ *                     + document.text[document.cursor_position:]
+ *                 )
+ *                 if text_if_applied == document.text:             # <<<<<<<<<<<<<<
+ *                     continue
+ * 
+ */
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_document, __pyx_n_s_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 106, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_11 = PyObject_RichCompare(__pyx_cur_scope->__pyx_v_text_if_applied, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 106, __pyx_L5_error)
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 106, __pyx_L5_error)
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        if (__pyx_t_20) {
+
+          /* "rubbish/core/prompt.pyx":107
+ *                 )
+ *                 if text_if_applied == document.text:
+ *                     continue             # <<<<<<<<<<<<<<
+ * 
+ *                 if text_if_applied in found_so_far:
+ */
+          goto __pyx_L21_continue;
+
+          /* "rubbish/core/prompt.pyx":106
+ *                     + document.text[document.cursor_position:]
+ *                 )
+ *                 if text_if_applied == document.text:             # <<<<<<<<<<<<<<
+ *                     continue
+ * 
+ */
+        }
+
+        /* "rubbish/core/prompt.pyx":109
+ *                     continue
+ * 
+ *                 if text_if_applied in found_so_far:             # <<<<<<<<<<<<<<
+ *                     continue
+ * 
+ */
+        __pyx_t_20 = (__Pyx_PySet_ContainsTF(__pyx_cur_scope->__pyx_v_text_if_applied, __pyx_cur_scope->__pyx_v_found_so_far, Py_EQ)); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 109, __pyx_L5_error)
+        __pyx_t_5 = (__pyx_t_20 != 0);
+        if (__pyx_t_5) {
+
+          /* "rubbish/core/prompt.pyx":110
+ * 
+ *                 if text_if_applied in found_so_far:
+ *                     continue             # <<<<<<<<<<<<<<
+ * 
+ *                 found_so_far.add(text_if_applied)
+ */
+          goto __pyx_L21_continue;
+
+          /* "rubbish/core/prompt.pyx":109
+ *                     continue
+ * 
+ *                 if text_if_applied in found_so_far:             # <<<<<<<<<<<<<<
+ *                     continue
+ * 
+ */
+        }
+
+        /* "rubbish/core/prompt.pyx":112
+ *                     continue
+ * 
+ *                 found_so_far.add(text_if_applied)             # <<<<<<<<<<<<<<
+ *                 yield completion
+ *         except OSError:
+ */
+        __pyx_t_18 = PySet_Add(__pyx_cur_scope->__pyx_v_found_so_far, __pyx_cur_scope->__pyx_v_text_if_applied); if (unlikely(__pyx_t_18 == ((int)-1))) __PYX_ERR(0, 112, __pyx_L5_error)
+
+        /* "rubbish/core/prompt.pyx":113
+ * 
+ *                 found_so_far.add(text_if_applied)
+ *                 yield completion             # <<<<<<<<<<<<<<
+ *         except OSError:
+ *             pass
+ */
+        __Pyx_INCREF(__pyx_cur_scope->__pyx_v_completion);
+        __pyx_r = __pyx_cur_scope->__pyx_v_completion;
         __Pyx_XGIVEREF(__pyx_t_3);
         __pyx_cur_scope->__pyx_t_0 = __pyx_t_3;
         __pyx_cur_scope->__pyx_t_1 = __pyx_t_4;
@@ -3773,7 +3947,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         /* return from generator, yielding value */
         __pyx_generator->resume_label = 1;
         return __pyx_r;
-        __pyx_L27_resume_from_yield:;
+        __pyx_L29_resume_from_yield:;
         __pyx_t_3 = __pyx_cur_scope->__pyx_t_0;
         __pyx_cur_scope->__pyx_t_0 = 0;
         __Pyx_XGOTREF(__pyx_t_3);
@@ -3788,9 +3962,9 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
         __pyx_cur_scope->__pyx_t_4 = 0;
         __Pyx_XGOTREF(__pyx_t_8);
         __pyx_t_10 = __pyx_cur_scope->__pyx_t_5;
-        if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 99, __pyx_L5_error)
+        if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 113, __pyx_L5_error)
 
-        /* "rubbish/core/prompt.pyx":87
+        /* "rubbish/core/prompt.pyx":88
  *             filenames = sorted(filenames, key=lambda k: k[1])
  * 
  *             for directory, filename in filenames:             # <<<<<<<<<<<<<<
@@ -3801,7 +3975,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "rubbish/core/prompt.pyx":64
+      /* "rubbish/core/prompt.pyx":65
  *             return
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -3823,9 +3997,9 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "rubbish/core/prompt.pyx":100
- * 
- *                 yield Completion(completion, 0, display=filename)
+    /* "rubbish/core/prompt.pyx":114
+ *                 found_so_far.add(text_if_applied)
+ *                 yield completion
  *         except OSError:             # <<<<<<<<<<<<<<
  *             pass
  */
@@ -3837,7 +4011,7 @@ static PyObject *__pyx_gb_7rubbish_4core_6prompt_9Completer_2generator(__pyx_Cor
     goto __pyx_L7_except_error;
     __pyx_L7_except_error:;
 
-    /* "rubbish/core/prompt.pyx":64
+    /* "rubbish/core/prompt.pyx":65
  *             return
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -3918,11 +4092,13 @@ static void __pyx_tp_dealloc_7rubbish_4core_6prompt___pyx_scope_struct__get_comp
   Py_CLEAR(p->__pyx_v_document);
   Py_CLEAR(p->__pyx_v_filename);
   Py_CLEAR(p->__pyx_v_filenames);
+  Py_CLEAR(p->__pyx_v_found_so_far);
   Py_CLEAR(p->__pyx_v_full_name);
   Py_CLEAR(p->__pyx_7genexpr__pyx_v_p);
   Py_CLEAR(p->__pyx_v_prefix);
   Py_CLEAR(p->__pyx_v_self);
   Py_CLEAR(p->__pyx_v_text);
+  Py_CLEAR(p->__pyx_v_text_if_applied);
   Py_CLEAR(p->__pyx_t_0);
   Py_CLEAR(p->__pyx_t_2);
   Py_CLEAR(p->__pyx_t_3);
@@ -3961,6 +4137,9 @@ static int __pyx_tp_traverse_7rubbish_4core_6prompt___pyx_scope_struct__get_comp
   if (p->__pyx_v_filenames) {
     e = (*v)(p->__pyx_v_filenames, a); if (e) return e;
   }
+  if (p->__pyx_v_found_so_far) {
+    e = (*v)(p->__pyx_v_found_so_far, a); if (e) return e;
+  }
   if (p->__pyx_v_full_name) {
     e = (*v)(p->__pyx_v_full_name, a); if (e) return e;
   }
@@ -3975,6 +4154,9 @@ static int __pyx_tp_traverse_7rubbish_4core_6prompt___pyx_scope_struct__get_comp
   }
   if (p->__pyx_v_text) {
     e = (*v)(p->__pyx_v_text, a); if (e) return e;
+  }
+  if (p->__pyx_v_text_if_applied) {
+    e = (*v)(p->__pyx_v_text_if_applied, a); if (e) return e;
   }
   if (p->__pyx_t_0) {
     e = (*v)(p->__pyx_t_0, a); if (e) return e;
@@ -4127,6 +4309,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_PathCompleter, __pyx_k_PathCompleter, sizeof(__pyx_k_PathCompleter), 0, 0, 1, 1},
   {&__pyx_n_s_RED, __pyx_k_RED, sizeof(__pyx_k_RED), 0, 0, 1, 1},
   {&__pyx_n_s_RESET, __pyx_k_RESET, sizeof(__pyx_k_RESET), 0, 0, 1, 1},
+  {&__pyx_n_s_Set, __pyx_k_Set, sizeof(__pyx_k_Set), 0, 0, 1, 1},
   {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
   {&__pyx_kp_u__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 1, 0, 0},
   {&__pyx_kp_u__4, __pyx_k__4, sizeof(__pyx_k__4), 0, 1, 0, 0},
@@ -4139,6 +4322,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_close, __pyx_k_close, sizeof(__pyx_k_close), 0, 0, 1, 1},
   {&__pyx_n_s_complete_event, __pyx_k_complete_event, sizeof(__pyx_k_complete_event), 0, 0, 1, 1},
   {&__pyx_n_s_completion, __pyx_k_completion, sizeof(__pyx_k_completion), 0, 0, 1, 1},
+  {&__pyx_n_s_cursor_position, __pyx_k_cursor_position, sizeof(__pyx_k_cursor_position), 0, 0, 1, 1},
   {&__pyx_n_s_directories, __pyx_k_directories, sizeof(__pyx_k_directories), 0, 0, 1, 1},
   {&__pyx_n_s_directory, __pyx_k_directory, sizeof(__pyx_k_directory), 0, 0, 1, 1},
   {&__pyx_n_s_dirname, __pyx_k_dirname, sizeof(__pyx_k_dirname), 0, 0, 1, 1},
@@ -4149,6 +4333,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_file_filter, __pyx_k_file_filter, sizeof(__pyx_k_file_filter), 0, 0, 1, 1},
   {&__pyx_n_s_filename, __pyx_k_filename, sizeof(__pyx_k_filename), 0, 0, 1, 1},
   {&__pyx_n_s_filenames, __pyx_k_filenames, sizeof(__pyx_k_filenames), 0, 0, 1, 1},
+  {&__pyx_n_s_found_so_far, __pyx_k_found_so_far, sizeof(__pyx_k_found_so_far), 0, 0, 1, 1},
   {&__pyx_n_s_full_name, __pyx_k_full_name, sizeof(__pyx_k_full_name), 0, 0, 1, 1},
   {&__pyx_n_s_get_completions, __pyx_k_get_completions, sizeof(__pyx_k_get_completions), 0, 0, 1, 1},
   {&__pyx_n_s_get_paths, __pyx_k_get_paths, sizeof(__pyx_k_get_paths), 0, 0, 1, 1},
@@ -4181,17 +4366,19 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_send, __pyx_k_send, sizeof(__pyx_k_send), 0, 0, 1, 1},
   {&__pyx_n_s_sorted, __pyx_k_sorted, sizeof(__pyx_k_sorted), 0, 0, 1, 1},
   {&__pyx_n_s_split, __pyx_k_split, sizeof(__pyx_k_split), 0, 0, 1, 1},
+  {&__pyx_n_s_start_position, __pyx_k_start_position, sizeof(__pyx_k_start_position), 0, 0, 1, 1},
   {&__pyx_n_s_startswith, __pyx_k_startswith, sizeof(__pyx_k_startswith), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_text, __pyx_k_text, sizeof(__pyx_k_text), 0, 0, 1, 1},
   {&__pyx_n_s_text_before_cursor, __pyx_k_text_before_cursor, sizeof(__pyx_k_text_before_cursor), 0, 0, 1, 1},
+  {&__pyx_n_s_text_if_applied, __pyx_k_text_if_applied, sizeof(__pyx_k_text_if_applied), 0, 0, 1, 1},
   {&__pyx_n_s_throw, __pyx_k_throw, sizeof(__pyx_k_throw), 0, 0, 1, 1},
   {&__pyx_n_s_typing, __pyx_k_typing, sizeof(__pyx_k_typing), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 85, __pyx_L1_error)
-  __pyx_builtin_OSError = __Pyx_GetBuiltinName(__pyx_n_s_OSError); if (!__pyx_builtin_OSError) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_builtin_OSError = __Pyx_GetBuiltinName(__pyx_n_s_OSError); if (!__pyx_builtin_OSError) __PYX_ERR(0, 114, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -4208,10 +4395,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         self, document: Document, complete_event: CompleteEvent
  *     ) -> Iterable[Completion]:
  */
-  __pyx_tuple__8 = PyTuple_Pack(13, __pyx_n_s_self, __pyx_n_s_document, __pyx_n_s_complete_event, __pyx_n_s_text, __pyx_n_s_dirname, __pyx_n_s_directories, __pyx_n_s_prefix, __pyx_n_s_filenames, __pyx_n_s_directory, __pyx_n_s_filename, __pyx_n_s_completion, __pyx_n_s_full_name, __pyx_n_s_p); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(15, __pyx_n_s_self, __pyx_n_s_document, __pyx_n_s_complete_event, __pyx_n_s_found_so_far, __pyx_n_s_text, __pyx_n_s_dirname, __pyx_n_s_directories, __pyx_n_s_prefix, __pyx_n_s_filenames, __pyx_n_s_directory, __pyx_n_s_filename, __pyx_n_s_completion, __pyx_n_s_full_name, __pyx_n_s_text_if_applied, __pyx_n_s_p); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(3, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_rubbish_core_prompt_pyx, __pyx_n_s_get_completions, 56, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(3, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_rubbish_core_prompt_pyx, __pyx_n_s_get_completions, 56, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4543,7 +4730,7 @@ if (!__Pyx_RefNanny) {
 
   /* "rubbish/core/prompt.pyx":1
  * import os.path             # <<<<<<<<<<<<<<
- * from typing import Iterable
+ * from typing import Set, Iterable
  * 
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_os_path, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -4553,17 +4740,24 @@ if (!__Pyx_RefNanny) {
 
   /* "rubbish/core/prompt.pyx":2
  * import os.path
- * from typing import Iterable             # <<<<<<<<<<<<<<
+ * from typing import Set, Iterable             # <<<<<<<<<<<<<<
  * 
  * from prompt_toolkit.document import Document
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_n_s_Set);
+  __Pyx_GIVEREF(__pyx_n_s_Set);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Set);
   __Pyx_INCREF(__pyx_n_s_Iterable);
   __Pyx_GIVEREF(__pyx_n_s_Iterable);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Iterable);
+  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_Iterable);
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Set); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Set, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Iterable); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -4572,7 +4766,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "rubbish/core/prompt.pyx":4
- * from typing import Iterable
+ * from typing import Set, Iterable
  * 
  * from prompt_toolkit.document import Document             # <<<<<<<<<<<<<<
  * from prompt_toolkit.history import FileHistory
@@ -4708,7 +4902,7 @@ if (!__Pyx_RefNanny) {
  *     def get_completions(
  *         self, document: Document, complete_event: CompleteEvent             # <<<<<<<<<<<<<<
  *     ) -> Iterable[Completion]:
- *         text = document.text_before_cursor.split()[-1]
+ *         found_so_far: Set[str] = set()
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_Document); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -4723,8 +4917,8 @@ if (!__Pyx_RefNanny) {
  *     def get_completions(
  *         self, document: Document, complete_event: CompleteEvent
  *     ) -> Iterable[Completion]:             # <<<<<<<<<<<<<<
+ *         found_so_far: Set[str] = set()
  *         text = document.text_before_cursor.split()[-1]
- * 
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_Iterable); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -4768,7 +4962,7 @@ if (!__Pyx_RefNanny) {
 
   /* "rubbish/core/prompt.pyx":1
  * import os.path             # <<<<<<<<<<<<<<
- * from typing import Iterable
+ * from typing import Set, Iterable
  * 
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -6386,6 +6580,60 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetSlice(PyObject* obj,
         "'%.200s' object is unsliceable", Py_TYPE(obj)->tp_name);
 bad:
     return NULL;
+}
+
+/* pyfrozenset_new */
+static CYTHON_INLINE PyObject* __Pyx_PyFrozenSet_New(PyObject* it) {
+    if (it) {
+        PyObject* result;
+#if CYTHON_COMPILING_IN_PYPY
+        PyObject* args;
+        args = PyTuple_Pack(1, it);
+        if (unlikely(!args))
+            return NULL;
+        result = PyObject_Call((PyObject*)&PyFrozenSet_Type, args, NULL);
+        Py_DECREF(args);
+        return result;
+#else
+        if (PyFrozenSet_CheckExact(it)) {
+            Py_INCREF(it);
+            return it;
+        }
+        result = PyFrozenSet_New(it);
+        if (unlikely(!result))
+            return NULL;
+        if ((PY_VERSION_HEX >= 0x031000A1) || likely(PySet_GET_SIZE(result)))
+            return result;
+        Py_DECREF(result);
+#endif
+    }
+#if CYTHON_USE_TYPE_SLOTS
+    return PyFrozenSet_Type.tp_new(&PyFrozenSet_Type, __pyx_empty_tuple, NULL);
+#else
+    return PyObject_Call((PyObject*)&PyFrozenSet_Type, __pyx_empty_tuple, NULL);
+#endif
+}
+
+/* PySetContains */
+static int __Pyx_PySet_ContainsUnhashable(PyObject *set, PyObject *key) {
+    int result = -1;
+    if (PySet_Check(key) && PyErr_ExceptionMatches(PyExc_TypeError)) {
+        PyObject *tmpkey;
+        PyErr_Clear();
+        tmpkey = __Pyx_PyFrozenSet_New(key);
+        if (tmpkey != NULL) {
+            result = PySet_Contains(set, tmpkey);
+            Py_DECREF(tmpkey);
+        }
+    }
+    return result;
+}
+static CYTHON_INLINE int __Pyx_PySet_ContainsTF(PyObject* key, PyObject* set, int eq) {
+    int result = PySet_Contains(set, key);
+    if (unlikely(result < 0)) {
+        result = __Pyx_PySet_ContainsUnhashable(set, key);
+    }
+    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
 }
 
 /* GetTopmostException */
