@@ -61,6 +61,15 @@ cdef extern from "grammar.tab.h":
         LESS = 271
         LESS_AND = 272
 
+
+cdef class Redirector:
+    cdef REDIRECTOR *_redirector
+    cdef bint ptr_set
+
+    @staticmethod
+    cdef Redirector from_ptr(REDIRECTOR *ptr, bint auto_dealloc = *)
+
+
 cdef class Redirect:
     cdef REDIRECT *_redirect
     cdef bint ptr_set

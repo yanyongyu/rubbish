@@ -31,6 +31,12 @@ class TokenType(IntEnum):
     LESS = 271
     LESS_AND = 272
 
+class Redirector:
+    @property
+    def dest(self) -> int: ...
+    @property
+    def filename(self) -> str: ...
+
 class Redirect:
     @property
     def redirector(self) -> int: ...
