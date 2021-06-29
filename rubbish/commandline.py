@@ -5,6 +5,7 @@ from colorama import Fore
 from prompt_toolkit import PromptSession, ANSI
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
+from rubbish.gui import main as ui_main
 from rubbish.core import (
     init,
     get_history,
@@ -32,6 +33,14 @@ def run_file(filename: str, config: Config = None):
             return_code = execute_command(
                 command, sys.stdin.fileno(), sys.stdout.fileno()
             )
+
+
+def run_ui(config: Config = None):
+    config = config or get_config()
+    set_config(config)
+    init()
+
+    ui_main()
 
 
 def run_console(config: Config = None):

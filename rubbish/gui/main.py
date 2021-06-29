@@ -1,13 +1,14 @@
 import os.path
-import send
-
-from tempfile import TemporaryFile
 from threading import Timer
+from tempfile import TemporaryFile
+
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QUrl, QFileInfo, pyqtProperty, qInstallMessageHandler, Qt
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QMessageBox
+
+from .send import getFileno, recieve
 
 CURRENT_DIR = os.path.dirname(__file__)
 ICON_FILE = os.path.join(CURRENT_DIR, "src/minilogo.png")
@@ -17,13 +18,12 @@ rtemp = TemporaryFile(buffering=0)
 
 
 class Myshared(QWidget):
-
     def __init__(self, win: "MainWindow"):
         super().__init__()
         self.win = win
 
     def RemoveRoute(self, str):
-        str = str[len(self.win.getRoute()):]
+        str = str[len(self.win.getRoute()) :]
         return str
 
     def PyQt52WebValue(self):
@@ -31,7 +31,7 @@ class Myshared(QWidget):
 
     def Web2PyQt5Value(self, str):
         instr = self.RemoveRoute(str).encode("utf-8")
-        fileno = send.getFileno(stemp, instr)
+        fileno = getFileno(stemp, instr)
         # commandline
         # parse(str)
         self.win.setResult()
@@ -54,13 +54,13 @@ class MainWindow(QMainWindow):
     # 传输当前路径调用：
     def setRoute(self, value):
         self.route = value
-        jscode = "PyQt52Route(\"" + value + "\");"
+        jscode = 'PyQt52Route("' + value + '");'
         self.browser.page().runJavaScript(jscode)
 
     # 传输结果调用
     def setResult(self):
-        value = send.recieve(rtemp)
-        jscode = "PyQt52Result(\"" + value + "\");"
+        value = recieve(rtemp)
+        jscode = 'PyQt52Result("' + value + '");'
         self.browser.page().runJavaScript(jscode)
 
     def getRoute(self):
@@ -90,5 +90,5 @@ def main():
     rtemp.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

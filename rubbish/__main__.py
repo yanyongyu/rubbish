@@ -4,11 +4,12 @@ from dataclasses import dataclass, asdict
 
 from . import __version__
 from .core import Config
-from .commandline import run_file, run_console
+from .commandline import run_file, run_ui, run_console
 
 
 @dataclass
 class CommandlineConfig(object):
+    ui: bool = False
     use_ansi: bool = True
     file: Optional[str] = None
     init_file: str = ""
@@ -31,6 +32,7 @@ parser.add_argument(
 parser.add_argument(
     "--history-file", action="store", dest="history_file", help="rubbish history file."
 )
+parser.add_argument("--ui", action="store_true", dest="ui", help="launch terminal ui.")
 parser.add_argument(
     "file", action="store", nargs="?", default=None, metavar="FILE", help="input file."
 )
@@ -41,6 +43,8 @@ def start():
     config = Config(**asdict(commandline_config))
     if commandline_config.file:
         run_file(commandline_config.file, config)
+    elif commandline_config.ui:
+        run_ui(config)
     else:
         run_console(config)
 
