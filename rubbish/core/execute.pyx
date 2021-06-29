@@ -1,7 +1,9 @@
 import os.path
+from typing import Dict, Tuple
+
 from libc.stdio cimport fopen, FILE
-from libc.stdlib cimport malloc, free
 from libc.string cimport strcpy, memset
+from libc.stdlib cimport malloc, free, getenv
 
 from rubbish.core.command cimport Command, SimpleCommand, Connection, CommandType, TokenType
 
@@ -12,13 +14,21 @@ cdef extern from "<unistd.h>":
     cdef int pipe (int fd[2])
     cdef void c_exit "exit" (int status)
     cdef int chdir (char* path)
+    cdef char **environ
 
 cdef extern from "<stdio.h>":
     cdef int fileno (FILE *stream)
+    cdef int setenv(const char *name, const char *value, int overwrite)
     cdef int dprintf (int fd, const char *format, ...)
 
 cdef extern from "_execute.c":
     cdef int _execute "execute" (char ** parameters, int input, int output)
+
+
+aliases: Dict[str, Tuple[str]] = {
+    "ls": ("ls", "--color=auto"),
+    "ll": ("ls", "-alF")
+}
 
 
 cpdef int execute_command(Command command, int input, int output, bint async = False) except? -1:
@@ -56,10 +66,27 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
     cdef char ** parameters
     cdef int i = 0, result
 
-    if command.words[0] == "cd":
+    words = list(command.words)
+
+    if words[0] in aliases:
+        words[:1] = list(aliases[words[0]])
+
+    if words[0] == "cd":
         return cd(command.words[1] if len(command.words) == 2 else None)
-    elif command.words[0] == "exit":
+    elif words[0] == "exit":
         return exit()
+    elif words[0] == "alias":
+        if len(command.words) == 1:
+            return alias(output)
+        return alias(output, command.words[1], command.words[2:])
+    elif words[0] == "unalias":
+        return unalias(command.words[1])
+    elif words[0] == "export":
+        if len(command.words) == 1:
+            return export(output)
+        elif len(command.words) == 2:
+            return export(output, command.words[1])
+        return export(output, command.words[1], command.words[2])
 
     parameters = <char **>malloc(100 * sizeof(char *))
     memset(parameters, 0, 100 * sizeof(char *))
@@ -121,3 +148,46 @@ cpdef int cd(unicode dir = None) except? -1:
 
 cpdef int exit() except? -1:
     raise EOFError("Shell exit")
+
+cpdef int alias(int output, unicode name = None, tuple words = None) except? -1:
+    cdef char *temp_str
+    if not name:
+        for key, value in aliases.items():
+            formated = f"alias {key} '{' '.join(value)}'".encode("utf-8")
+            temp_str = formated
+            dprintf(output, "%s\n", temp_str)
+    elif not words:
+        return 1
+    else:
+        aliases[name] = words
+    return 0
+
+cpdef int unalias(unicode name):
+    aliases.pop(name, None)
+    return 0
+
+cpdef int export(int output, unicode name = None, unicode value = None) except? -1:
+    cdef int i = 0
+    cdef char *temp_str
+    cdef char *temp_name
+    cdef char *temp_value
+    if not name:
+        while True:
+            temp_str = environ[i]
+            if temp_str == NULL:
+                break
+            dprintf(output, "%s\n", temp_str)
+            i += 1
+    elif not value:
+        name_bytes = name.encode("utf-8")
+        temp_name = name_bytes
+        temp_value = getenv(temp_name)
+        if temp_value is not NULL:
+            dprintf(output, "%s\n", temp_value)
+    else:
+        name_bytes = name.encode("utf-8")
+        value_bytes = value.encode("utf-8")
+        temp_name = name_bytes
+        temp_value = value_bytes
+        return setenv(temp_name, temp_value, 1)
+    return 0

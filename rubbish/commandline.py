@@ -3,9 +3,12 @@ import traceback
 
 from colorama import Fore
 from prompt_toolkit import PromptSession, ANSI
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
 from rubbish.core import (
     init,
+    get_history,
+    get_completer,
     Config,
     set_config,
     get_config,
@@ -36,7 +39,11 @@ def run_console(config: Config = None):
     set_config(config)
     init()
 
-    session = PromptSession()
+    session = PromptSession(
+        history=get_history(),
+        completer=get_completer(),
+        auto_suggest=AutoSuggestFromHistory(),
+    )
     input_stuck = []
     more = False
     while True:

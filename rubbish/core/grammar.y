@@ -215,22 +215,22 @@ redirection:
   | LESS_AND NUMBER {
       source.dest = 0;
       destination.dest = $2;
-      $$ = create_redirection(source, r_duplicating_output_word, destination);
+      $$ = create_redirection(source, r_duplicating_input, destination);
     }
   | NUMBER LESS_AND NUMBER {
       source.dest = $1;
       destination.dest = $3;
-      $$ = create_redirection(source, r_duplicating_output_word, destination);
+      $$ = create_redirection(source, r_duplicating_input, destination);
     }
   | LESS_AND WORD {
       source.dest = 0;
       destination.filename = $2;
-      $$ = create_redirection(source, r_duplicating_output_word, destination);
+      $$ = create_redirection(source, r_duplicating_input_word, destination);
     }
   | NUMBER LESS_AND WORD {
       source.dest = $1;
       destination.filename = $3;
-      $$ = create_redirection(source, r_duplicating_output_word, destination);
+      $$ = create_redirection(source, r_duplicating_input_word, destination);
     }
   ;
 

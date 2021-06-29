@@ -25,7 +25,7 @@ cdef class Config:
     @property
     def history_file(self):
         return (
-            self._history_file.encode("utf-8") or os.path.expanduser("~/.rubbish_history")
+            self._history_file.decode("utf-8") or os.path.expanduser("~/.rubbish_history")
         )
 
     @history_file.setter

@@ -141,7 +141,7 @@ cdef class SimpleCommand(Command):
             redirects = []
             redirect = self._command.info.Simple.redirects
             while redirect:
-                redirects.append(Redirect.from_ptr(redirect))
+                redirects.insert(0, Redirect.from_ptr(redirect))
                 redirect = redirect.next
             self._redirects = tuple(redirects)
         return self._redirects

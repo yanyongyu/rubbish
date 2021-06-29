@@ -1,11 +1,12 @@
 from pathlib import Path
+from typing import Optional
 
 from colorama import Fore
 
-from .parse import parse, parse_file, MoreInputNeeded
 from .config import Config, get_config, set_config
-from .prompt import get_username, get_hostname, get_cwd, get_prompt
+from .parse import parse, parse_file, MoreInputNeeded
 from .execute import execute_command, execute_simplecommand, execute_connection, cd
+from .prompt import get_username, get_hostname, get_cwd, get_prompt, History, Completer
 from .command import (
     CommandType,
     RedirectInstruction,
@@ -16,8 +17,13 @@ from .command import (
     SimpleCommand,
 )
 
+_history: Optional[History] = None
+_completer: Optional[Completer] = None
+
 
 def init():
+    global _history
+    global _completer
     config: Config = get_config()
 
     # init rubbish rc file
@@ -38,3 +44,22 @@ def init():
             print(
                 f"{Fore.RED}[!] Error when running init file: {config.init_file}{Fore.RESET}"
             )
+
+    # init rubbish history file
+    Path(config.history_file).touch()
+    _history = History(config.history_file)
+    _completer = Completer()
+
+
+def get_history() -> History:
+    if not _history:
+        raise RuntimeError("Shell not init!")
+
+    return _history
+
+
+def get_completer() -> Completer:
+    if not _completer:
+        raise RuntimeError("Shell not init!")
+
+    return _completer

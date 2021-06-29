@@ -1,4 +1,6 @@
 import os.path
+from prompt_toolkit.history import FileHistory
+from prompt_toolkit.completion import PathCompleter
 
 from rubbish.core.color_control cimport Fore
 
@@ -40,3 +42,11 @@ cpdef unicode get_prompt():
     prompt += Fore.CYAN + cwd + Fore.RESET
     prompt += "\n" + promptchar
     return prompt
+
+
+class History(FileHistory):
+    pass
+
+
+class Completer(PathCompleter):
+    pass
