@@ -73,8 +73,14 @@ cpdef int execute_command(Command command, int input, int output, bint async = F
 
 
 cpdef int execute_simplecommand(SimpleCommand command, int input, int output) except? -1:
+    cdef int fd1
+    cdef int fd2
+    cdef pid_t pid
     cdef char ** parameters
     cdef int i = 0
+    cdef int status = 0
+    cdef int result = 0
+    cdef int flag = 0
 
     words = list(command.words)
 
@@ -107,98 +113,98 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
         parameters[i] = <char *>malloc(100 * sizeof(char))
         strcpy(parameters[i], word_bytes)
         i += 1
-    cdef int status = 0
-    cdef pid_t pid
-    cdef int result = 0
-    cdef int fd
-    cdef int fd2
-    cdef int flag = 0
+
     pid = fork()
-    if pid < 0 :
+    if pid < 0:
         dprintf(output, "create fork failed\n")
-    elif pid ==0 :
+    elif pid ==0:
         dup2(input, 0)
         dup2(output, 1)
         for redirect in command.redirects:
-            if redirect.instruction == RedirectInstruction.r_output_direction:
-                temp = redirect.redirectee.filename.encode("utf-8")
-                fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
-                if fd < 0:
-                    dprintf(output, " open error\n")
-                    return result
-                flag = 1
-                fd2 = dup2(fd, output)
-                if fd2 < 0:
-                    dprintf(output, "dup2 error\n")
-                    return result
-            elif redirect.instruction == RedirectInstruction.r_appending_to:
-                temp = redirect.redirectee.filename.encode("utf-8")
-                fd = open(temp, O_CREAT | O_RDWR | O_APPEND, S_IRUSR | S_IWUSR)
-                if fd < 0:
-                    dprintf(output, " open error\n")
-                    return result
-                flag = 1
-                fd2 = dup2(fd, output)
-                if fd2 < 0:
-                    dprintf(output, "dup2 error\n")
-                    return result
-            elif redirect.instruction == RedirectInstruction.r_input_direction:
+            if redirect.instruction == RedirectInstruction.r_input_direction:
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp,O_RDWR, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, " open error\n")
-                    return result
+                    dprintf(output, "open error\n")
+                    c_exit(fd)
                 flag = 1
                 fd2 = dup2(fd, input)
                 if fd2 < 0:
                     dprintf(output, "dup2 error\n")
-                    return result
+                    c_exit(fd2)
+            elif redirect.instruction == RedirectInstruction.r_output_direction:
+                temp = redirect.redirectee.filename.encode("utf-8")
+                fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
+                if fd < 0:
+                    dprintf(output, "open error\n")
+                    c_exit(fd)
+                flag = 1
+                fd2 = dup2(fd, output)
+                if fd2 < 0:
+                    dprintf(output, "dup2 error\n")
+                    c_exit(fd2)
+            elif redirect.instruction == RedirectInstruction.r_appending_to:
+                temp = redirect.redirectee.filename.encode("utf-8")
+                fd = open(temp, O_CREAT | O_RDWR | O_APPEND, S_IRUSR | S_IWUSR)
+                if fd < 0:
+                    dprintf(output, "open error\n")
+                    c_exit(fd)
+                flag = 1
+                fd2 = dup2(fd, output)
+                if fd2 < 0:
+                    dprintf(output, "dup2 error\n")
+                    c_exit(fd2)
+            elif redirect.instruction == RedirectInstruction.r_duplicating_output:
+                temp = redirect.redirectee.dest
+                fd1 = dup2(temp, output)
+                if fd1 < 0:
+                    dprintf(output, "dup2 error\n")
+                    c_exit(fd1)
+                fd2 = dup2(temp, STDERR_FILENO)
+                if fd2 < 0:
+                    dprintf(output, "dup2 error\n")
+                    c_exit(fd2)
             elif redirect.instruction == RedirectInstruction.r_duplicating_output_word:
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, " open error\n")
-                    return result
+                    dprintf(output, "open error\n")
+                    c_exit(fd)
                 flag = 1
                 fd1 = dup2(fd, output)
                 fd2 = dup2(fd, STDERR_FILENO)
                 if fd2 < 0 or fd1 < 0:
                     dprintf(output, "dup2 error\n")
-                    return result
-            elif redirect.instruction == RedirectInstruction.r_duplicating_output:
+                    c_exit(fd2)
+            elif redirect.instruction == RedirectInstruction.r_duplicating_input:
                 temp = redirect.redirectee.dest
                 fd1 = dup2(temp, output)
-                fd2 = dup2(temp, STDERR_FILENO)
-                if fd2 < 0 or fd1 < 0:
+                if fd1 < 0:
                     dprintf(output, "dup2 error\n")
-                    return result
+                    c_exit(fd1)
             elif redirect.instruction == RedirectInstruction.r_duplicating_input_word:
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, " open error\n")
-                    return result
+                    dprintf(output, "open error\n")
+                    c_exit(fd)
                 flag = 1
                 fd1 = dup2(fd, input)
                 if fd1 < 0:
                     dprintf(output, "dup2 error\n")
-                    return result
-            elif redirect.instruction == RedirectInstruction.r_duplicating_input:
-                temp = redirect.redirectee.dest
-                fd1 = dup2(temp, output)
-                if  fd1 < 0:
-                    dprintf(output, "dup2 error\n")
-                    return result
+                    c_exit(fd1)
 
-        result = execvp( parameters[0], parameters)
+        result = execvp(parameters[0], parameters)
+
         if flag == 1:
             close(fd)
-        if result<0 :
-            dprintf(output, "%s: command not found\n", parameters[0])
-            c_exit(errno)
-        else:
-            wait(&status)
 
+        if result < 0:
+            dprintf(output, "%s: command not found\n", parameters[0])
+
+        c_exit(errno)
+    else:
+        wait(&status)
 
     for j in range(i):
         free(parameters[j])

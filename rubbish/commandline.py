@@ -43,6 +43,7 @@ def run_console(config: Config = None):
         history=get_history(),
         completer=get_completer(),
         auto_suggest=AutoSuggestFromHistory(),
+        complete_while_typing=True,
     )
     input_stuck = []
     more = False

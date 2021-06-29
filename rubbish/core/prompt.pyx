@@ -1,6 +1,9 @@
 import os.path
+from typing import Iterable
+
+from prompt_toolkit.document import Document
 from prompt_toolkit.history import FileHistory
-from prompt_toolkit.completion import PathCompleter
+from prompt_toolkit.completion import PathCompleter, Completion, CompleteEvent
 
 from rubbish.core.color_control cimport Fore
 
@@ -49,4 +52,50 @@ class History(FileHistory):
 
 
 class Completer(PathCompleter):
-    pass
+
+    def get_completions(
+        self, document: Document, complete_event: CompleteEvent
+    ) -> Iterable[Completion]:
+        text = document.text_before_cursor.split()[-1]
+
+        if len(text) < self.min_input_len:
+            return
+
+        try:
+            if self.expanduser:
+                text = os.path.expanduser(text)
+
+            dirname = os.path.dirname(text)
+            if dirname:
+                directories = [
+                    os.path.dirname(os.path.join(p, text)) for p in self.get_paths()
+                ]
+            else:
+                directories = self.get_paths()
+
+            prefix = os.path.basename(text)
+
+            filenames = []
+            for directory in directories:
+                if os.path.isdir(directory):
+                    for filename in os.listdir(directory):
+                        if filename.startswith(prefix):
+                            filenames.append((directory, filename))
+
+            filenames = sorted(filenames, key=lambda k: k[1])
+
+            for directory, filename in filenames:
+                completion = filename[len(prefix) :]
+                full_name = os.path.join(directory, filename)
+
+                if os.path.isdir(full_name):
+                    filename += "/"
+                elif self.only_directories:
+                    continue
+
+                if not self.file_filter(full_name):
+                    continue
+
+                yield Completion(completion, 0, display=filename)
+        except OSError:
+            pass
