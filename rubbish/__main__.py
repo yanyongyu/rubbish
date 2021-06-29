@@ -1,8 +1,18 @@
+from typing import Optional
 from argparse import ArgumentParser
+from dataclasses import dataclass, asdict
 
-from .core import Config
 from . import __version__
-from .commandline import main
+from .core import Config
+from .commandline import run_file, run_console
+
+
+@dataclass
+class CommandlineConfig(object):
+    use_ansi: bool = True
+    file: Optional[str] = None
+    init_file: str = ""
+    history_file: str = ""
 
 
 parser = ArgumentParser("Rubbish", description="Rubbish -- Yet another Rubbi shell.")
@@ -15,11 +25,24 @@ parser.add_argument(
     dest="use_ansi",
     help="disable ANSI output.",
 )
+parser.add_argument(
+    "--init-file", action="store", dest="init_file", help="rubbish init file."
+)
+parser.add_argument(
+    "--history-file", action="store", dest="history_file", help="rubbish history file."
+)
+parser.add_argument(
+    "file", action="store", nargs="?", default=None, metavar="FILE", help="input file."
+)
 
 
 def start():
-    result = parser.parse_args(namespace=Config())
-    main(result)
+    commandline_config = parser.parse_args(namespace=CommandlineConfig())
+    config = Config(**asdict(commandline_config))
+    if commandline_config.file:
+        run_file(commandline_config.file, config)
+    else:
+        run_console(config)
 
 
 if __name__ == "__main__":

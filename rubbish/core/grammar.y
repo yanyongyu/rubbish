@@ -3,6 +3,7 @@
 
 int command_end = 1;
 int is_interactive = 0;
+int eof_encountered = 0;
 static REDIRECTOR source;
 static REDIRECTOR destination;
 COMMAND *global_command = (COMMAND *)NULL;
@@ -19,13 +20,16 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 
 %union {
   char *word;
+  int number;
   COMMAND *command;
   ELEMENT element;
   REDIRECT *redirect;
 }
 
 %token <word> WORD
-%token NEWLINE AND AND_AND SEMI OR OR_OR GREATER GREATER_GREATER LESS YACCEOF
+%token <number> NUMBER
+%token NEWLINE SEMI YACCEOF ERROR
+%token AND AND_AND OR OR_OR GREATER GREATER_GREATER GREATER_AND LESS LESS_AND
 
 %type <redirect> redirection
 %type <element> simple_command_element
@@ -41,20 +45,27 @@ WORD_LIST * merge_word_list(char *word, WORD_LIST *list);
 input:
     simple_list simple_list_terminator {
       global_command = $1;
+      eof_encountered = 0;
       YYACCEPT;
     }
   | NEWLINE {
+      global_command = (COMMAND *)NULL;
+      eof_encountered = 0;
       YYACCEPT;
     }
   | error NEWLINE {
       global_command = (COMMAND *)NULL;
+      eof_encountered = 0;
       YYABORT;
     }
   | YACCEOF {
+      global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYACCEPT;
     }
   | error YACCEOF {
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   ;
@@ -64,7 +75,7 @@ simple_list:
       $$ = $1;
     }
   | simple_list_inner AND {
-      $$ = $1;
+      $$ = create_connection($1, (COMMAND *)NULL, AND);
     }
   | simple_list_inner SEMI {
       $$ = $1;
@@ -72,26 +83,26 @@ simple_list:
   ;
 
 simple_list_inner:
-    simple_list_inner AND_AND simple_list_inner {
-      $$ = create_connection($1, $3, AND_AND);
+    simple_list_inner AND_AND newline_list simple_list_inner {
+      $$ = create_connection($1, $4, AND_AND);
     }
-  | simple_list_inner AND_AND NEWLINE newline_list simple_list_inner {
-      $$ = create_connection($1, $5, AND_AND);
-    }
-  | simple_list_inner AND_AND NEWLINE YACCEOF {
-      command_end = 0;
+  | simple_list_inner AND_AND newline_list YACCEOF {
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
-  | simple_list_inner OR_OR simple_list_inner {
-      $$ = create_connection($1, $3, OR_OR);
+  | simple_list_inner OR_OR newline_list simple_list_inner {
+      $$ = create_connection($1, $4, OR_OR);
     }
-  | simple_list_inner OR_OR NEWLINE newline_list simple_list_inner {
-      $$ = create_connection($1, $5, OR_OR);
-    }
-  | simple_list_inner OR_OR NEWLINE YACCEOF {
-      command_end = 0;
+  | simple_list_inner OR_OR newline_list YACCEOF {
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   | simple_list_inner AND simple_list_inner {
@@ -113,15 +124,15 @@ newline_list:
   ;
 
 pipeline_command:
-    pipeline_command OR command {
-      $$ = create_connection($1, $3, OR);
+    pipeline_command OR newline_list command {
+      $$ = create_connection($1, $4, OR);
     }
-  | pipeline_command OR NEWLINE newline_list command {
-      $$ = create_connection($1, $5, OR);
-    }
-  | pipeline_command OR NEWLINE YACCEOF {
-      command_end = 0;
+  | pipeline_command OR newline_list YACCEOF {
+      if (is_interactive) {
+        command_end = 0;
+      }
       global_command = (COMMAND *)NULL;
+      eof_encountered = 1;
       YYABORT;
     }
   | command {
@@ -161,15 +172,65 @@ redirection:
       destination.filename = $2;
       $$ = create_redirection(source, r_output_direction, destination);
     }
+  | NUMBER GREATER WORD {
+      source.dest = $1;
+      destination.filename = $3;
+      $$ = create_redirection(source, r_output_direction, destination);
+    }
   | LESS WORD {
       source.dest = 0;
       destination.filename = $2;
+      $$ = create_redirection(source, r_input_direction, destination);
+    }
+  | NUMBER LESS WORD {
+      source.dest = $1;
+      destination.filename = $3;
       $$ = create_redirection(source, r_input_direction, destination);
     }
   | GREATER_GREATER WORD {
       source.dest = 1;
       destination.filename = $2;
       $$ = create_redirection(source, r_appending_to, destination);
+    }
+  | GREATER_AND NUMBER {
+      source.dest = 1;
+      destination.dest = $2;
+      $$ = create_redirection(source, r_duplicating_output, destination);
+    }
+  | NUMBER GREATER_AND NUMBER {
+      source.dest = $1;
+      destination.dest = $3;
+      $$ = create_redirection(source, r_duplicating_output, destination);
+    }
+  | GREATER_AND WORD {
+      source.dest = 1;
+      destination.filename = $2;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | NUMBER GREATER_AND WORD {
+      source.dest = $1;
+      destination.filename = $3;
+      $$ = create_redirection(source, r_duplicating_output_word, destination);
+    }
+  | LESS_AND NUMBER {
+      source.dest = 0;
+      destination.dest = $2;
+      $$ = create_redirection(source, r_duplicating_input, destination);
+    }
+  | NUMBER LESS_AND NUMBER {
+      source.dest = $1;
+      destination.dest = $3;
+      $$ = create_redirection(source, r_duplicating_input, destination);
+    }
+  | LESS_AND WORD {
+      source.dest = 0;
+      destination.filename = $2;
+      $$ = create_redirection(source, r_duplicating_input_word, destination);
+    }
+  | NUMBER LESS_AND WORD {
+      source.dest = $1;
+      destination.filename = $3;
+      $$ = create_redirection(source, r_duplicating_input_word, destination);
     }
   ;
 

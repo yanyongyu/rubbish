@@ -6,7 +6,11 @@ enum CommandType { cm_simple, cm_connection };
 enum RedirectInstruction {
   r_output_direction,
   r_input_direction,
-  r_appending_to
+  r_appending_to,
+  r_duplicating_output,
+  r_duplicating_output_word,
+  r_duplicating_input,
+  r_duplicating_input_word
 };
 
 typedef struct word_list {

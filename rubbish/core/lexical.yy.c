@@ -351,12 +351,13 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	yyleng = (int) (yy_cp - yy_bp); \
+	(yytext_ptr) -= (yy_more_len); \
+	yyleng = (int) (yy_cp - (yytext_ptr)); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 14
-#define YY_END_OF_BUFFER 15
+#define YY_NUM_RULES 16
+#define YY_END_OF_BUFFER 17
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -364,29 +365,29 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[27] =
+static const flex_int16_t yy_accept[24] =
     {   0,
-        0,    0,   15,   11,   13,    1,   11,    2,    4,    9,
-        7,   14,    5,   11,    0,   11,    0,    0,    3,    8,
-       10,    0,    6,   11,   12,    0
+        0,    0,   17,   12,   14,    1,   13,    2,    4,   10,
+        7,   12,    5,   12,   13,    3,   11,    9,    8,    0,
+       15,    6,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    4,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    4,    1,    5,    1,    1,    1,    6,    1,    1,
+        1,    2,    1,    5,    1,    1,    1,    6,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    7,    8,    9,
+        1,    1,    1,    1,    1,    1,    1,    1,    7,    8,
+        1,    9,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,   10,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,   11,    1,    1,    1,    1,    7,    7,    1,    1,
 
-        1,    1,    1,    1,    1,    1,    7,    7,    1,    7,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,   12,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,   11,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -403,44 +404,40 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[13] =
+static const YY_CHAR yy_meta[12] =
     {   0,
-        1,    2,    3,    3,    1,    3,    1,    3,    3,    3,
-        1,    3
+        1,    2,    2,    2,    3,    2,    2,    2,    2,    1,
+        2
     } ;
 
-static const flex_int16_t yy_base[29] =
+static const flex_int16_t yy_base[26] =
     {   0,
-        0,    0,   31,   19,   45,   45,   12,   21,   45,   45,
-       16,   21,   10,   10,   16,   28,   13,   36,   45,   45,
-       45,   12,   45,    0,   10,   45,   13,   41
+        0,    0,   24,    0,   25,   25,    0,   17,   25,   16,
+        6,   14,    3,    0,    0,   25,   25,   25,   25,   16,
+       25,   25,   25,   12,   19
     } ;
 
-static const flex_int16_t yy_def[29] =
+static const flex_int16_t yy_def[26] =
     {   0,
-       26,    1,   26,   27,   26,   26,   28,   26,   26,   26,
-       26,   26,   26,   27,   26,   28,   28,   28,   26,   26,
-       26,   12,   26,   16,   28,    0,   26,   26
+       23,    1,   23,   24,   23,   23,   25,   23,   23,   23,
+       23,   24,   23,   24,   25,   23,   23,   23,   23,   23,
+       23,   23,    0,   23,   23
     } ;
 
-static const flex_int16_t yy_nxt[58] =
+static const flex_int16_t yy_nxt[37] =
     {   0,
-        4,    5,    6,    5,    7,    8,    4,    9,   10,   11,
-       12,   13,   16,   14,   25,   26,   16,   25,   16,   14,
-       15,   23,   18,   21,   14,   20,   19,   22,   16,   15,
-       26,   26,   24,   26,   16,   26,   26,   26,   18,   16,
-       25,   17,   26,   17,    3,   26,   26,   26,   26,   26,
-       26,   26,   26,   26,   26,   26,   26
+        4,    5,    6,    5,    7,    8,    9,   10,   11,   12,
+       13,   18,   14,   22,   19,   20,   21,   20,   21,   15,
+       15,   17,   16,   23,    3,   23,   23,   23,   23,   23,
+       23,   23,   23,   23,   23,   23
     } ;
 
-static const flex_int16_t yy_chk[58] =
+static const flex_int16_t yy_chk[37] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    7,   27,   25,   22,    7,   17,    7,   15,
-       14,   13,    7,   12,   12,   11,    8,   12,   16,    4,
-        3,    0,   16,    0,   16,    0,    0,    0,   16,   18,
-       18,   28,    0,   28,   26,   26,   26,   26,   26,   26,
-       26,   26,   26,   26,   26,   26,   26
+        1,   11,   24,   13,   11,   12,   12,   20,   20,   25,
+       25,   10,    8,    3,   23,   23,   23,   23,   23,   23,
+       23,   23,   23,   23,   23,   23
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -453,20 +450,32 @@ int yy_flex_debug = 0;
  * any uses of REJECT which flex missed.
  */
 #define REJECT reject_used_but_not_detected
-#define yymore() yymore_used_but_not_detected
-#define YY_MORE_ADJ 0
+static int yy_more_flag = 0;
+static int yy_more_len = 0;
+#define yymore() ((yy_more_flag) = 1)
+#define YY_MORE_ADJ (yy_more_len)
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "rubbish/core/lexical.l"
 #line 2 "rubbish/core/lexical.l"
 #include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 #include "_global.h"
 #include "grammar.tab.h"
-#line 468 "rubbish/core/lexical.yy.c"
-#define YY_NO_INPUT 1
-#line 470 "rubbish/core/lexical.yy.c"
+
+char temp;
+char *temp_str;
+long number_value;
+enum yytokentype last_token;
+
+int legal_number(const char *string, long *result);
+void filter_string(const char *string, char *output);
+#line 478 "rubbish/core/lexical.yy.c"
+#line 479 "rubbish/core/lexical.yy.c"
 
 #define INITIAL 0
 
@@ -526,6 +535,8 @@ extern int yywrap ( void );
 #endif
 
 #ifndef YY_NO_UNPUT
+    
+    static void yyunput ( int c, char *buf_ptr  );
     
 #endif
 
@@ -681,13 +692,19 @@ YY_DECL
 		}
 
 	{
-#line 13 "rubbish/core/lexical.l"
+#line 22 "rubbish/core/lexical.l"
 
 
-#line 688 "rubbish/core/lexical.yy.c"
+#line 699 "rubbish/core/lexical.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
+		(yy_more_len) = 0;
+		if ( (yy_more_flag) )
+			{
+			(yy_more_len) = (int) ((yy_c_buf_p) - (yytext_ptr));
+			(yy_more_flag) = 0;
+			}
 		yy_cp = (yy_c_buf_p);
 
 		/* Support of yytext. */
@@ -711,13 +728,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 27 )
+				if ( yy_current_state >= 24 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 45 );
+		while ( yy_base[yy_current_state] != 25 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -744,91 +761,147 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 15 "rubbish/core/lexical.l"
-{ return NEWLINE; }
+#line 24 "rubbish/core/lexical.l"
+{ last_token = NEWLINE; return NEWLINE; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "rubbish/core/lexical.l"
-{ return AND; }
+#line 25 "rubbish/core/lexical.l"
+{ last_token = AND; return AND; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 17 "rubbish/core/lexical.l"
-{ return AND_AND; }
+#line 26 "rubbish/core/lexical.l"
+{ last_token = AND_AND; return AND_AND; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 18 "rubbish/core/lexical.l"
-{ return SEMI; }
+#line 27 "rubbish/core/lexical.l"
+{ last_token = SEMI; return SEMI; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 19 "rubbish/core/lexical.l"
-{ return OR; }
+#line 28 "rubbish/core/lexical.l"
+{ last_token = OR; return OR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 20 "rubbish/core/lexical.l"
-{ return OR_OR; }
+#line 29 "rubbish/core/lexical.l"
+{ last_token = OR_OR; return OR_OR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 21 "rubbish/core/lexical.l"
-{ return GREATER; }
+#line 30 "rubbish/core/lexical.l"
+{ last_token = GREATER; return GREATER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 22 "rubbish/core/lexical.l"
-{ return GREATER_GREATER; }
+#line 31 "rubbish/core/lexical.l"
+{ last_token = GREATER_GREATER; return GREATER_GREATER; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 23 "rubbish/core/lexical.l"
-{ return LESS; }
-	YY_BREAK
-case YY_STATE_EOF(INITIAL):
-#line 24 "rubbish/core/lexical.l"
-{ return YACCEOF; }
+#line 32 "rubbish/core/lexical.l"
+{ last_token = GREATER_AND; return GREATER_AND; }
 	YY_BREAK
 case 10:
-/* rule 10 can match eol */
-*yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
-YY_LINENO_REWIND_TO(yy_bp + 1);
-(yy_c_buf_p) = yy_cp = yy_bp + 1;
-YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 26 "rubbish/core/lexical.l"
-{ return NEWLINE; }
+#line 33 "rubbish/core/lexical.l"
+{ last_token = LESS; return LESS; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "rubbish/core/lexical.l"
-{
-  yylval.word = strdup(yytext);
-  return WORD;
-}
+#line 34 "rubbish/core/lexical.l"
+{ last_token = LESS_AND; return LESS_AND; }
+	YY_BREAK
+case YY_STATE_EOF(INITIAL):
+#line 35 "rubbish/core/lexical.l"
+{ last_token = YACCEOF; return YACCEOF; }
 	YY_BREAK
 case 12:
-/* rule 12 can match eol */
 YY_RULE_SETUP
-#line 31 "rubbish/core/lexical.l"
+#line 37 "rubbish/core/lexical.l"
 {
-  yylval.word = strdup(yytext);
-  return WORD;
+  // meet escaped special character, more input needed
+  if (yytext[yyleng - 1] == '\\') {
+    temp = input();
+    yytext[yyleng] = temp;
+    yymore();
+  } else {
+    // yylval.word = strdup(yytext);
+    temp_str = strdup(yytext);
+
+    // lookahead one character
+    temp = input();
+    if (temp) {
+      unput(temp);
+    }
+
+    // only convert to int if last_token is '>&' '<&' or next token is '>' '<'
+    if (last_token == GREATER_AND || last_token == LESS_AND || temp == '>' || temp == '<') {
+      if (legal_number(temp_str, &number_value) && (int)number_value == number_value) {
+        yylval.number = number_value;
+        free(temp_str);
+        last_token = NUMBER;
+        return NUMBER;
+      }
+    }
+
+    yylval.word = (char *)malloc(strlen(temp_str) * sizeof(char));
+    filter_string(temp_str, yylval.word);
+    free(temp_str);
+    last_token = WORD;
+    return WORD;
+  }
+
 }
 	YY_BREAK
 case 13:
+/* rule 13 can match eol */
 YY_RULE_SETUP
-#line 36 "rubbish/core/lexical.l"
-/* ignore whitespace */ ;
+#line 71 "rubbish/core/lexical.l"
+{
+  // meet escaped quote character, more input needed
+  if (yytext[yyleng - 1] == '\\') {
+    yymore();
+  } else {
+    temp = input();
+    if (temp == '"') {
+      // yylval.word = strdup(yytext);
+      yylval.word = (char *)malloc(strlen(yytext) * sizeof(char));
+      filter_string(yytext + 1, yylval.word);
+      last_token = WORD;
+      return WORD;
+    }
+
+    // input not complete
+    if (temp) {
+      unput(temp);
+    }
+    if (is_interactive) {
+      command_end = 0;
+    }
+    return ERROR;
+  }
+}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 38 "rubbish/core/lexical.l"
+#line 96 "rubbish/core/lexical.l"
+/* ignore whitespace */ ;
+	YY_BREAK
+case 15:
+/* rule 15 can match eol */
+YY_RULE_SETUP
+#line 97 "rubbish/core/lexical.l"
+/* ignore escaped newline */ ;
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 99 "rubbish/core/lexical.l"
 ECHO;
 	YY_BREAK
-#line 832 "rubbish/core/lexical.yy.c"
+#line 905 "rubbish/core/lexical.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1123,7 +1196,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 27 )
+			if ( yy_current_state >= 24 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1151,16 +1224,53 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 27 )
+		if ( yy_current_state >= 24 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 26);
+	yy_is_jam = (yy_current_state == 23);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
 
 #ifndef YY_NO_UNPUT
+
+    static void yyunput (int c, char * yy_bp )
+{
+	char *yy_cp;
+    
+    yy_cp = (yy_c_buf_p);
+
+	/* undo effects of setting up yytext */
+	*yy_cp = (yy_hold_char);
+
+	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
+		{ /* need to shift things up to make room */
+		/* +2 for EOB chars. */
+		int number_to_move = (yy_n_chars) + 2;
+		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
+		char *source =
+				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
+
+		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			*--dest = *--source;
+
+		yy_cp += (int) (dest - source);
+		yy_bp += (int) (dest - source);
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
+			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+
+		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
+			YY_FATAL_ERROR( "flex scanner push-back overflow" );
+		}
+
+	*--yy_cp = (char) c;
+
+	(yytext_ptr) = yy_bp;
+	(yy_hold_char) = *yy_cp;
+	(yy_c_buf_p) = yy_cp;
+}
 
 #endif
 
@@ -1794,6 +1904,33 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 38 "rubbish/core/lexical.l"
+#line 99 "rubbish/core/lexical.l"
 
+
+int legal_number(const char *string, long *result) {
+  long value;
+  char *ep;
+  if (result) *result = 0;
+  if (string == 0) return 0;
+
+  errno = 0;
+  value = strtoimax(string, &ep, 10);
+  if (errno || ep == string) return 0;
+  if (*string && *ep == '\0') {
+    if (result) *result = value;
+    return 1;
+  }
+  return 0;
+}
+
+void filter_string(const char *string, char * output) {
+  const char *p_read = string;
+  char *p_write = output;
+  while (*p_read) {
+    *p_write = *p_read;
+    p_read++;
+    p_write += (*p_write != '\\' || *p_read == '\\');
+  }
+  *p_write = '\0';
+}
 

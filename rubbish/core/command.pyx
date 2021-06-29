@@ -1,59 +1,29 @@
 from libc.stdlib cimport free
 
-cdef extern from "_command.h":
-    cpdef enum CommandType:
-        cm_simple
-        cm_connection
+cdef class Redirector:
 
-    cpdef enum RedirectInstruction:
-        r_output_direction
-        r_input_direction
-        r_appending_to
+    def __cinit__(self):
+        self.ptr_set = False
 
-    ctypedef struct WORD_LIST:
-        WORD_LIST *next
-        char *word
+    def __dealloc__(self):
+        if self._redirector is not NULL and self.ptr_set is True:
+            self._redirector = NULL
 
-    ctypedef union REDIRECTOR:
-        int dest
-        char *filename
+    @property
+    def dest(self):
+        return self._redirector.dest
 
-    ctypedef struct REDIRECT:
-        REDIRECT *next
-        REDIRECTOR redirector
-        RedirectInstruction instruction
-        REDIRECTOR redirectee
+    @property
+    def filename(self):
+        return self._redirector.filename.decode("utf-8")
 
-    ctypedef union COMMAND_INFO:
-        CONNECTION *Connection
-        SIMPLE_COMMAND *Simple
+    @staticmethod
+    cdef Redirector from_ptr(REDIRECTOR *ptr, bint auto_dealloc = False):
+        cdef Redirector wrapper = Redirector.__new__(Redirector)
+        wrapper._redirector = ptr
+        wrapper.ptr_set = auto_dealloc
+        return wrapper
 
-    ctypedef struct COMMAND:
-        CommandType type
-        COMMAND_INFO info
-
-    ctypedef struct CONNECTION:
-        COMMAND *first
-        COMMAND *second
-        int connector
-
-    ctypedef struct SIMPLE_COMMAND:
-        WORD_LIST *words
-        REDIRECT *redirects
-
-cdef extern from "grammar.tab.h":
-    cpdef enum TokenType "yytokentype":
-        WORD
-        NEWLINE
-        AND
-        AND_AND
-        SEMI
-        OR
-        OR_OR
-        GREATER
-        GREATER_GREATER
-        LESS
-        YACCEOF
 
 cdef class Redirect:
 
@@ -68,15 +38,15 @@ cdef class Redirect:
 
     @property
     def redirector(self):
-        return self._redirect.redirector.dest or self._redirect.redirector.filename.decode("utf-8")
+        return Redirector.from_ptr(&self._redirect.redirector)
 
     @property
     def instruction(self):
-        return self._redirect.instruction
+        return RedirectInstruction(self._redirect.instruction)
 
     @property
     def redirectee(self):
-        return self._redirect.redirectee.dest or self._redirect.redirectee.filename.decode("utf-8")
+        return Redirector.from_ptr(&self._redirect.redirectee)
 
     @staticmethod
     cdef Redirect from_ptr(REDIRECT *ptr, bint auto_dealloc = False):
@@ -84,6 +54,12 @@ cdef class Redirect:
         wrapper._redirect = ptr
         wrapper.ptr_set = auto_dealloc
         return wrapper
+
+    def __str__(self):
+        return f"({self.redirector} {self.instruction!s} {self.redirectee})"
+
+    def __repr__(self):
+        return f"Redirect({self.redirector} {self.instruction!s} {self.redirectee})"
 
 
 cdef class Command:
@@ -132,6 +108,8 @@ cdef class Connection(Command):
 
     @property
     def second(self):
+        if self._command.info.Connection.second is NULL:
+            return None
         return Command.from_ptr(self._command.info.Connection.second)
 
     @property
@@ -139,6 +117,9 @@ cdef class Connection(Command):
         return TokenType(self._command.info.Connection.connector)
 
     def __str__(self):
+        return f"({self.first}) {self.connector!s} ({self.second})"
+
+    def __repr__(self):
         return f"Connection({self.first} {self.connector!s} {self.second})"
 
 
@@ -185,10 +166,13 @@ cdef class SimpleCommand(Command):
             redirects = []
             redirect = self._command.info.Simple.redirects
             while redirect:
-                redirects.append(Redirect.from_ptr(redirect))
+                redirects.insert(0, Redirect.from_ptr(redirect))
                 redirect = redirect.next
             self._redirects = tuple(redirects)
         return self._redirects
 
     def __str__(self):
+        return f"{' '.join(self.words)} {' '.join(map(str, self.redirects))}".strip()
+
+    def __repr__(self):
         return f"SimpleCommand({self.words}, {self.redirects})"

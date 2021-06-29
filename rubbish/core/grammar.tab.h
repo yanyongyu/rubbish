@@ -50,16 +50,20 @@ extern int yydebug;
   enum yytokentype
   {
     WORD = 258,
-    NEWLINE = 259,
-    AND = 260,
-    AND_AND = 261,
-    SEMI = 262,
-    OR = 263,
-    OR_OR = 264,
-    GREATER = 265,
-    GREATER_GREATER = 266,
-    LESS = 267,
-    YACCEOF = 268
+    NUMBER = 259,
+    NEWLINE = 260,
+    SEMI = 261,
+    YACCEOF = 262,
+    ERROR = 263,
+    AND = 264,
+    AND_AND = 265,
+    OR = 266,
+    OR_OR = 267,
+    GREATER = 268,
+    GREATER_GREATER = 269,
+    GREATER_AND = 270,
+    LESS = 271,
+    LESS_AND = 272
   };
 #endif
 
@@ -67,14 +71,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 20 "rubbish/core/grammar.y"
+#line 21 "rubbish/core/grammar.y"
 
   char *word;
+  int number;
   COMMAND *command;
   ELEMENT element;
   REDIRECT *redirect;
 
-#line 78 "rubbish/core/grammar.tab.h"
+#line 83 "rubbish/core/grammar.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
