@@ -1,5 +1,7 @@
 import os.path
+import send
 
+from tempfile import TemporaryFile
 from threading import Timer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QUrl, QFileInfo, pyqtProperty, qInstallMessageHandler, Qt
@@ -10,6 +12,8 @@ from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QMessageBox
 CURRENT_DIR = os.path.dirname(__file__)
 ICON_FILE = os.path.join(CURRENT_DIR, "src/minilogo.png")
 HTML_FILE = os.path.join(CURRENT_DIR, "src/terminal.html")
+stemp = TemporaryFile(buffering=0)
+rtemp = TemporaryFile(buffering=0)
 
 
 class Myshared(QWidget):
@@ -26,9 +30,11 @@ class Myshared(QWidget):
         return "666"
 
     def Web2PyQt5Value(self, str):
-        instr = self.RemoveRoute(str)
+        instr = self.RemoveRoute(str).encode("utf-8")
+        fileno = send.getFileno(stemp, instr)
+        # commandline
         # parse(str)
-        QMessageBox.information(self, "网页来的信息", instr)
+        self.win.setResult()
 
     value = pyqtProperty(str, fget=PyQt52WebValue, fset=Web2PyQt5Value)
 
@@ -52,7 +58,8 @@ class MainWindow(QMainWindow):
         self.browser.page().runJavaScript(jscode)
 
     # 传输结果调用
-    def setResult(self, value):
+    def setResult(self):
+        value = send.recieve(rtemp)
         jscode = "PyQt52Result(\"" + value + "\");"
         self.browser.page().runJavaScript(jscode)
 
@@ -70,16 +77,17 @@ class MainWindow(QMainWindow):
 def main():
     app = QApplication([])
     win = MainWindow()
-    qInstallMessageHandler(lambda *args: None)
+    # qInstallMessageHandler(lambda *args: None)
     channel = QWebChannel()
     shared = Myshared(win)
     channel.registerObject("con", shared)
     win.browser.page().setWebChannel(channel)
     t = Timer(5, win.setRoute, ["123"])
     t.start()
-
     win.show()
     app.exit(app.exec_())
+    stemp.close()
+    rtemp.close()
 
 
 if __name__ == '__main__':

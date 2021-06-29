@@ -6,16 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>RubbiSh</title>
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+  <script src="ansi_up.js"></script>
   <style type="text/css">
     body {
       background-color: #333333;
     }
-    kbd{
+
+    kbd {
       position: relative;
       right: -2vh;
       float: right;
       background-color: #7c7c7c;
     }
+
     .bg {
       position: fixed;
       background: url(logo-white.png) no-repeat center 70px;
@@ -31,7 +34,7 @@
     }
 
     .textdiv {
-      width: 98%;
+      width: 99%;
       overflow: auto;
       position: relative;
       top: 4vh;
@@ -39,7 +42,7 @@
     }
 
     .content {
-      width: 99%;
+      width: 98%;
       position: relative;
       bottom: -18px;
       left: 2px;
@@ -76,8 +79,7 @@
   </style>
 </head>
 
-<body id="body" oncontextmenu="return false" onkeydown="focusTxt(event)"
-  onkeydown="if(event.keyCode==9){stopit(event)}">
+<body id="body" oncontextmenu="pst()" onkeydown="focusTxt(event)" onkeydown="if(event.keyCode==9){stopit(event)}">
   <div id="bg" class="bg"></div>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top customnav">
@@ -90,8 +92,8 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#" onclick="cl()">清屏<kbd>Ctrl+L</kbd></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" onclick="cl()">复制<kbd>Ctrl+C</kbd></a>
-            <a class="dropdown-item" href="#" onclick="cl()">粘贴<kbd>R Click</kbd></a>
+            <a class="dropdown-item" href="#" onclick="cl()">复制<kbd>Select</kbd></a>
+            <a class="dropdown-item" href="#" onclick="cl()">粘贴<kbd>Ctrl+V</kbd></a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -142,6 +144,7 @@
           onkeydown="pvt(event,this)" onkeyup="cancelpvt(); if(event.keyCode==13){addInstr()}"></textarea>
       </div>
     </div>
+    <!-- <button onclick="PyQt52Result()"></button> -->
   </div>
 
   <script src="bootstrap/js/jquery-3.4.1.min.js"></script>
@@ -164,9 +167,13 @@
     }
 
     function PyQt52Result(value) {
+      // value = "[1;30m 30";
       let obj = document.getElementById("content");
-      let txt = document.createTextNode(value);
-      obj.appendChild(txt);
+      let ansi_up = new AnsiUp;
+      let html = ansi_up.ansi_to_html(value);
+      // let txt = document.createTextNode(value);
+      // obj.appendChild(txt);
+      obj.innerHTML = obj.innerHTML + html;
     }
 
 
@@ -186,7 +193,7 @@
         textarea.focus();
       }
       //Ctrl L
-      else if (event.keyCode ==76){
+      else if (event.keyCode == 76) {
         cl();
       }
     }
@@ -199,6 +206,23 @@
       let txt = document.getElementById("content");
       txt.innerHTML = "";
     }
+
+    document.onclick = function () {
+      if (window.getSelection) {
+        text = window.getSelection();
+      } else if (document.selection) {
+        text = document.selection.createRange();
+      }
+      // 放到粘贴板里，操作浏览器自身的API
+      document.execCommand('Copy'); // 执行浏览器的复制命令
+    }
+
+    // function pst(){
+    //   let cb = window.clipboardData.getData('Text');
+    //   let clipboard = document.createTextNode(cb);
+    //   console.log("1");
+    //   textarea.appendChild(clipboard);
+    // }
 
     function addInstr() {
       let obj = document.getElementById("content");
