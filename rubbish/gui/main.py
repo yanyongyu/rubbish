@@ -3,7 +3,7 @@ from functools import partial
 from tempfile import TemporaryFile
 
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QUrl, QFileInfo, pyqtProperty, qInstallMessageHandler, Qt
+from PyQt5.QtCore import QUrl, QFileInfo, pyqtProperty, qInstallMessageHandler, Qt, QTimer
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QMessageBox
@@ -76,6 +76,9 @@ class MainWindow(QMainWindow):
         self.browser.load(QUrl(f"file://{QFileInfo(HTML_FILE).absoluteFilePath()}"))
         self.setCentralWidget(self.browser)
         self.browser.loadFinished.connect(partial(self.setRoute, get_prompt()))
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.setResult)
+        self.timer.start(1000)
 
     # 传输当前路径调用：
     def setRoute(self, value):
