@@ -21,7 +21,7 @@ from rubbish.core import (
 )
 
 
-def run_file(filename: str, config: Config = None):
+def run_file(filename: str, config: Config = None, debug: bool = False):
     config = config or get_config()
     set_config(config)
     init()
@@ -29,7 +29,8 @@ def run_file(filename: str, config: Config = None):
     result = parse_file(filename)
     if result:
         for command in result:
-            print(repr(command))
+            if debug:
+                print(repr(command))
             return_code = execute_command(
                 command, sys.stdin.fileno(), sys.stdout.fileno(), sys.stderr.fileno()
             )
@@ -43,7 +44,7 @@ def run_ui(config: Config = None):
     ui_main()
 
 
-def run_console(config: Config = None):
+def run_console(config: Config = None, debug: bool = False):
     config = config or get_config()
     set_config(config)
     init()
@@ -69,7 +70,8 @@ def run_console(config: Config = None):
             input_stuck = []
             if result:
                 for command in result:
-                    print(repr(command))
+                    if debug:
+                        print(repr(command))
                     return_code = execute_command(
                         command,
                         sys.stdin.fileno(),

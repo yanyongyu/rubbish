@@ -10,6 +10,7 @@ from .commandline import run_file, run_ui, run_console
 @dataclass
 class CommandlineConfig(object):
     ui: bool = False
+    debug: bool = False
     use_ansi: bool = True
     file: Optional[str] = None
     init_file: str = ""
@@ -19,6 +20,9 @@ class CommandlineConfig(object):
 parser = ArgumentParser("Rubbish", description="Rubbish -- Yet another Rubbi shell.")
 parser.add_argument(
     "-v", "--version", action="version", version=f"%(prog)s {__version__}"
+)
+parser.add_argument(
+    "-d", "--debug", action="store_true", dest="debug", help="enable debugging."
 )
 parser.add_argument(
     "--no-ansi",
@@ -42,11 +46,11 @@ def start():
     commandline_config = parser.parse_args(namespace=CommandlineConfig())
     config = Config(**asdict(commandline_config))
     if commandline_config.file:
-        run_file(commandline_config.file, config)
+        run_file(commandline_config.file, config, commandline_config.debug)
     elif commandline_config.ui:
         run_ui(config)
     else:
-        run_console(config)
+        run_console(config, commandline_config.debug)
 
 
 if __name__ == "__main__":

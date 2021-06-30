@@ -4239,7 +4239,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
  * 
  *         c_exit(errno)             # <<<<<<<<<<<<<<
  *     else:
- *         wait(&status)
+ *         waitpid(pid, &status, 0)
  */
     exit(errno);
 
@@ -4256,17 +4256,17 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
   /* "rubbish/core/execute.pyx":220
  *         c_exit(errno)
  *     else:
- *         wait(&status)             # <<<<<<<<<<<<<<
+ *         waitpid(pid, &status, 0)             # <<<<<<<<<<<<<<
  * 
  *     for j in range(i):
  */
   /*else*/ {
-    (void)(wait((&__pyx_v_status)));
+    (void)(waitpid(__pyx_v_pid, (&__pyx_v_status), 0));
   }
   __pyx_L9:;
 
   /* "rubbish/core/execute.pyx":222
- *         wait(&status)
+ *         waitpid(pid, &status, 0)
  * 
  *     for j in range(i):             # <<<<<<<<<<<<<<
  *         free(parameters[j])

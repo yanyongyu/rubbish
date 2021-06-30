@@ -25,7 +25,7 @@ cdef extern from "<stdio.h>":
     cdef int dprintf (int fd, const char *format, ...)
 
 cdef extern from "<wait.h>":
-    cdef int wait(int* statloc)
+    cdef pid_t waitpid(pid_t pid, int *status, int options)
 
 cdef extern from "<sys/types.h>":
     ctypedef unsigned int mode_t
@@ -217,7 +217,7 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output, in
 
         c_exit(errno)
     else:
-        wait(&status)
+        waitpid(pid, &status, 0)
 
     for j in range(i):
         free(parameters[j])
