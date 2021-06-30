@@ -31,7 +31,7 @@ def run_file(filename: str, config: Config = None):
         for command in result:
             print(repr(command))
             return_code = execute_command(
-                command, sys.stdin.fileno(), sys.stdout.fileno()
+                command, sys.stdin.fileno(), sys.stdout.fileno(), sys.stderr.fileno()
             )
 
 
@@ -71,7 +71,10 @@ def run_console(config: Config = None):
                 for command in result:
                     print(repr(command))
                     return_code = execute_command(
-                        command, sys.stdin.fileno(), sys.stdout.fileno()
+                        command,
+                        sys.stdin.fileno(),
+                        sys.stdout.fileno(),
+                        sys.stderr.fileno(),
                     )
         except MoreInputNeeded:
             more = True

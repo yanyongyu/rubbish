@@ -29,6 +29,7 @@ def init():
 
     # init rubbish rc file
     Path(config.init_file).touch()
+    f = open("/dev/null", "r+")
     try:
         init_commands = parse_file(config.init_file)
     except SyntaxError:
@@ -37,14 +38,17 @@ def init():
         )
     else:
         try:
-            f = open("/dev/null", "r+")
             for command in init_commands:
-                result_code = execute_command(command, f.fileno(), f.fileno())
+                result_code = execute_command(
+                    command, f.fileno(), f.fileno(), f.fileno()
+                )
                 assert result_code == 0
         except Exception:
             print(
                 f"{Fore.RED}[!] Error when running init file: {config.init_file}{Fore.RESET}"
             )
+    finally:
+        f.close()
 
     # init rubbish history file
     Path(config.history_file).touch()

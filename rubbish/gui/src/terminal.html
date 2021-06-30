@@ -226,7 +226,7 @@
       var routeNum = 2;
       var start = 0;
       var end = 0;
-      var op = ''
+      var op = "";
 
       function Web2PyQt5Value(instr) {
         if (window.con) {
@@ -242,7 +242,7 @@
         // let txt = document.createTextNode(value);
         // obj.appendChild(txt);
         obj.innerHTML = obj.innerHTML + html;
-        window.scrollTo(0,document.documentElement.clientHeight); 
+        window.scrollTo(0, document.documentElement.clientHeight);
       }
 
       function PyQt52Route(route, st) {
@@ -250,13 +250,13 @@
         let obj = document.getElementById("content");
         let ansi_up = new AnsiUp();
         let html = ansi_up.ansi_to_html(route);
-        op = st
+        op = st;
         obj.innerHTML = obj.innerHTML + html;
         textarea.value = op;
       }
 
-      function getHistory(value){
-        textarea.value = op + value
+      function getHistory(value) {
+        textarea.value = op + value;
       }
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -318,9 +318,12 @@
         if (leftNum < routeNum || rightNum < routeNum) {
           textarea.readOnly = true;
         } else if (leftNum == routeNum && rightNum == routeNum) {
-          if (event.keyCode == 8) {
+          if (event.keyCode == 8 || event.keyCode == 37) {
             event.preventDefault();
           }
+        }
+        if (event.keyCode == 38 || event.keyCode == 40) {
+          event.preventDefault();
         }
       }
 

@@ -41,7 +41,7 @@ aliases: Dict[str, Tuple[str]] = {
 }
 
 
-cpdef int execute_command(Command command, int input, int output, bint async = False) except? -1:
+cpdef int execute_command(Command command, int input, int output, int error, bint async = False) except? -1:
     if command is None:
         return 0
 
@@ -57,9 +57,9 @@ cpdef int execute_command(Command command, int input, int output, bint async = F
             return -1
         elif pid == 0:
             if command.type == CommandType.cm_simple:
-                status = execute_simplecommand(<SimpleCommand>command, input, output)
+                status = execute_simplecommand(<SimpleCommand>command, input, output, error)
             elif command.type == CommandType.cm_connection:
-                status = execute_connection(<Connection>command, input, output)
+                status = execute_connection(<Connection>command, input, output, error)
             dprintf(output, "[!] Job %s ended with status %d\n", temp, status)
             c_exit(status)
         else:
@@ -67,19 +67,20 @@ cpdef int execute_command(Command command, int input, int output, bint async = F
             return 0
 
     if command.type == CommandType.cm_simple:
-        return execute_simplecommand(<SimpleCommand>command, input, output)
+        return execute_simplecommand(<SimpleCommand>command, input, output, error)
     elif command.type == CommandType.cm_connection:
-        return execute_connection(<Connection>command, input, output)
+        return execute_connection(<Connection>command, input, output, error)
 
 
-cpdef int execute_simplecommand(SimpleCommand command, int input, int output) except? -1:
+cpdef int execute_simplecommand(SimpleCommand command, int input, int output, int error) except? -1:
     cdef int fd1
     cdef int fd2
+    cdef int dest
     cdef pid_t pid
     cdef char ** parameters
     cdef int i = 0
-    cdef int status = 0
-    cdef int result = 0
+    cdef int status = -1
+    cdef int result = -1
     cdef int flag = 0
 
     words = list(command.words)
@@ -94,7 +95,7 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
     elif words[0] == "alias":
         if len(words) == 1:
             return alias(output)
-        return alias(output, words[1], words[2:])
+        return alias(output, words[1], tuple(words[2:]))
     elif words[0] == "unalias":
         return unalias(words[1])
     elif words[0] == "export":
@@ -116,82 +117,94 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
 
     pid = fork()
     if pid < 0:
-        dprintf(output, "create fork failed\n")
+        dprintf(error, "create fork failed\n")
     elif pid ==0:
         dup2(input, 0)
         dup2(output, 1)
+        dup2(error, 2)
+
         for redirect in command.redirects:
             if redirect.instruction == RedirectInstruction.r_input_direction:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp,O_RDWR, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, "open error\n")
+                    dprintf(error, "open error\n")
                     c_exit(fd)
                 flag = 1
-                fd2 = dup2(fd, input)
+                fd2 = dup2(fd, dest)
                 if fd2 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd2)
             elif redirect.instruction == RedirectInstruction.r_output_direction:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, "open error\n")
+                    dprintf(error, "open error\n")
                     c_exit(fd)
                 flag = 1
-                fd2 = dup2(fd, output)
+                fd2 = dup2(fd, dest)
                 if fd2 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd2)
             elif redirect.instruction == RedirectInstruction.r_appending_to:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp, O_CREAT | O_RDWR | O_APPEND, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, "open error\n")
+                    dprintf(error, "open error\n")
                     c_exit(fd)
                 flag = 1
-                fd2 = dup2(fd, output)
+                fd2 = dup2(fd, dest)
                 if fd2 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd2)
             elif redirect.instruction == RedirectInstruction.r_duplicating_output:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.dest
-                fd1 = dup2(temp, output)
+                fd1 = dup2(temp, dest)
                 if fd1 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd1)
-                fd2 = dup2(temp, STDERR_FILENO)
+                fd2 = dup2(temp, 2)
                 if fd2 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd2)
             elif redirect.instruction == RedirectInstruction.r_duplicating_output_word:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, "open error\n")
+                    dprintf(error, "open error\n")
                     c_exit(fd)
                 flag = 1
-                fd1 = dup2(fd, output)
-                fd2 = dup2(fd, STDERR_FILENO)
-                if fd2 < 0 or fd1 < 0:
-                    dprintf(output, "dup2 error\n")
+                fd1 = dup2(fd, dest)
+                if fd1 < 0:
+                    dprintf(error, "dup2 error\n")
+                    c_exit(fd1)
+                fd2 = dup2(fd, 2)
+                if fd2 < 0:
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd2)
             elif redirect.instruction == RedirectInstruction.r_duplicating_input:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.dest
-                fd1 = dup2(temp, output)
+                fd1 = dup2(temp, dest)
                 if fd1 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd1)
             elif redirect.instruction == RedirectInstruction.r_duplicating_input_word:
+                dest = redirect.redirector.dest
                 temp = redirect.redirectee.filename.encode("utf-8")
                 fd = open(temp, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR)
                 if fd < 0:
-                    dprintf(output, "open error\n")
+                    dprintf(error, "open error\n")
                     c_exit(fd)
                 flag = 1
-                fd1 = dup2(fd, input)
+                fd1 = dup2(fd, dest)
                 if fd1 < 0:
-                    dprintf(output, "dup2 error\n")
+                    dprintf(error, "dup2 error\n")
                     c_exit(fd1)
 
         result = execvp(parameters[0], parameters)
@@ -200,7 +213,7 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
             close(fd)
 
         if result < 0:
-            dprintf(output, "%s: command not found\n", parameters[0])
+            dprintf(error, "%s: command not found\n", parameters[0])
 
         c_exit(errno)
     else:
@@ -210,38 +223,38 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
         free(parameters[j])
     free(parameters)
 
-    return result
+    return status
 
 
 
-cpdef int execute_connection(Connection command, int input, int output) except? -1:
+cpdef int execute_connection(Connection command, int input, int output, int error) except? -1:
     cdef int status = -1
     cdef int fd, fds[2]
     cdef FILE *fp
     if command.connector == TokenType.SEMI:
-        execute_command(command.first, input, output, 0)
-        status = execute_command(command.second, input, output, 0)
+        execute_command(command.first, input, output, error)
+        status = execute_command(command.second, input, output, error)
     elif command.connector == TokenType.AND_AND:
-        status = execute_command(command.first, input, output, 0)
+        status = execute_command(command.first, input, output, error)
         if status == 0:
-            status = execute_command(command.second, input, output, 0)
+            status = execute_command(command.second, input, output, error)
     elif command.connector == TokenType.OR_OR:
-        status = execute_command(command.first, input, output, 0)
+        status = execute_command(command.first, input, output, error)
         if status != 0:
-            status = execute_command(command.second, input, output, 0)
+            status = execute_command(command.second, input, output, error)
     elif command.connector == TokenType.OR:
         status = pipe(fds)
         if status == 0:
-            status = execute_command(command.first, input, fds[1], 0)
+            status = execute_command(command.first, input, fds[1], error)
             close(fds[1])
-            status = execute_command(command.second, fds[0], output, 0)
+            status = execute_command(command.second, fds[0], output, error)
             close(fds[0])
     elif command.connector == TokenType.AND:
         fp = fopen("/dev/null", "r")
         fd = fileno(fp)
-        execute_command(command.first, fd, output, 1)
+        execute_command(command.first, fd, output, error, 1)
         close(fd)
-        status = execute_command(command.second, input, output, 0)
+        status = execute_command(command.second, input, output, error)
     return status
 
 cpdef int cd(unicode dir = None) except? -1:
