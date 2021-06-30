@@ -226,6 +226,7 @@
       var routeNum = 2;
       var start = 0;
       var end = 0;
+      var op = ''
 
       function Web2PyQt5Value(instr) {
         if (window.con) {
@@ -241,6 +242,7 @@
         // let txt = document.createTextNode(value);
         // obj.appendChild(txt);
         obj.innerHTML = obj.innerHTML + html;
+        window.scrollTo(0,document.documentElement.clientHeight); 
       }
 
       function PyQt52Route(route, st) {
@@ -248,8 +250,13 @@
         let obj = document.getElementById("content");
         let ansi_up = new AnsiUp();
         let html = ansi_up.ansi_to_html(route);
+        op = st
         obj.innerHTML = obj.innerHTML + html;
-        textarea.value = st;
+        textarea.value = op;
+      }
+
+      function getHistory(value){
+        textarea.value = op + value
       }
 
       document.addEventListener("DOMContentLoaded", function () {
