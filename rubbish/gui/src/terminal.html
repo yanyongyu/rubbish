@@ -240,7 +240,7 @@
         let html = ansi_up.ansi_to_html(value);
         // let txt = document.createTextNode(value);
         // obj.appendChild(txt);
-        obj.innerHTML = obj.innerHTML + value;
+        obj.innerHTML = obj.innerHTML + html;
       }
 
       function PyQt52Route(route, st) {
@@ -248,7 +248,7 @@
         let obj = document.getElementById("content");
         let ansi_up = new AnsiUp();
         let html = ansi_up.ansi_to_html(route);
-        obj.innerHTML = obj.innerHTML + route;
+        obj.innerHTML = obj.innerHTML + html;
         textarea.value = st;
       }
 
