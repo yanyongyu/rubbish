@@ -1,5 +1,5 @@
 import os.path
-from threading import Timer
+from functools import partial
 from tempfile import TemporaryFile
 
 from PyQt5.QtGui import QIcon
@@ -8,7 +8,8 @@ from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QMessageBox
 
-from .send import getFileno, recieve
+from .send import getFileno, receive
+from rubbish.core import get_prompt, parse, execute_command, MoreInputNeeded
 
 CURRENT_DIR = os.path.dirname(__file__)
 ICON_FILE = os.path.join(CURRENT_DIR, "src/minilogo.png")
@@ -21,6 +22,7 @@ class Myshared(QWidget):
     def __init__(self, win: "MainWindow"):
         super().__init__()
         self.win = win
+        self.input_stuck = []
 
     def RemoveRoute(self, str):
         str = str[len(self.win.getRoute()) :]
@@ -30,11 +32,34 @@ class Myshared(QWidget):
         return "666"
 
     def Web2PyQt5Value(self, str):
-        instr = self.RemoveRoute(str).encode("utf-8")
+        instr = self.RemoveRoute(str)
         fileno = getFileno(stemp, instr)
+        self.input_stuck.append(instr)
         # commandline
-        # parse(str)
+        try:
+            result = parse(instr)
+            print(result)
+            self.more = False
+            self.input_stuck = []
+            for command in result:
+                result_code = execute_command(command, stemp.fileno(), rtemp.fileno())
+        except EOFError:
+            QApplication.instance().quit()
+        except KeyboardInterrupt:
+            self.more = False
+            self.input_stuck = []
+        except SyntaxError:
+            self.more = False
+            self.input_stuck = []
+        except MoreInputNeeded:
+            self.more = True
+
         self.win.setResult()
+        if self.more:
+            prompt = f"· ····"
+        else:
+            prompt = get_prompt()
+        self.win.setRoute(prompt)
 
     value = pyqtProperty(str, fget=PyQt52WebValue, fset=Web2PyQt5Value)
 
@@ -48,19 +73,20 @@ class MainWindow(QMainWindow):
         self.setGeometry(70, 70, 1080, 720)  # 窗口的初始位置和大小
         self.setWindowIcon(QIcon(ICON_FILE))
         self.browser = QWebEngineView()
-        self.browser.load(QUrl(QFileInfo(HTML_FILE).absoluteFilePath()))
+        self.browser.load(QUrl(f"file://{QFileInfo(HTML_FILE).absoluteFilePath()}"))
         self.setCentralWidget(self.browser)
+        self.browser.loadFinished.connect(partial(self.setRoute, get_prompt()))
 
     # 传输当前路径调用：
     def setRoute(self, value):
         self.route = value
-        jscode = 'PyQt52Route("' + value + '");'
+        jscode = "PyQt52Route(" + repr(value) + ");"
         self.browser.page().runJavaScript(jscode)
 
     # 传输结果调用
     def setResult(self):
-        value = recieve(rtemp)
-        jscode = 'PyQt52Result("' + value + '");'
+        value = receive(rtemp)
+        jscode = "PyQt52Result(" + repr(value) + ");"
         self.browser.page().runJavaScript(jscode)
 
     def getRoute(self):
@@ -71,7 +97,7 @@ class MainWindow(QMainWindow):
             QApplication.instance().quit()
         elif event.key() == Qt.Key_C and event.modifiers() == Qt.ControlModifier:
             # 结束正在运行的程序或命令
-            pass
+            self.setRoute(get_prompt())
 
 
 def main():
@@ -82,8 +108,8 @@ def main():
     shared = Myshared(win)
     channel.registerObject("con", shared)
     win.browser.page().setWebChannel(channel)
-    t = Timer(5, win.setRoute, ["123"])
-    t.start()
+    # t = Timer(5, win.setRoute, ["123"])
+    # t.start()
     win.show()
     app.exit(app.exec_())
     stemp.close()

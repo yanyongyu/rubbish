@@ -104,7 +104,7 @@ cpdef int execute_simplecommand(SimpleCommand command, int input, int output) ex
             return export(output, words[1])
         return export(output, words[1], words[2])
     elif words[0] == "help":
-        return help()
+        return help(output)
 
     parameters = <char **>malloc(100 * sizeof(char *))
     memset(parameters, 0, 100 * sizeof(char *))
@@ -299,8 +299,9 @@ cpdef int export(int output, unicode name = None, unicode value = None) except? 
         temp_value = value_bytes
         return setenv(temp_name, temp_value, 1)
     return 0
-cpdef int help():
-    print(
+cpdef int help(int output):
+    cdef char *temp_str
+    text = (
 		"                  ______\n"
 		"                 /      \\\n"
 		"       __________   __   ___________\n"
@@ -325,5 +326,7 @@ cpdef int help():
 		"     |  |  |    |    |    |    |  |  |\n"
 		"     \\  |  |    |    |    |    |  | /\n"
 		"      \\____________________________/\n"
-	)
+	).encode("utf-8")
+    temp_str = text
+    dprintf(output, "%s", temp_str)
     return 0

@@ -939,7 +939,7 @@ struct __pyx_opt_args_7rubbish_4core_7execute_alias {
  * cpdef int alias(int output, unicode name = *, tuple words = *) except? -1
  * cpdef int unalias(unicode name)
  * cpdef int export(int output, unicode name = *, unicode value = *) except? -1             # <<<<<<<<<<<<<<
- * cpdef int help()
+ * cpdef int help(int output)
  */
 struct __pyx_opt_args_7rubbish_4core_7execute_export {
   int __pyx_n;
@@ -1577,7 +1577,7 @@ static int __pyx_f_7rubbish_4core_7execute_exit(int __pyx_skip_dispatch); /*prot
 static int __pyx_f_7rubbish_4core_7execute_alias(int, int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_7execute_alias *__pyx_optional_args); /*proto*/
 static int __pyx_f_7rubbish_4core_7execute_unalias(PyObject *, int __pyx_skip_dispatch); /*proto*/
 static int __pyx_f_7rubbish_4core_7execute_export(int, int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_7execute_export *__pyx_optional_args); /*proto*/
-static int __pyx_f_7rubbish_4core_7execute_help(int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_7rubbish_4core_7execute_help(int, int __pyx_skip_dispatch); /*proto*/
 #define __Pyx_MODULE_NAME "rubbish.core.execute"
 extern int __pyx_module_is_main_rubbish__core__execute;
 int __pyx_module_is_main_rubbish__core__execute = 0;
@@ -1650,7 +1650,7 @@ static PyObject *__pyx_n_s_Tuple;
 static PyObject *__pyx_kp_u__3;
 static PyObject *__pyx_kp_u__4;
 static PyObject *__pyx_kp_u__5;
-static PyObject *__pyx_kp_u__6;
+static PyObject *__pyx_kp_b__6;
 static PyObject *__pyx_kp_u_alF;
 static PyObject *__pyx_n_u_alias;
 static PyObject *__pyx_kp_u_alias_2;
@@ -1706,11 +1706,10 @@ static PyObject *__pyx_pf_7rubbish_4core_7execute_8exit(CYTHON_UNUSED PyObject *
 static PyObject *__pyx_pf_7rubbish_4core_7execute_10alias(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_output, PyObject *__pyx_v_name, PyObject *__pyx_v_words); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_7execute_12unalias(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_name); /* proto */
 static PyObject *__pyx_pf_7rubbish_4core_7execute_14export(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_output, PyObject *__pyx_v_name, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_7rubbish_4core_7execute_16help(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_7rubbish_4core_7execute_16help(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_output); /* proto */
 static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
-static PyObject *__pyx_tuple__9;
 /* Late includes */
 
 /* "rubbish/core/execute.pyx":44
@@ -2655,7 +2654,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
  *             return export(output, words[1])
  *         return export(output, words[1], words[2])             # <<<<<<<<<<<<<<
  *     elif words[0] == "help":
- *         return help()
+ *         return help(output)
  */
     __pyx_t_5 = __Pyx_GetItemInt_List(__pyx_v_words, 1, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 105, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -2685,7 +2684,7 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
  *             return export(output, words[1])
  *         return export(output, words[1], words[2])
  *     elif words[0] == "help":             # <<<<<<<<<<<<<<
- *         return help()
+ *         return help(output)
  * 
  */
   __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_v_words, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
@@ -2697,24 +2696,24 @@ static int __pyx_f_7rubbish_4core_7execute_execute_simplecommand(struct __pyx_ob
     /* "rubbish/core/execute.pyx":107
  *         return export(output, words[1], words[2])
  *     elif words[0] == "help":
- *         return help()             # <<<<<<<<<<<<<<
+ *         return help(output)             # <<<<<<<<<<<<<<
  * 
  *     parameters = <char **>malloc(100 * sizeof(char *))
  */
-    __pyx_r = __pyx_f_7rubbish_4core_7execute_help(0);
+    __pyx_r = __pyx_f_7rubbish_4core_7execute_help(__pyx_v_output, 0);
     goto __pyx_L0;
 
     /* "rubbish/core/execute.pyx":106
  *             return export(output, words[1])
  *         return export(output, words[1], words[2])
  *     elif words[0] == "help":             # <<<<<<<<<<<<<<
- *         return help()
+ *         return help(output)
  * 
  */
   }
 
   /* "rubbish/core/execute.pyx":109
- *         return help()
+ *         return help(output)
  * 
  *     parameters = <char **>malloc(100 * sizeof(char *))             # <<<<<<<<<<<<<<
  *     memset(parameters, 0, 100 * sizeof(char *))
@@ -6010,7 +6009,7 @@ static int __pyx_f_7rubbish_4core_7execute_export(int __pyx_v_output, CYTHON_UNU
  *         temp_value = value_bytes
  *         return setenv(temp_name, temp_value, 1)             # <<<<<<<<<<<<<<
  *     return 0
- * cpdef int help():
+ * cpdef int help(int output):
  */
     __pyx_r = setenv(__pyx_v_temp_name, __pyx_v_temp_value, 1);
     goto __pyx_L0;
@@ -6021,8 +6020,8 @@ static int __pyx_f_7rubbish_4core_7execute_export(int __pyx_v_output, CYTHON_UNU
  *         temp_value = value_bytes
  *         return setenv(temp_name, temp_value, 1)
  *     return 0             # <<<<<<<<<<<<<<
- * cpdef int help():
- *     print(
+ * cpdef int help(int output):
+ *     cdef char *temp_str
  */
   __pyx_r = 0;
   goto __pyx_L0;
@@ -6169,35 +6168,54 @@ static PyObject *__pyx_pf_7rubbish_4core_7execute_14export(CYTHON_UNUSED PyObjec
 /* "rubbish/core/execute.pyx":302
  *         return setenv(temp_name, temp_value, 1)
  *     return 0
- * cpdef int help():             # <<<<<<<<<<<<<<
- *     print(
- * 		"                  ______\n"
+ * cpdef int help(int output):             # <<<<<<<<<<<<<<
+ *     cdef char *temp_str
+ *     text = (
  */
 
-static PyObject *__pyx_pw_7rubbish_4core_7execute_17help(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static int __pyx_f_7rubbish_4core_7execute_help(CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_7rubbish_4core_7execute_17help(PyObject *__pyx_self, PyObject *__pyx_arg_output); /*proto*/
+static int __pyx_f_7rubbish_4core_7execute_help(int __pyx_v_output, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  char *__pyx_v_temp_str;
+  PyObject *__pyx_v_text = NULL;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  char *__pyx_t_1;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("help", 0);
 
-  /* "rubbish/core/execute.pyx":303
- *     return 0
- * cpdef int help():
- *     print(             # <<<<<<<<<<<<<<
- * 		"                  ______\n"
- * 		"                 /      \\\n"
- */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
   /* "rubbish/core/execute.pyx":329
+ * 		"     \\  |  |    |    |    |    |  | /\n"
  * 		"      \\____________________________/\n"
- * 	)
+ * 	).encode("utf-8")             # <<<<<<<<<<<<<<
+ *     temp_str = text
+ *     dprintf(output, "%s", temp_str)
+ */
+  __Pyx_INCREF(__pyx_kp_b__6);
+  __pyx_v_text = __pyx_kp_b__6;
+
+  /* "rubbish/core/execute.pyx":330
+ * 		"      \\____________________________/\n"
+ * 	).encode("utf-8")
+ *     temp_str = text             # <<<<<<<<<<<<<<
+ *     dprintf(output, "%s", temp_str)
+ *     return 0
+ */
+  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_text); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_v_temp_str = __pyx_t_1;
+
+  /* "rubbish/core/execute.pyx":331
+ * 	).encode("utf-8")
+ *     temp_str = text
+ *     dprintf(output, "%s", temp_str)             # <<<<<<<<<<<<<<
+ *     return 0
+ */
+  (void)(dprintf(__pyx_v_output, ((char const *)"%s"), __pyx_v_temp_str));
+
+  /* "rubbish/core/execute.pyx":332
+ *     temp_str = text
+ *     dprintf(output, "%s", temp_str)
  *     return 0             # <<<<<<<<<<<<<<
  */
   __pyx_r = 0;
@@ -6206,35 +6224,48 @@ static int __pyx_f_7rubbish_4core_7execute_help(CYTHON_UNUSED int __pyx_skip_dis
   /* "rubbish/core/execute.pyx":302
  *         return setenv(temp_name, temp_value, 1)
  *     return 0
- * cpdef int help():             # <<<<<<<<<<<<<<
- *     print(
- * 		"                  ______\n"
+ * cpdef int help(int output):             # <<<<<<<<<<<<<<
+ *     cdef char *temp_str
+ *     text = (
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_WriteUnraisable("rubbish.core.execute.help", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_text);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7rubbish_4core_7execute_17help(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7rubbish_4core_7execute_17help(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7rubbish_4core_7execute_17help(PyObject *__pyx_self, PyObject *__pyx_arg_output); /*proto*/
+static PyObject *__pyx_pw_7rubbish_4core_7execute_17help(PyObject *__pyx_self, PyObject *__pyx_arg_output) {
+  int __pyx_v_output;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("help (wrapper)", 0);
-  __pyx_r = __pyx_pf_7rubbish_4core_7execute_16help(__pyx_self);
+  assert(__pyx_arg_output); {
+    __pyx_v_output = __Pyx_PyInt_As_int(__pyx_arg_output); if (unlikely((__pyx_v_output == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 302, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("rubbish.core.execute.help", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_7rubbish_4core_7execute_16help(__pyx_self, ((int)__pyx_v_output));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7rubbish_4core_7execute_16help(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_7rubbish_4core_7execute_16help(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_output) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6243,7 +6274,7 @@ static PyObject *__pyx_pf_7rubbish_4core_7execute_16help(CYTHON_UNUSED PyObject 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("help", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_7rubbish_4core_7execute_help(0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 302, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_7rubbish_4core_7execute_help(__pyx_v_output, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6269,7 +6300,7 @@ static PyMethodDef __pyx_methods[] = {
   {"alias", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7rubbish_4core_7execute_11alias, METH_VARARGS|METH_KEYWORDS, 0},
   {"unalias", (PyCFunction)__pyx_pw_7rubbish_4core_7execute_13unalias, METH_O, 0},
   {"export", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7rubbish_4core_7execute_15export, METH_VARARGS|METH_KEYWORDS, 0},
-  {"help", (PyCFunction)__pyx_pw_7rubbish_4core_7execute_17help, METH_NOARGS, 0},
+  {"help", (PyCFunction)__pyx_pw_7rubbish_4core_7execute_17help, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -6323,7 +6354,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 1, 0, 0},
   {&__pyx_kp_u__4, __pyx_k__4, sizeof(__pyx_k__4), 0, 1, 0, 0},
   {&__pyx_kp_u__5, __pyx_k__5, sizeof(__pyx_k__5), 0, 1, 0, 0},
-  {&__pyx_kp_u__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
+  {&__pyx_kp_b__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 0, 0, 0},
   {&__pyx_kp_u_alF, __pyx_k_alF, sizeof(__pyx_k_alF), 0, 1, 0, 0},
   {&__pyx_n_u_alias, __pyx_k_alias, sizeof(__pyx_k_alias), 0, 1, 0, 1},
   {&__pyx_kp_u_alias_2, __pyx_k_alias_2, sizeof(__pyx_k_alias_2), 0, 1, 0, 0},
@@ -6397,17 +6428,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "rubbish/core/execute.pyx":303
- *     return 0
- * cpdef int help():
- *     print(             # <<<<<<<<<<<<<<
- * 		"                  ______\n"
- * 		"                 /      \\\n"
- */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u__6); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 303, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-
   /* "rubbish/core/execute.pyx":39
  * 
  * aliases: Dict[str, Tuple[str]] = {
@@ -6415,9 +6435,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     "ll": ("ls", "-alF")
  * }
  */
-  __pyx_tuple__8 = PyTuple_Pack(2, __pyx_n_u_ls, __pyx_kp_u_color_auto); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 39, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_n_u_ls, __pyx_kp_u_color_auto); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
 
   /* "rubbish/core/execute.pyx":40
  * aliases: Dict[str, Tuple[str]] = {
@@ -6426,9 +6446,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * }
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(2, __pyx_n_u_ls, __pyx_kp_u_alF); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 40, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__8 = PyTuple_Pack(2, __pyx_n_u_ls, __pyx_kp_u_alF); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6482,7 +6502,7 @@ static int __Pyx_modinit_function_export_code(void) {
   if (__Pyx_ExportFunction("alias", (void (*)(void))__pyx_f_7rubbish_4core_7execute_alias, "int (int, int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_7execute_alias *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("unalias", (void (*)(void))__pyx_f_7rubbish_4core_7execute_unalias, "int (PyObject *, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("export", (void (*)(void))__pyx_f_7rubbish_4core_7execute_export, "int (int, int __pyx_skip_dispatch, struct __pyx_opt_args_7rubbish_4core_7execute_export *__pyx_optional_args)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("help", (void (*)(void))__pyx_f_7rubbish_4core_7execute_help, "int (int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("help", (void (*)(void))__pyx_f_7rubbish_4core_7execute_help, "int (int, int __pyx_skip_dispatch)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6797,7 +6817,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_2 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_ls, __pyx_tuple__8) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_ls, __pyx_tuple__7) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
 
   /* "rubbish/core/execute.pyx":40
  * aliases: Dict[str, Tuple[str]] = {
@@ -6806,7 +6826,7 @@ if (!__Pyx_RefNanny) {
  * }
  * 
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_ll, __pyx_tuple__9) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_ll, __pyx_tuple__8) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_aliases, __pyx_t_2) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
