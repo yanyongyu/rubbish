@@ -242,7 +242,9 @@
         // let txt = document.createTextNode(value);
         // obj.appendChild(txt);
         obj.innerHTML = obj.innerHTML + html;
-        window.scrollTo(0, document.documentElement.clientHeight);
+        if(value!=""){
+          window.scroll({ top: document.body.clientHeight, left: 0});
+        }
       }
 
       function PyQt52Route(route, st) {
