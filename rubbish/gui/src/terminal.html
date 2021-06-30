@@ -87,7 +87,7 @@
 
   <body
     id="body"
-    oncontextmenu="pst()"
+    oncontextmenu="return false;"
     onkeydown="focusTxt(event)"
     onkeydown="if(event.keyCode==9){stopit(event)}"
   >
@@ -223,7 +223,7 @@
       var textarea = document.getElementById("textarea");
       makeExpandingArea(textarea);
 
-      var routeNum = 0;
+      var routeNum = 2;
       var start = 0;
       var end = 0;
 
@@ -243,9 +243,13 @@
         obj.innerHTML = obj.innerHTML + value;
       }
 
-      function PyQt52Route(value) {
-        routeNum = value.length;
-        textarea.value = value;
+      function PyQt52Route(route, st) {
+        // routeNum = value.length;
+        let obj = document.getElementById("content");
+        let ansi_up = new AnsiUp();
+        let html = ansi_up.ansi_to_html(route);
+        obj.innerHTML = obj.innerHTML + route;
+        textarea.value = st;
       }
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -298,7 +302,7 @@
         obj.appendChild(input);
         let newTxt = "";
         textarea.value = newTxt;
-        routeNum = 0;
+        // routeNum = 0;
       }
 
       function pvt(event, textBox) {

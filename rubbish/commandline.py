@@ -37,7 +37,6 @@ def run_file(filename: str, config: Config = None):
 
 def run_ui(config: Config = None):
     config = config or get_config()
-    config.use_ansi = False
     set_config(config)
     init()
 
